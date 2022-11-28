@@ -47,9 +47,9 @@ require('packer').startup(
 
     use {
       'numToStr/Comment.nvim',
-      config = function()
-          require('Comment').setup()
-      end
+      -- config = function()
+      --     require('Comment').setup()
+      -- end
     }
 
     use {
@@ -127,6 +127,8 @@ require('packer').startup(
         }
       end
     }
+
+    use 'moll/vim-bbye'
 
   end
 )
@@ -282,3 +284,4 @@ require('trim').setup({
 })
 
 require("plugin-settings.hop")
+require("plugin-settings.comment")
