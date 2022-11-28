@@ -13,8 +13,13 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
-vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
+if vim.g.vscode then
+    -- VSCode extension
+else
+    -- ordinary Neovim
+  vim.o.background = "dark" -- or "light" for light mode
+  vim.cmd([[colorscheme gruvbox]])
+end
 
 
 vim.g.mapleader = " "
@@ -87,4 +92,10 @@ vim.keymap.set('n', '<C-k>', '<C-w>k')
 --
 -- end)
 --
-require("plugins")
+if vim.g.vscode then
+    -- VSCode extension
+  require("plugins_vscode")
+else
+    -- ordinary Neovim
+  require("plugins")
+end

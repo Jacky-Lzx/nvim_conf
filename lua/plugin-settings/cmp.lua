@@ -1,5 +1,5 @@
 local lspkind = require('lspkind')
-local cmp = require'cmp'
+local cmp = require('cmp')
 
 cmp.setup {
   -- 指定 snippet 引擎
