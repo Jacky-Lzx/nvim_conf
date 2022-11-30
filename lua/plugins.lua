@@ -130,6 +130,8 @@ require('packer').startup(
     use 'moll/vim-bbye'
 
     use 'jose-elias-alvarez/null-ls.nvim'
+
+    -- use 'mg979/vim-visual-multi'
   end
 )
 

@@ -13,27 +13,23 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
-if vim.g.vscode then
-    -- VSCode extension
-else
-    -- ordinary Neovim
-  vim.o.background = "dark" -- or "light" for light mode
-  vim.cmd([[colorscheme gruvbox]])
-end
+vim.o.background = "dark" -- or "light" for light mode
+vim.cmd([[colorscheme gruvbox]])
 
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-
 vim.wo.wrap = false
 
 vim.bo.tabstop = 2
 
--- vim.wo.cursorline = true
+vim.wo.cursorline = true
 
 vim.opt.clipboard = ""
 
+-- vim.opt.formatoptions:remove { "r", "o" }
+vim.cmd([[ autocmd FileType * set formatoptions-=ro ]])
 
 -- vim.keymap.set('v', '<leader>/', function()
 --   vim.api.nvim_exec([[
@@ -46,7 +42,6 @@ vim.opt.clipboard = ""
 --     call VSCodeNotifyVisual('editor.action.commentLine', 1)
 --   ]], false)
 -- end)
---
 
 vim.keymap.set('i', '<C-h>', '<Left>')
 vim.keymap.set('i', '<C-l>', '<Right>')
@@ -58,44 +53,17 @@ vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
 
+vim.keymap.set('n', 'n', 'nzz')
+vim.keymap.set('n', 'N', 'Nzz')
 
-
-  --   ["<TAB>"] = {
-  --     function()
-  --       require("nvchad_ui.tabufline").tabuflineNext()
-  --     end,
-  --     "goto next buffer",
-  --   },
-  --
-  --   ["<S-Tab>"] = {
-  --     function()
-  --       require("nvchad_ui.tabufline").tabuflinePrev()
-  --     end,
-  --     "goto prev buffer",
-  --   },
-  --
-  --   -- pick buffers via numbers
-  --   ["<Bslash>"] = { "<cmd> TbufPick <CR>", "Pick buffer" },
-  --
-  --   -- close buffer + hide terminal buffer
-  --   ["<leader>x"] = {
-  --     function()
-  --       require("nvchad_ui.tabufline").close_buffer()
-  --     end,
-  --     "close buffer",
-  --   },
-  -- },
-  --
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
 
 -- vim.keymap.set('n', '<leader>x',function ()
 --   bufnr = api.nvim_get_current_buf()
 --
 -- end)
---
-if vim.g.vscode then
-    -- VSCode extension
-  require("plugins_vscode")
-else
-    -- ordinary Neovim
-  require("plugins")
-end
+
+-- vim.cmd( [[ set formatoptions-=ro ]])
+
+require("plugins")
