@@ -11,7 +11,7 @@ local ensure_packer = function()
 end
 local packer_bootstrap = ensure_packer()
 
-require('impatient')
+-- require('impatient')
 
 require('packer').startup(
   function(use)
@@ -88,6 +88,9 @@ require('packer').startup(
     use 'hrsh7th/cmp-vsnip'    -- { name = 'vsnip' }
     use 'hrsh7th/vim-vsnip'
     use 'rafamadriz/friendly-snippets'
+    -- Luasnip
+    use 'L3MON4D3/LuaSnip'
+    use 'saadparwaiz1/cmp_luasnip'
     -- lspkind
     use 'onsails/lspkind-nvim'
 
@@ -202,3 +205,5 @@ require("plugin-settings.cmp")
 require("plugin-settings.undotree")
 
 require("plugin-settings.null-ls")
+
+require("plugin-settings.luasnip")
