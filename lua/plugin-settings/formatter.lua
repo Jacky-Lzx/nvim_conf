@@ -11,6 +11,27 @@ require("formatter").setup({
 	filetype = {
 		-- Formatter configurations for filetype "lua" go here
 		-- and will be executed in order
+		cpp = {
+			-- prettier
+			function()
+				return {
+					exe = "clang-format",
+					args = {},
+					stdin = true,
+				}
+			end,
+		},
+
+		python = {
+			function()
+				return {
+					exe = "yapf",
+					args = {},
+					stdin = true,
+				}
+			end,
+		},
+
 		lua = {
 			-- "formatter.filetypes.lua" defines default configurations for the
 			-- "lua" filetype
