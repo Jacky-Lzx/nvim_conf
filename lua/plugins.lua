@@ -115,14 +115,6 @@ require("packer").startup({
 		use("lewis6991/impatient.nvim")
 
 		use({
-			"lewis6991/gitsigns.nvim",
-			-- tag = 'release' -- To use the latest release (do not use this if you run Neovim nightly or dev builds!)
-		})
-		if packer_bootstrap then
-			require("packer").sync()
-		end
-
-		use({
 			"folke/which-key.nvim",
 			config = function()
 				require("which-key").setup({
@@ -147,7 +139,31 @@ require("packer").startup({
 			end,
 		})
 
-		-- use 'mg979/vim-visual-multi'
+		use({
+			"lewis6991/gitsigns.nvim",
+			-- tag = 'release' -- To use the latest release (do not use this if you run Neovim nightly or dev builds!)
+		})
+		use("kevinhwang91/nvim-hlslens")
+		use({
+			"petertriho/nvim-scrollbar",
+			config = function()
+				-- require('hlslens').setup() is not required
+				require("scrollbar.handlers.search").setup({
+					-- hlslens config overrides
+		        -- Not work
+					-- calm_down = true,
+					nearest_only = true,
+					-- nearest_float_when = "always",
+				})
+				require("scrollbar.handlers.gitsigns").setup()
+			end,
+		})
+
+		use 'mg979/vim-visual-multi'
+
+		if packer_bootstrap then
+			require("packer").sync()
+		end
 	end,
 	config = {
 		git = {
@@ -200,6 +216,16 @@ require("specs").setup({
 
 require("aerial").setup()
 require("gitsigns").setup()
+
+require("hlslens").setup({
+	-- auto_enable = false,
+	-- calm_down = true,
+	nearest_only = true,
+	-- nearest_float_when = "always",
+  -- override_lens = function() end,
+})
+
+-- require("scrollbar").setup()
 
 require("trim").setup({
 	-- if you want to ignore markdown file.
