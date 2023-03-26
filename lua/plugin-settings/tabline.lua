@@ -21,7 +21,13 @@ vim.cmd[[
   set sessionoptions+=tabpages,globals " store tabpages and globals in session
 ]]
 
-vim.keymap.set('n', '<TAB>', '<CMD>TablineBufferNext<CR>')
-vim.keymap.set('n', '<S-TAB>', '<CMD>TablineBufferPrevious<CR>')
+-- vim.keymap.set('n', '<TAB>', '<CMD>TablineBufferNext<CR>')
+-- vim.keymap.set('n', '<S-TAB>', '<CMD>TablineBufferPrevious<CR>')
+
+vim.keymap.set('n', '<leader>l', '<CMD>TablineBufferNext<CR>')
+vim.keymap.set('n', '<leader>h', '<CMD>TablineBufferPrevious<CR>')
+
+vim.keymap.set('n', '<C-L>', '<CMD>TablineBufferNext<CR>')
+vim.keymap.set('n', '<C-H>', '<CMD>TablineBufferPrevious<CR>')
 
 vim.keymap.set('n', '<leader>x', '<CMD>Bdelete<CR>')
