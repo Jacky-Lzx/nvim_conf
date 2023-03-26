@@ -134,6 +134,8 @@ require('packer').startup(
 
     use 'jose-elias-alvarez/null-ls.nvim'
 
+    use 'mhartington/formatter.nvim'
+
     -- use 'mg979/vim-visual-multi'
   end
 )
@@ -207,3 +209,5 @@ require("plugin-settings.undotree")
 require("plugin-settings.null-ls")
 
 require("plugin-settings.luasnip")
+
+require("plugin-settings.formatter")

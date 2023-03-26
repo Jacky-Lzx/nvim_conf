@@ -27,7 +27,7 @@ vim.cmd[[
 vim.keymap.set('n', '<leader>l', '<CMD>TablineBufferNext<CR>')
 vim.keymap.set('n', '<leader>h', '<CMD>TablineBufferPrevious<CR>')
 
-vim.keymap.set('n', '<C-L>', '<CMD>TablineBufferNext<CR>')
-vim.keymap.set('n', '<C-H>', '<CMD>TablineBufferPrevious<CR>')
+-- vim.keymap.set('n', '<C-L>', '<CMD>TablineBufferNext<CR>')
+-- vim.keymap.set('n', '<C-H>', '<CMD>TablineBufferPrevious<CR>')
 
 vim.keymap.set('n', '<leader>x', '<CMD>Bdelete<CR>')
