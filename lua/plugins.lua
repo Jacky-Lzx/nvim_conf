@@ -61,6 +61,7 @@ require("packer").startup({
 			tag = "nightly", -- optional, updated every week. (see issue #1193)
 		})
 
+		use("numToStr/FTerm.nvim")
 
 		use({
 			"nvim-treesitter/nvim-treesitter",
@@ -69,8 +70,6 @@ require("packer").startup({
 				ts_update()
 			end,
 		})
-
-		use("numToStr/FTerm.nvim")
 
 		use({ "norcalli/nvim-colorizer.lua" })
 
@@ -227,6 +226,7 @@ require("specs").setup({
 
 require("aerial").setup()
 require("gitsigns").setup()
+require("colorizer").setup()
 
 require("hlslens").setup({
 	-- auto_enable = false,

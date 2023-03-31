@@ -12,11 +12,10 @@ require'FTerm'.setup({
 
 vim.api.nvim_create_user_command('FTermToggle', require('FTerm').toggle, { bang = true })
 
-vim.keymap.set('n', '<A-i>', function() require("FTerm").toggle() end)
-vim.keymap.set('t', '<A-i>', function() require("FTerm").toggle() end)
+vim.keymap.set('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
+vim.keymap.set('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 
 local fterm = require("FTerm")
-
 local lg = fterm:new({
     ft = 'lazygit', -- You can also override the default filetype, if you want
     cmd = "lazygit --use-config-file=$HOME/.config/lazygit/config.yml",
