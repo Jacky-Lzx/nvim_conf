@@ -14,17 +14,17 @@ local hop = require("hop")
 
 -- :HopLine
 -- vim.keymap.set({ "n", "v" }, "<leader>j", function()
--- 	hop.hint_lines({ direction = directions.AFTER_CURSOR, current_line_only = false })
+--   hop.hint_lines({ direction = directions.AFTER_CURSOR, current_line_only = false })
 -- end, { remap = true })
 
 -- vim.keymap.set({ "n", "v" }, "<leader>k", function()
--- 	hop.hint_lines({ direction = directions.BEFORE_CURSOR, current_line_only = false })
+--   hop.hint_lines({ direction = directions.BEFORE_CURSOR, current_line_only = false })
 -- end, { remap = true })
 
 vim.keymap.set({ "n", "v" }, "<leader>j", function()
-	hop.hint_lines({ current_line_only = false })
+  hop.hint_lines({ current_line_only = false })
 end, { remap = true })
 
 vim.keymap.set({ "n", "v" }, "<leader>k", function()
-	hop.hint_lines({ current_line_only = false })
+  hop.hint_lines({ current_line_only = false })
 end, { remap = true })
