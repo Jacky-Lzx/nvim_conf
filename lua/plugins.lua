@@ -34,13 +34,7 @@ require("packer").startup({
 
 		use({ "ellisonleao/gruvbox.nvim" })
 
-		use({
-			"nvim-tree/nvim-tree.lua",
-			requires = {
-				"nvim-tree/nvim-web-devicons", -- optional, for file icons
-			},
-			tag = "nightly", -- optional, updated every week. (see issue #1193)
-		})
+		use("numToStr/Comment.nvim")
 
 		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 		use("nvim-telescope/telescope-ui-select.nvim")
@@ -60,11 +54,13 @@ require("packer").startup({
 		})
 
 		use({
-			"numToStr/Comment.nvim",
-			-- config = function()
-			--     require('Comment').setup()
-			-- end
+			"nvim-tree/nvim-tree.lua",
+			requires = {
+				"nvim-tree/nvim-web-devicons", -- optional, for file icons
+			},
+			tag = "nightly", -- optional, updated every week. (see issue #1193)
 		})
+
 
 		use({
 			"nvim-treesitter/nvim-treesitter",
@@ -196,6 +192,7 @@ require("plugin-settings.nvim-treesitter")
 require("plugin-settings.nvim-tree")
 
 require("plugin-settings.telescope")
+
 require("plugin-settings.lualine")
 require("plugin-settings.tabline")
 require("plugin-settings.fterm")
@@ -260,6 +257,7 @@ require("plugin-settings.hop")
 require("plugin-settings.leap")
 
 require("plugin-settings.comment")
+
 require("plugin-settings.cmp")
 
 require("plugin-settings.undotree")
