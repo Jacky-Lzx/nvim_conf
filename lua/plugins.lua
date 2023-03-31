@@ -24,8 +24,12 @@ require("packer").startup({
 			branch = "v2", -- optional but strongly recommended
 			config = function()
 				-- you can configure Hop the way you like here; see :h hop-config
-				require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
+				-- require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
 			end,
+		})
+		use({
+			"ggandor/leap.nvim",
+			requires = { "tpope/vim-repeat" },
 		})
 
 		use({ "ellisonleao/gruvbox.nvim" })
@@ -173,11 +177,6 @@ require("packer").startup({
 
 		use("nvim-telescope/telescope-ui-select.nvim")
 
-		use({
-			"ggandor/leap.nvim",
-			requires = { "tpope/vim-repeat" },
-		})
-
 		if packer_bootstrap then
 			require("packer").sync()
 		end
@@ -260,6 +259,8 @@ require("trim").setup({
 })
 
 require("plugin-settings.hop")
+require("plugin-settings.leap")
+
 require("plugin-settings.comment")
 require("plugin-settings.cmp")
 
