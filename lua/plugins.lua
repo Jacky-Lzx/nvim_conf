@@ -32,7 +32,7 @@ require("packer").startup({
 			requires = { "tpope/vim-repeat" },
 		})
 
-		use({ "ellisonleao/gruvbox.nvim" })
+		use("ellisonleao/gruvbox.nvim")
 
 		use("numToStr/Comment.nvim")
 
@@ -65,7 +65,7 @@ require("packer").startup({
 
 		use("cappyzawa/trim.nvim")
 
-		use({ "norcalli/nvim-colorizer.lua" })
+		use("norcalli/nvim-colorizer.lua")
 
 		-- The command of Buffer delete
 		use("moll/vim-bbye")
@@ -120,23 +120,32 @@ require("packer").startup({
 			"williamboman/mason-lspconfig.nvim",
 		})
 
+		use("windwp/nvim-autopairs")
 		use("hrsh7th/cmp-nvim-lsp") -- { name = nvim_lsp }
 		use("hrsh7th/cmp-buffer") -- { name = 'buffer' },
-		use("hrsh7th/cmp-path") -- { name = 'path' }
+		-- use("hrsh7th/cmp-path") -- { name = 'path' }
+		use("FelipeLema/cmp-async-path") -- { name = 'async_path' }
 		use("hrsh7th/cmp-cmdline") -- { name = 'cmdline' }
 		use("hrsh7th/nvim-cmp")
 		-- vsnip
-		use("hrsh7th/cmp-vsnip") -- { name = 'vsnip' }
-		use("hrsh7th/vim-vsnip")
-		use("rafamadriz/friendly-snippets")
+		-- use("hrsh7th/cmp-vsnip") -- { name = 'vsnip' }
+		-- use("hrsh7th/vim-vsnip")
 		-- Luasnip
-		use("L3MON4D3/LuaSnip")
+		use({
+			"L3MON4D3/LuaSnip",
+			-- follow latest release.
+			tag = "v<CurrentMajor>.*",
+			-- install jsregexp (optional!:).
+			run = "make install_jsregexp",
+		})
 		use("saadparwaiz1/cmp_luasnip")
+		use("rafamadriz/friendly-snippets")
 		-- lspkind
 		use("onsails/lspkind-nvim")
 
-		-- use("stevearc/aerial.nvim")
+    use("lewis6991/hover.nvim")
 
+		-- use("stevearc/aerial.nvim")
 
 		if packer_bootstrap then
 			require("packer").sync()
@@ -198,6 +207,8 @@ require("aerial").setup()
 
 require("which-key").setup()
 
+require("nvim-autopairs").setup()
+
 require("hlslens").setup({
 	-- auto_enable = false,
 	-- calm_down = true,
@@ -237,3 +248,4 @@ require("plugin-settings.luasnip")
 require("plugin-settings.formatter")
 
 -- require("plugin-settings.specs")
+require("plugin-settings.hover")
