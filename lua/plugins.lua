@@ -11,12 +11,12 @@ local ensure_packer = function()
 end
 local packer_bootstrap = ensure_packer()
 
--- require('impatient')
-
 require("packer").startup({
 	function(use)
 		-- Packer can manage itself
 		use("wbthomason/packer.nvim")
+
+		use("lewis6991/impatient.nvim")
 
 		-- use 'easymotion/vim-easymotion'
 		use({
@@ -67,6 +67,8 @@ require("packer").startup({
 
 		use({ "norcalli/nvim-colorizer.lua" })
 
+		-- The command of Buffer delete
+		use("moll/vim-bbye")
 		use({
 			"nvim-lualine/lualine.nvim",
 			requires = { "kyazdani42/nvim-web-devicons", opt = true },
@@ -81,6 +83,10 @@ require("packer").startup({
 		use("dstein64/vim-startuptime")
 
 		use("lukas-reineke/indent-blankline.nvim")
+
+		use("folke/which-key.nvim")
+
+		-- use({ "edluffy/specs.nvim" })
 
 		use({
 			"nvim-treesitter/nvim-treesitter",
@@ -111,33 +117,7 @@ require("packer").startup({
 		-- lspkind
 		use("onsails/lspkind-nvim")
 
-
-
-
-
-		use({ "edluffy/specs.nvim" })
-
-		use({
-			"stevearc/aerial.nvim",
-			config = function()
-				require("aerial").setup()
-			end,
-		})
-
-		use("lewis6991/impatient.nvim")
-
-		use({
-			"folke/which-key.nvim",
-			config = function()
-				require("which-key").setup({
-					-- your configuration comes here
-					-- or leave it empty to use the default settings
-					-- refer to the configuration section below
-				})
-			end,
-		})
-
-		use("moll/vim-bbye")
+		-- use("stevearc/aerial.nvim")
 
 		use("jose-elias-alvarez/null-ls.nvim")
 
@@ -146,9 +126,6 @@ require("packer").startup({
 		use({
 			"goolord/alpha-nvim",
 			requires = { "nvim-tree/nvim-web-devicons" },
-			config = function()
-				require("alpha").setup(require("alpha.themes.startify").config)
-			end,
 		})
 
 		use({
@@ -203,33 +180,21 @@ require("which-key").setup({})
 
 require("plugin-settings.mason")
 
-require("indent_blankline").setup {
-    space_char_blankline = " ",
-    show_current_context = true,
-    show_current_context_start = true,
-}
-
-require("specs").setup({
-	show_jumps = false,
-	min_jump = 30,
-	popup = {
-		delay_ms = 0, -- delay before popup displays
-		inc_ms = 10, -- time increments used for fade/resize effects
-		blend = 10, -- starting blend, between 0-100 (fully transparent), see :h winblend
-		width = 10,
-		winhl = "PMenu",
-		fader = require("specs").linear_fader,
-		resizer = require("specs").shrink_resizer,
-	},
-	ignore_filetypes = {},
-	ignore_buftypes = {
-		nofile = true,
-	},
+require("indent_blankline").setup({
+	space_char_blankline = " ",
+	show_current_context = true,
+	show_current_context_start = true,
 })
 
 require("aerial").setup()
 require("gitsigns").setup()
 require("colorizer").setup()
+
+require("alpha").setup(require("alpha.themes.startify").config)
+
+require("aerial").setup()
+
+require("which-key").setup()
 
 require("hlslens").setup({
 	-- auto_enable = false,
@@ -270,3 +235,5 @@ require("plugin-settings.null-ls")
 require("plugin-settings.luasnip")
 
 require("plugin-settings.formatter")
+
+-- require("plugin-settings.specs")
