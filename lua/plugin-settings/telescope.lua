@@ -1,24 +1,13 @@
 -- This is your opts table
 require("telescope").setup({
+	-- pickers = {
+	-- 	find_files = {
+	-- 		theme = "dropdown",
+	-- 	},
+	-- },
 	extensions = {
 		["ui-select"] = {
-			require("telescope.themes").get_dropdown({
-				-- even more opts
-			}),
-
-			-- pseudo code / specification for writing custom displays, like the one
-			-- for "codeactions"
-			-- specific_opts = {
-			--   [kind] = {
-			--     make_indexed = function(items) -> indexed_items, width,
-			--     make_displayer = function(widths) -> displayer
-			--     make_display = function(displayer) -> function(e)
-			--     make_ordinal = function(e) -> string
-			--   },
-			--   -- for example to disable the custom builtin "codeactions" display
-			--      do the following
-			--   codeactions = false,
-			-- }
+			require("telescope.themes").get_cursor(),
 		},
 	},
 })
@@ -29,9 +18,12 @@ require("telescope").load_extension("fzf")
 
 local builtin = require("telescope.builtin")
 
+vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, {})
+vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
+vim.keymap.set("n", "<leader>fd", builtin.lsp_definitions, {})
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-
-vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, {})
+vim.keymap.set("n", "<leader>fk", builtin.keymaps, {})
+vim.keymap.set("n", "<leader>fq", builtin.quickfix, {})
+vim.keymap.set("n", "<leader>fr", builtin.registers, {})

@@ -43,10 +43,10 @@ require("packer").startup({
 		})
 
 		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+		use("nvim-telescope/telescope-ui-select.nvim")
 		use({
 			"nvim-telescope/telescope.nvim",
-			tag = "0.1.0",
-			-- or                            , branch = '0.1.x',
+			tag = "0.1.1",
 			requires = { { "nvim-lua/plenary.nvim" } },
 			extensions = {
 				fzf = {
@@ -175,28 +175,26 @@ require("packer").startup({
 
 		use("mg979/vim-visual-multi")
 
-		use("nvim-telescope/telescope-ui-select.nvim")
-
 		if packer_bootstrap then
 			require("packer").sync()
 		end
 	end,
 	config = {
+		display = {
+			open_fn = require("packer.util").float,
+		},
 		git = {
 			clone_timeout = 600, -- Timeout, in seconds, for git clones
-			-- default_url_format = "https://github.com/%s", -- Lua format string used for "aaa/bbb" style plugins
 			default_url_format = "git@github.com:%s", -- Lua format string used for "aaa/bbb" style plugins
 		},
 	},
 })
 
-if vim.g.vscode then
-	-- VSCode extension
-else
-	require("plugin-settings.gruvbox")
-	require("plugin-settings.nvim-treesitter")
-end
+require("plugin-settings.gruvbox")
+
+require("plugin-settings.nvim-treesitter")
 require("plugin-settings.nvim-tree")
+
 require("plugin-settings.telescope")
 require("plugin-settings.lualine")
 require("plugin-settings.tabline")
