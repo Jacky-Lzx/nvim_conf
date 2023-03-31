@@ -28,7 +28,7 @@ vim.wo.cursorline = true
 
 vim.opt.clipboard = ""
 
-vim.g.python3_host_prog = '~/.pyenv/versions/neovim3/bin/python'
+vim.g.python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"
 
 -- vim.opt.formatoptions:remove { "r", "o" }
 vim.cmd([[ autocmd FileType * set formatoptions-=ro ]])
@@ -55,7 +55,6 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 
-
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 
@@ -68,7 +67,7 @@ vim.keymap.set("n", "<S-L>", "$")
 -- vim.keymap.set("n", "//", "<CMD>:set hlsearch!<CR>")
 vim.keymap.set("n", "//", "<CMD>:noh<CR>")
 
-vim.keymap.set("n", "<C-q>", "<CMD>:qa!<CR>")
+vim.keymap.set("n", "<C-q>", "<CMD>:qa<CR>")
 vim.keymap.set("n", "qq", "<CMD>:q<CR>")
 vim.keymap.set("n", "Q", "<CMD>:q<CR>")
 
