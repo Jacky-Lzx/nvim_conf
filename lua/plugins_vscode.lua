@@ -110,6 +110,10 @@ require('packer').startup(
     -- }
     --
     -- use 'moll/vim-bbye'
+		use({
+			"ggandor/leap.nvim",
+			requires = { "tpope/vim-repeat" },
+		})
 
   end
 )
@@ -208,3 +212,4 @@ require("plugin-settings.comment")
 require("plugin-settings.cmp")
 
 -- require("plugin-settings.undotree")
+-- require('leap').add_default_mappings()

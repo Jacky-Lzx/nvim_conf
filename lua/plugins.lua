@@ -38,11 +38,21 @@ require("packer").startup({
 			tag = "nightly", -- optional, updated every week. (see issue #1193)
 		})
 
+		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 		use({
 			"nvim-telescope/telescope.nvim",
 			tag = "0.1.0",
 			-- or                            , branch = '0.1.x',
 			requires = { { "nvim-lua/plenary.nvim" } },
+			extensions = {
+				fzf = {
+					fuzzy = true, -- false will only do exact matching
+					override_generic_sorter = true, -- override the generic sorter
+					override_file_sorter = true, -- override the file sorter
+					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+					-- the default case_mode is "smart_case"
+				},
+			},
 		})
 
 		use({
@@ -150,7 +160,7 @@ require("packer").startup({
 				-- require('hlslens').setup() is not required
 				require("scrollbar.handlers.search").setup({
 					-- hlslens config overrides
-		        -- Not work
+					-- Not work
 					-- calm_down = true,
 					nearest_only = true,
 					-- nearest_float_when = "always",
@@ -159,7 +169,14 @@ require("packer").startup({
 			end,
 		})
 
-		use 'mg979/vim-visual-multi'
+		use("mg979/vim-visual-multi")
+
+		use("nvim-telescope/telescope-ui-select.nvim")
+
+		use({
+			"ggandor/leap.nvim",
+			requires = { "tpope/vim-repeat" },
+		})
 
 		if packer_bootstrap then
 			require("packer").sync()
@@ -222,7 +239,7 @@ require("hlslens").setup({
 	-- calm_down = true,
 	nearest_only = true,
 	-- nearest_float_when = "always",
-  -- override_lens = function() end,
+	-- override_lens = function() end,
 })
 
 -- require("scrollbar").setup()
