@@ -86,7 +86,25 @@ require("packer").startup({
 
 		use("folke/which-key.nvim")
 
+		use({
+			"goolord/alpha-nvim",
+			requires = { "nvim-tree/nvim-web-devicons" },
+		})
+
+		use("lewis6991/gitsigns.nvim")
+		use("kevinhwang91/nvim-hlslens")
+		use("petertriho/nvim-scrollbar")
+
 		-- use({ "edluffy/specs.nvim" })
+
+		use("mhartington/formatter.nvim")
+
+		use("mg979/vim-visual-multi")
+
+		use({
+			"jose-elias-alvarez/null-ls.nvim",
+			requires = { "nvim-lua/plenary.nvim" },
+		})
 
 		use({
 			"nvim-treesitter/nvim-treesitter",
@@ -119,36 +137,6 @@ require("packer").startup({
 
 		-- use("stevearc/aerial.nvim")
 
-		use("jose-elias-alvarez/null-ls.nvim")
-
-		use("mhartington/formatter.nvim")
-
-		use({
-			"goolord/alpha-nvim",
-			requires = { "nvim-tree/nvim-web-devicons" },
-		})
-
-		use({
-			"lewis6991/gitsigns.nvim",
-			-- tag = 'release' -- To use the latest release (do not use this if you run Neovim nightly or dev builds!)
-		})
-		use("kevinhwang91/nvim-hlslens")
-		use({
-			"petertriho/nvim-scrollbar",
-			config = function()
-				-- require('hlslens').setup() is not required
-				require("scrollbar.handlers.search").setup({
-					-- hlslens config overrides
-					-- Not work
-					-- calm_down = true,
-					nearest_only = true,
-					-- nearest_float_when = "always",
-				})
-				require("scrollbar.handlers.gitsigns").setup()
-			end,
-		})
-
-		use("mg979/vim-visual-multi")
 
 		if packer_bootstrap then
 			require("packer").sync()
@@ -187,8 +175,22 @@ require("indent_blankline").setup({
 })
 
 require("aerial").setup()
-require("gitsigns").setup()
 require("colorizer").setup()
+
+require("gitsigns").setup()
+require("scrollbar.handlers.search").setup({ nearest_only = true })
+require("scrollbar.handlers.gitsigns").setup()
+require("scrollbar").setup({
+	handle = {
+		text = " ",
+		blend = 60, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
+		color = nil,
+		color_nr = nil, -- cterm
+		highlight = "StatusLineNC",
+		-- highlight = "CursorLine",
+		hide_if_all_visible = true, -- Hides handle if all lines are visible
+	},
+})
 
 require("alpha").setup(require("alpha.themes.startify").config)
 
@@ -203,8 +205,6 @@ require("hlslens").setup({
 	-- nearest_float_when = "always",
 	-- override_lens = function() end,
 })
-
--- require("scrollbar").setup()
 
 require("trim").setup({
 	-- if you want to ignore markdown file.
