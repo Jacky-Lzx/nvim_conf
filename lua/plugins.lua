@@ -63,13 +63,7 @@ require("packer").startup({
 
 		use("numToStr/FTerm.nvim")
 
-		use({
-			"nvim-treesitter/nvim-treesitter",
-			run = function()
-				local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-				ts_update()
-			end,
-		})
+		use("cappyzawa/trim.nvim")
 
 		use({ "norcalli/nvim-colorizer.lua" })
 
@@ -77,10 +71,23 @@ require("packer").startup({
 			"nvim-lualine/lualine.nvim",
 			requires = { "kyazdani42/nvim-web-devicons", opt = true },
 		})
-
 		use({
 			"kdheepak/tabline.nvim",
 			requires = { { "hoob3rt/lualine.nvim", opt = true }, { "kyazdani42/nvim-web-devicons", opt = true } },
+		})
+
+		use("mbbill/undotree")
+
+		use("dstein64/vim-startuptime")
+
+		use("lukas-reineke/indent-blankline.nvim")
+
+		use({
+			"nvim-treesitter/nvim-treesitter",
+			run = function()
+				local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+				ts_update()
+			end,
 		})
 
 		use({
@@ -104,13 +111,9 @@ require("packer").startup({
 		-- lspkind
 		use("onsails/lspkind-nvim")
 
-		use("cappyzawa/trim.nvim")
 
-		use("mbbill/undotree")
 
-		use("dstein64/vim-startuptime")
 
-		use("lukas-reineke/indent-blankline.nvim")
 
 		use({ "edluffy/specs.nvim" })
 
@@ -200,11 +203,11 @@ require("which-key").setup({})
 
 require("plugin-settings.mason")
 
-require("indent_blankline").setup({
-	-- for example, context is off by default, use this to turn it on
-	show_current_context = true,
-	show_current_context_start = false,
-})
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
 
 require("specs").setup({
 	show_jumps = false,
