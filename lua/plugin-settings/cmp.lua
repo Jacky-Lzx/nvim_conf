@@ -3,18 +3,19 @@ local cmp = require("cmp")
 
 -- The directories will have to be structured like eg. <https://github.com/rafamadriz/friendly-snippets> (include
 -- a similar `package.json`)
--- require("luasnip.loaders.from_vscode").load({ paths = { "./my-snippets" } }) -- Load snippets from my-snippets folder
-require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").load({ paths = { "./my_snippets" } }) -- Load snippets from my-snippets folder
+-- require("luasnip.loaders.from_vscode").lazy_load()
 
 vim.cmd([[
   " press <Tab> to expand or jump in a snippet. These can also be mapped separately
   " via <Plug>luasnip-expand-snippet and <Plug>luasnip-jump-next.
-  imap <silent><expr> <M-l> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
+  " imap <silent><expr> <M-l> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
   " -1 for jumping backwards.
-  inoremap <silent> <M-h> <cmd>lua require'luasnip'.jump(-1)<Cr>
+  inoremap <silent> <M-l> <cmd>lua require'luasnip'.jump(1)<CR>
+  inoremap <silent> <M-h> <cmd>lua require'luasnip'.jump(-1)<CR>
 
-  snoremap <silent> <M-l> <cmd>lua require('luasnip').jump(1)<Cr>
-  snoremap <silent> <M-h> <cmd>lua require('luasnip').jump(-1)<Cr>
+  snoremap <silent> <M-l> <cmd>lua require('luasnip').jump(1)<CR>
+  snoremap <silent> <M-h> <cmd>lua require('luasnip').jump(-1)<CR>
 
   " For changing choices in choiceNodes (not strictly necessary for a basic setup).
   imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
