@@ -113,6 +113,7 @@ require("packer").startup({
 				ts_update()
 			end,
 		})
+		use("nvim-treesitter/nvim-treesitter-context")
 
 		use({
 			"williamboman/mason.nvim",
@@ -148,6 +149,29 @@ require("packer").startup({
 
 		-- use("stevearc/aerial.nvim")
 		use("lervag/vimtex")
+
+		use({
+			"kylechui/nvim-surround",
+			tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+			config = function()
+				require("nvim-surround").setup({
+					-- Configuration here, or leave empty to use defaults
+				})
+			end,
+		})
+
+		use({
+			"folke/noice.nvim",
+			config = function() end,
+			requires = {
+				-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+				"MunifTanjim/nui.nvim",
+				-- OPTIONAL:
+				--   `nvim-notify` is only needed, if you want to use the notification view.
+				--   If not available, we use `mini` as the fallback
+				"rcarriga/nvim-notify",
+			},
+		})
 
 		if packer_bootstrap then
 			require("packer").sync()
@@ -253,3 +277,4 @@ require("plugin-settings.formatter")
 require("plugin-settings.hover")
 
 require("plugin-settings.vimtex")
+require("plugin-settings.noice")
