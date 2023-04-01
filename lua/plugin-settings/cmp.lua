@@ -22,7 +22,7 @@ vim.cmd([[
   smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
 ]])
 
-vim.api.nvim_create_user_command('SnippetList', require("luasnip.extras.snippet_list").open, {})
+vim.api.nvim_create_user_command("SnippetList", require("luasnip.extras.snippet_list").open, {})
 
 cmp.setup({
 	-- 指定 snippet 引擎
@@ -139,9 +139,12 @@ cmp.setup.cmdline(":", {
 -- 	capabilities = capabilities,
 -- })
 
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+-- require("lspconfig")["lua-ls"].setup({
+-- 	capabilities = capabilities,
+-- })
+
 -- If you want insert `(` after select function or method item
--- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
--- cmp.event:on(
---   'confirm_done',
---   cmp_autopairs.on_confirm_done()
--- )
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())

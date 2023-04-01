@@ -134,7 +134,8 @@ require("packer").startup({
 		use({
 			"L3MON4D3/LuaSnip",
 			-- follow latest release.
-			tag = "v<CurrentMajor>.*",
+			-- tag = "v<CurrentMajor>.*",
+			tag = "v1.*",
 			-- install jsregexp (optional!:).
 			run = "make install_jsregexp",
 		})
@@ -143,9 +144,10 @@ require("packer").startup({
 		-- lspkind
 		use("onsails/lspkind-nvim")
 
-    use("lewis6991/hover.nvim")
+		use("lewis6991/hover.nvim")
 
 		-- use("stevearc/aerial.nvim")
+		use("lervag/vimtex")
 
 		if packer_bootstrap then
 			require("packer").sync()
@@ -183,7 +185,7 @@ require("indent_blankline").setup({
 	show_current_context_start = true,
 })
 
-require("aerial").setup()
+-- require("aerial").setup()
 require("colorizer").setup()
 
 require("gitsigns").setup()
@@ -203,7 +205,7 @@ require("scrollbar").setup({
 
 require("alpha").setup(require("alpha.themes.startify").config)
 
-require("aerial").setup()
+-- require("aerial").setup()
 
 require("which-key").setup()
 
