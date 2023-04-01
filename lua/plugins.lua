@@ -92,7 +92,7 @@ require("packer").startup({
 		})
 
 		use("lewis6991/gitsigns.nvim")
-		use("kevinhwang91/nvim-hlslens")
+		-- use("kevinhwang91/nvim-hlslens") -- Conflicted with vscode_nvim, don't know way
 		use("petertriho/nvim-scrollbar")
 
 		-- use({ "edluffy/specs.nvim" })
@@ -189,7 +189,7 @@ require("indent_blankline").setup({
 require("colorizer").setup()
 
 require("gitsigns").setup()
-require("scrollbar.handlers.search").setup({ nearest_only = true })
+-- require("scrollbar.handlers.search").setup({ nearest_only = true })
 require("scrollbar.handlers.gitsigns").setup()
 require("scrollbar").setup({
 	handle = {
@@ -211,13 +211,13 @@ require("which-key").setup()
 
 require("nvim-autopairs").setup()
 
-require("hlslens").setup({
-	-- auto_enable = false,
-	-- calm_down = true,
-	nearest_only = true,
-	-- nearest_float_when = "always",
-	-- override_lens = function() end,
-})
+-- require("hlslens").setup({
+-- 	-- auto_enable = false,
+-- 	-- calm_down = true,
+-- 	nearest_only = true,
+-- 	-- nearest_float_when = "always",
+-- 	-- override_lens = function() end,
+-- })
 
 require("trim").setup({
 	-- if you want to ignore markdown file.
