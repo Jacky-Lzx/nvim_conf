@@ -251,3 +251,5 @@ require("plugin-settings.formatter")
 
 -- require("plugin-settings.specs")
 require("plugin-settings.hover")
+
+require("plugin-settings.vimtex")
