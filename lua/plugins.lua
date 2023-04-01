@@ -22,19 +22,17 @@ require("packer").startup({
 		use({
 			"phaazon/hop.nvim",
 			branch = "v2", -- optional but strongly recommended
-			config = function()
-				-- you can configure Hop the way you like here; see :h hop-config
-				-- require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-			end,
+			config = require("plugin-settings/hop"),
 		})
 		use({
 			"ggandor/leap.nvim",
 			requires = { "tpope/vim-repeat" },
+			config = require("plugin-settings/leap"),
 		})
 
-		use("ellisonleao/gruvbox.nvim")
+		use({ "ellisonleao/gruvbox.nvim", config = require("plugin-settings/gruvbox") })
 
-		use("numToStr/Comment.nvim")
+		use({ "numToStr/Comment.nvim", config = require("plugin-settings/comment") })
 
 		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 		use("nvim-telescope/telescope-ui-select.nvim")
@@ -51,6 +49,7 @@ require("packer").startup({
 					-- the default case_mode is "smart_case"
 				},
 			},
+			config = require("plugin-settings.telescope"),
 		})
 
 		use({
@@ -59,61 +58,90 @@ require("packer").startup({
 				"nvim-tree/nvim-web-devicons", -- optional, for file icons
 			},
 			tag = "nightly", -- optional, updated every week. (see issue #1193)
+			config = require("plugin-settings/nvim-tree"),
 		})
 
-		use("numToStr/FTerm.nvim")
+		use({ "numToStr/FTerm.nvim", config = require("plugin-settings.fterm") })
 
-		use("cappyzawa/trim.nvim")
+		use({
+			"cappyzawa/trim.nvim",
+			config = require("trim").setup({
+				-- if you want to ignore markdown file.
+				-- you can specify filetypes.
+				-- disable = {"markdown"},
 
-		use("norcalli/nvim-colorizer.lua")
+				-- if you want to remove multiple blank lines
+				-- patterns = {
+				--   [[%s/\(\n\n\)\n\+/\1/]],   -- replace multiple blank lines with a single line
+				-- },
+				--
+				trim_trailing = true,
+				trim_last_line = true,
+				trim_first_line = false,
+			}),
+		})
+
+		use({ "norcalli/nvim-colorizer.lua", config = require("colorizer").setup() })
 
 		-- The command of Buffer delete
 		use("moll/vim-bbye")
 		use({
 			"nvim-lualine/lualine.nvim",
 			requires = { "kyazdani42/nvim-web-devicons", opt = true },
+			config = require("plugin-settings.lualine"),
 		})
 		use({
 			"kdheepak/tabline.nvim",
 			requires = { { "hoob3rt/lualine.nvim", opt = true }, { "kyazdani42/nvim-web-devicons", opt = true } },
+			config = require("plugin-settings.tabline"),
 		})
 
-		use("mbbill/undotree")
+		use({ "mbbill/undotree", config = require("plugin-settings/undotree") })
 
 		use("dstein64/vim-startuptime")
 
-		use("lukas-reineke/indent-blankline.nvim")
+		use({
+			"lukas-reineke/indent-blankline.nvim",
+			config = require("indent_blankline").setup({
+				space_char_blankline = " ",
+				show_current_context = true,
+				show_current_context_start = true,
+			}),
+		})
 
-		use("folke/which-key.nvim")
+		use({ "folke/which-key.nvim", config = require("which-key").setup() })
 
 		use({
 			"goolord/alpha-nvim",
 			requires = { "nvim-tree/nvim-web-devicons" },
+			cofig = require("alpha").setup(require("alpha.themes.startify").config),
 		})
 
 		use("lewis6991/gitsigns.nvim")
 		-- use("kevinhwang91/nvim-hlslens") -- Conflicted with vscode_nvim, don't know way
 		use("petertriho/nvim-scrollbar")
 
-		-- use({ "edluffy/specs.nvim" })
+		-- use({ "edluffy/specs.nvim", config = require("plugin-settings.specs") })
 
-		use("mhartington/formatter.nvim")
+		use({ "mhartington/formatter.nvim", config = require("plugin-settings/formatter") })
 
 		use("mg979/vim-visual-multi")
 
 		use({
 			"jose-elias-alvarez/null-ls.nvim",
 			requires = { "nvim-lua/plenary.nvim" },
+			config = require("plugin-settings/null-ls"),
 		})
 
 		use({
 			"nvim-treesitter/nvim-treesitter",
+			"nvim-treesitter/nvim-treesitter-context",
 			run = function()
 				local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
 				ts_update()
 			end,
+			config = require("plugin-settings/nvim-treesitter"),
 		})
-		use("nvim-treesitter/nvim-treesitter-context")
 
 		use({
 			"williamboman/mason.nvim",
@@ -121,7 +149,7 @@ require("packer").startup({
 			"williamboman/mason-lspconfig.nvim",
 		})
 
-		use("windwp/nvim-autopairs")
+		use({ "windwp/nvim-autopairs", config = require("nvim-autopairs").setup() })
 		use("hrsh7th/cmp-nvim-lsp") -- { name = nvim_lsp }
 		use("hrsh7th/cmp-buffer") -- { name = 'buffer' },
 		-- use("hrsh7th/cmp-path") -- { name = 'path' }
@@ -139,16 +167,17 @@ require("packer").startup({
 			tag = "v1.*",
 			-- install jsregexp (optional!:).
 			run = "make install_jsregexp",
+			config = require("plugin-settings/luasnip"),
 		})
 		use("saadparwaiz1/cmp_luasnip")
 		use("rafamadriz/friendly-snippets")
 		-- lspkind
 		use("onsails/lspkind-nvim")
 
-		use("lewis6991/hover.nvim")
+		use({ "lewis6991/hover.nvim", config = require("plugin-settings/hover") })
 
-		-- use("stevearc/aerial.nvim")
-		use("lervag/vimtex")
+		-- use({ "stevearc/aerial.nvim", config = require("aerial").setup() })
+		use({ "lervag/vimtex", config = require("plugin-settings/vimtex") })
 
 		use({
 			"kylechui/nvim-surround",
@@ -162,7 +191,7 @@ require("packer").startup({
 
 		use({
 			"folke/noice.nvim",
-			config = function() end,
+			config = require("plugin-settings.noice"),
 			requires = {
 				-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 				"MunifTanjim/nui.nvim",
@@ -188,29 +217,7 @@ require("packer").startup({
 	},
 })
 
-require("plugin-settings.gruvbox")
-
-require("plugin-settings.nvim-treesitter")
-require("plugin-settings.nvim-tree")
-
-require("plugin-settings.telescope")
-
-require("plugin-settings.lualine")
-require("plugin-settings.tabline")
-require("plugin-settings.fterm")
-
-require("which-key").setup({})
-
 require("plugin-settings.mason")
-
-require("indent_blankline").setup({
-	space_char_blankline = " ",
-	show_current_context = true,
-	show_current_context_start = true,
-})
-
--- require("aerial").setup()
-require("colorizer").setup()
 
 require("gitsigns").setup()
 -- require("scrollbar.handlers.search").setup({ nearest_only = true })
@@ -227,14 +234,6 @@ require("scrollbar").setup({
 	},
 })
 
-require("alpha").setup(require("alpha.themes.startify").config)
-
--- require("aerial").setup()
-
-require("which-key").setup()
-
-require("nvim-autopairs").setup()
-
 -- require("hlslens").setup({
 -- 	-- auto_enable = false,
 -- 	-- calm_down = true,
@@ -243,38 +242,4 @@ require("nvim-autopairs").setup()
 -- 	-- override_lens = function() end,
 -- })
 
-require("trim").setup({
-	-- if you want to ignore markdown file.
-	-- you can specify filetypes.
-	-- disable = {"markdown"},
-
-	-- if you want to remove multiple blank lines
-	-- patterns = {
-	--   [[%s/\(\n\n\)\n\+/\1/]],   -- replace multiple blank lines with a single line
-	-- },
-	--
-	trim_trailing = true,
-	trim_last_line = true,
-	trim_first_line = false,
-})
-
-require("plugin-settings.hop")
-require("plugin-settings.leap")
-
-require("plugin-settings.comment")
-
 require("plugin-settings.cmp")
-
-require("plugin-settings.undotree")
-
-require("plugin-settings.null-ls")
-
-require("plugin-settings.luasnip")
-
-require("plugin-settings.formatter")
-
--- require("plugin-settings.specs")
-require("plugin-settings.hover")
-
-require("plugin-settings.vimtex")
-require("plugin-settings.noice")

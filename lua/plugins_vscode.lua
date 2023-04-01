@@ -5,36 +5,32 @@ require("packer").startup(function(use)
 	use({
 		"phaazon/hop.nvim",
 		branch = "v2", -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-		end,
+		config = require("plugin-settings/hop"),
 	})
 	use({
 		"ggandor/leap.nvim",
 		requires = { "tpope/vim-repeat" },
+		config = require("plugin-settings.leap"),
 	})
 
-	use("numToStr/Comment.nvim")
+	use({ "numToStr/Comment.nvim", config = require("plugin-settings.comment") })
 
-	use("cappyzawa/trim.nvim")
+	use({
+		"cappyzawa/trim.nvim",
+		config = require("trim").setup({
+			trim_trailing = true,
+			trim_last_line = true,
+			trim_first_line = false,
+		}),
+	})
+
+	use({
+		"kylechui/nvim-surround",
+		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	})
 end)
-
-require("trim").setup({
-	-- if you want to ignore markdown file.
-	-- you can specify filetypes.
-	-- disable = {"markdown"},
-
-	-- if you want to remove multiple blank lines
-	-- patterns = {
-	--   [[%s/\(\n\n\)\n\+/\1/]],   -- replace multiple blank lines with a single line
-	-- },
-
-	trim_trailing = true,
-	trim_last_line = true,
-	trim_first_line = false,
-})
-
-require("plugin-settings.hop")
-require("plugin-settings.comment")
-require("plugin-settings.leap")
