@@ -82,7 +82,7 @@ vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 require("plugins")
 
 if vim.g.neovide then
-  vim.g.neovide_input_macos_alt_is_meta=true
+	vim.g.neovide_input_macos_alt_is_meta = true
 	-- Helper function for transparency formatting
 	local alpha = function()
 		return string.format("%x", math.floor(255 * (vim.g.neovide_transparency or 0.8)))
@@ -116,10 +116,10 @@ if vim.g.neovide then
 
 	vim.g.neovide_scale_factor = 1.0
 	local change_scale_factor = function(delta)
-    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
-  end
-  vim.keymap.set("n", "<D-=>", function()
-    change_scale_factor(1.1)
+		vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+	end
+	vim.keymap.set("n", "<D-=>", function()
+		change_scale_factor(1.1)
 	end)
 	vim.keymap.set("n", "<D-->", function()
 		change_scale_factor(1 / 1.1)
