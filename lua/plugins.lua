@@ -197,6 +197,33 @@ require("lazy").setup({
   },
 }, opts)
 
+require("plugin-settings.mason")
+
+require("gitsigns").setup()
+-- require("scrollbar.handlers.search").setup({ nearest_only = true })
+require("scrollbar.handlers.gitsigns").setup()
+
+require("scrollbar").setup({
+	handle = {
+		text = " ",
+		blend = 60, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
+		color = nil,
+		color_nr = nil, -- cterm
+		highlight = "StatusLineNC",
+		-- highlight = "CursorLine",
+		hide_if_all_visible = true, -- Hides handle if all lines are visible
+	},
+})
+
+-- require("hlslens").setup({
+-- 	-- auto_enable = false,
+-- 	-- calm_down = true,
+-- 	nearest_only = true,
+-- 	-- nearest_float_when = "always",
+-- 	-- override_lens = function() end,
+-- })
+
+
 require("plugin-settings.cmp")
 require("plugin-settings/hop")
 require("plugin-settings/leap")
@@ -211,11 +238,7 @@ require("plugin-settings.lualine")
 require("plugin-settings.tabline")
 require("plugin-settings/undotree")
 
-require("indent_blankline").setup {
-  space_char_blankline = " ",
-  show_current_context = true,
-  show_current_context_start = true,
-}
+
 require("which-key").setup()
 require("plugin-settings/formatter")
 require("plugin-settings/null-ls")
@@ -256,4 +279,8 @@ require("smartyank").setup({
 require("alpha").setup(require("alpha.themes.startify").config)
 
 require("trim").setup()
-require("trim").setup()
+require("indent_blankline").setup {
+  space_char_blankline = " ",
+  show_current_context = true,
+  show_current_context_start = true,
+}
