@@ -79,8 +79,6 @@ vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 
 -- vim.cmd( [[ set formatoptions-=ro ]])
 
-require("plugins")
-
 if vim.g.neovide then
   vim.g.neovide_input_macos_alt_is_meta = true
   -- Helper function for transparency formatting
@@ -132,3 +130,5 @@ vim.api.nvim_set_keymap("", "<D-v>", "+p<CR>", { noremap = true, silent = true }
 vim.api.nvim_set_keymap("!", "<D-v>", "<C-R>+", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("t", "<D-v>", "<C-R>+", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+
+require("plugins")

@@ -12,8 +12,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
-plugins = {}
-opts = {
+-- local plugins = {}
+local opts = {
   git = {
     clone_timeout = 600,
     url_format = "git@github.com:%s.git",
@@ -29,7 +29,6 @@ require("lazy").setup({
   },
   "folke/neodev.nvim",
 
-  "ellisonleao/gruvbox.nvim",
 
   -- use 'easymotion/vim-easymotion'
   {
@@ -168,8 +167,8 @@ require("lazy").setup({
   {
     "L3MON4D3/LuaSnip",
     -- follow latest release.
-    version = "v<CurrentMajor>.*",
-    -- version = "v1.*",
+    -- version = "v<CurrentMajor>.*",
+    version = "v1.*",
     -- install jsregexp (optional!:).
     build = "make install_jsregexp",
   },
@@ -195,7 +194,11 @@ require("lazy").setup({
   {
     "ibhagwan/smartyank.nvim",
   },
+  {"ellisonleao/gruvbox.nvim", lazy = false},
 }, opts)
+
+
+require("neodev").setup()
 
 require("plugin-settings.mason")
 
@@ -209,8 +212,8 @@ require("scrollbar").setup({
 		blend = 60, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
 		color = nil,
 		color_nr = nil, -- cterm
-		highlight = "StatusLineNC",
-		-- highlight = "CursorLine",
+		-- highlight = "StatusLineNC",
+		highlight = "CursorLine",
 		hide_if_all_visible = true, -- Hides handle if all lines are visible
 	},
 })
@@ -227,7 +230,6 @@ require("scrollbar").setup({
 require("plugin-settings.cmp")
 require("plugin-settings/hop")
 require("plugin-settings/leap")
-require("plugin-settings/gruvbox")
 require("plugin-settings/comment")
 require("plugin-settings.telescope")
 require("plugin-settings/nvim-tree")
@@ -279,8 +281,12 @@ require("smartyank").setup({
 require("alpha").setup(require("alpha.themes.startify").config)
 
 require("trim").setup()
+
+
 require("indent_blankline").setup {
   space_char_blankline = " ",
   show_current_context = true,
   show_current_context_start = true,
 }
+
+require("plugin-settings/gruvbox")

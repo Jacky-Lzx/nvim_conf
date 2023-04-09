@@ -40,6 +40,13 @@ vim.keymap.set("n", "N", "Nzz")
 vim.keymap.set("n", "<S-H>", "^")
 vim.keymap.set("n", "<S-L>", "$")
 
+-- vim.keymap.set("n", "//", "<CMD>:set hlsearch!<CR>")
+vim.keymap.set("n", "//", "<CMD>:noh<CR>")
+
+vim.keymap.set("n", "<C-q>", "<CMD>:qa<CR>")
+vim.keymap.set("n", "qq", "<CMD>:q<CR>")
+vim.keymap.set("n", "Q", "<CMD>:q<CR>")
+
 vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 
 -- vim.keymap.set(
