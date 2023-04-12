@@ -58,6 +58,7 @@ return {
   },
   {
     "ellisonleao/gruvbox.nvim",
+    priority = 1000,
     lazy = false,
     opts = {
       undercurl = true,
@@ -117,12 +118,12 @@ return {
   {
     -- The command of Buffer delete
     "moll/vim-bbye",
+    lazy = true,
     cmd = "Bdelete",
-    lazy = false,
-    -- keys = { "leader>x", "<cmd>Bdelete<cr>", desc = "delete buffer" },
+    keys = { "<leader>x", desc = "delete buffer" },
     config = function()
       vim.keymap.set("n", "<leader>x", "<CMD>Bdelete<CR>")
-    end
+    end,
   },
   {
     "kdheepak/tabline.nvim",
@@ -148,14 +149,12 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons", -- optional, for file icons
     },
-    config = function()
-      require("nvim-tree").setup()
-
-      -- vim.keymap.set('n', '<C-n>', '<CMD> NvimTreeToggle <CR>')
-      -- vim.keymap.set('n', '<leader>e', '<CMD> NvimTreeFocus <CR>')
-      vim.keymap.set("n", "<leader>e", "<CMD> NvimTreeToggle <CR>")
-    end,
+    keys = {
+      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
+    },
+    opts = {},
   },
+
   {
     "numToStr/FTerm.nvim",
     keys = {
