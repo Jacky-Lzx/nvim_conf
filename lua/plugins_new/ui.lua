@@ -73,7 +73,7 @@ return {
         bold = true,
         italic = {
           strings = true,
-          comments = false,
+          comments = true,
           operators = false,
           folds = true,
         },
@@ -212,52 +212,53 @@ return {
     "cappyzawa/trim.nvim",
   },
 
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-  "nvim-telescope/telescope-ui-select.nvim",
   {
     "nvim-telescope/telescope.nvim",
     version = "0.1.1",
-    -- or                              , branch = '0.1.1',
-    dependencies = { "nvim-lua/plenary.nvim" },
-    extensions = {
-      fzf = {
-        fuzzy = true, -- false will only do exact matching
-        override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true, -- override the file sorter
-        case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-        -- the default case_mode is "smart_case"
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+    lazy = true,
+    cmd = "Telescope",
+    opts = {
+      extensions = {
+        ["fzf"] = {
+          fuzzy = true, -- false will only do exact matching
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true, -- override the file sorter
+          case_mode = "smart_case", -- or "ignore_case" or "respect_case", the default case_mode is "smart_case"
+        },
+        ["ui-select"] = {
+          require("telescope.themes").get_cursor(),
+        },
       },
     },
-    config = function()
-      -- This is your opts table
-      require("telescope").setup({
-        -- pickers = {
-        -- 	find_files = {
-        -- 		theme = "dropdown",
-        -- 	},
-        -- },
-        extensions = {
-          ["ui-select"] = {
-            require("telescope.themes").get_cursor(),
-          },
-        },
-      })
-      -- To get ui-select loaded and working with telescope, you need to call
-      -- load_extension, somewhere after setup function:
-      require("telescope").load_extension("ui-select")
+    keys = {
+      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "buffers" },
+      { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>", desc = "lsp definitions" },
+      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "find files" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "live grep" },
+      { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "help tags" },
+      { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "keymaps" },
+      { "<leader>fq", "<cmd>Telescope quickfix<cr>", desc = "quick fix" },
+      { "<leader>fr", "<cmd>Telescope registers<cr>", desc = "registers" },
+      { "<leader>fm", "<cmd>Telescope noice<cr>", desc = "noice message history" },
+      {
+        "<leader>a",
+        function()
+          vim.lsp.buf.code_action()
+        end,
+        desc = "code action",
+      },
+    },
+    config = function(_, opts)
+      require("telescope").setup(opts)
+
       require("telescope").load_extension("fzf")
-
-      local builtin = require("telescope.builtin")
-
-      vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, {})
-      vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-      vim.keymap.set("n", "<leader>fd", builtin.lsp_definitions, {})
-      vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-      vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-      vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-      vim.keymap.set("n", "<leader>fk", builtin.keymaps, {})
-      vim.keymap.set("n", "<leader>fq", builtin.quickfix, {})
-      vim.keymap.set("n", "<leader>fr", builtin.registers, {})
+      require("telescope").load_extension("ui-select")
+      require("telescope").load_extension("noice")
     end,
   },
 
@@ -307,8 +308,6 @@ return {
           lsp_doc_border = false, -- add a border to hover docs and signature help
         },
       })
-
-      require("telescope").load_extension("noice")
 
       vim.keymap.set("n", "<leader>nl", function()
         require("noice").cmd("last")
