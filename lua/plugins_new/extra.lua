@@ -13,6 +13,7 @@ return {
 	-- use({ "stevearc/aerial.nvim", config = require("aerial").setup() })
 	{
 		"lervag/vimtex",
+    lazy = true,
 		config = function()
 			-- Viewer options: One may configure the viewer either by specifying a built-in
 			-- viewer method:
@@ -65,8 +66,6 @@ return {
 			})
 		end,
 	},
-	"folke/which-key.nvim",
-
 	{
 		"folke/neoconf.nvim",
 		cmd = "Neoconf",

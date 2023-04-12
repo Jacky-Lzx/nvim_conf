@@ -15,7 +15,6 @@ return {
 			})
 		end,
 	},
-	"folke/which-key.nvim",
 	{
 		"mbbill/undotree",
 		config = function()

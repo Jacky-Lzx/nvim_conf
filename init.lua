@@ -6,8 +6,6 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 --- End
 
--- require("impatient")
-
 vim.opt.number = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true

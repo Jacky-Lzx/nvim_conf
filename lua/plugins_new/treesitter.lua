@@ -1,7 +1,6 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		"nvim-treesitter/nvim-treesitter-context",
 		-- build = function()
 		--   local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
 		--   ts_update()
@@ -52,6 +51,11 @@ return {
 				},
 			})
 
+		end,
+	},
+  {
+		"nvim-treesitter/nvim-treesitter-context",
+    config = function ()
 			require("treesitter-context").setup({
 				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 				max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
@@ -66,6 +70,6 @@ return {
 				separator = "─",
 				zindex = 20, -- The Z-index of the context window
 			})
-		end,
-	},
+    end
+  }
 }

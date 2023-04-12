@@ -5,10 +5,6 @@ return {
       -- require("colorizer").setup()
     end,
   },
-  {
-    "goolord/alpha-nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
 
   {
     "lewis6991/gitsigns.nvim",
@@ -49,25 +45,22 @@ return {
 
   -- use({ "edluffy/specs.nvim", config = require("plugin-settings.specs") })
 
-  "folke/which-key.nvim",
   {
     "goolord/alpha-nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("alpha").setup(require("alpha.themes.startify").config)
-    end,
+    event = "VimEnter",
+    opts = require("alpha.themes.startify").config,
   },
+
   {
     "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup()
-    end,
+    opts = {},
   },
   {
     "ellisonleao/gruvbox.nvim",
     lazy = false,
     config = function()
-      opts = {
+      local opts = {
         undercurl = true,
         underline = true,
         bold = true,
