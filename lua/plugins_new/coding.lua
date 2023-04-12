@@ -19,6 +19,12 @@ return {
 		"mbbill/undotree",
 		config = function()
 			vim.keymap.set("n", "<leader>ut", "<CMD>UndotreeToggle<CR>")
+  {
+    "preservim/tagbar",
+    lazy = true,
+    keys = { { "<leader>t", "<cmd>TagbarToggle<cr>", desc = "toggle tagbar" } },
+    config = function() end,
+  },
 
 			vim.cmd([[
       if has("persistent_undo")
