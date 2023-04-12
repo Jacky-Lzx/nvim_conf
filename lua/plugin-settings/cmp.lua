@@ -25,6 +25,10 @@ vim.cmd([[
 vim.api.nvim_create_user_command("SnippetList", require("luasnip.extras.snippet_list").open, {})
 
 cmp.setup({
+	completion = {
+		completeopt = "menu,menuone,noinsert",
+	},
+
 	-- 指定 snippet 引擎
 	snippet = {
 		expand = function(args)
@@ -84,6 +88,18 @@ cmp.setup({
 		-- ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
 		["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
 		["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+
+		["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+		["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-e>"] = cmp.mapping.abort(),
+		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<S-CR>"] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = true,
+		}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 	},
 
 	-- 使用lspkind-nvim显示类型图标
