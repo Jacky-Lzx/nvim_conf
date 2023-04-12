@@ -1,45 +1,36 @@
 return {
   {
     "norcalli/nvim-colorizer.lua",
-    config = function()
-      -- require("colorizer").setup()
-    end,
+    opts = {},
   },
 
   {
     "lewis6991/gitsigns.nvim",
-    config = function()
-      require("gitsigns").setup()
-    end,
+    opts = {},
   },
   {
+    -- Conflicted with vscode_nvim, don't know way
     "kevinhwang91/nvim-hlslens",
-    config = function()
-      require("hlslens").setup({
-        -- auto_enable = false,
-        -- calm_down = true,
-        nearest_only = true,
-        -- nearest_float_when = "always",
-        -- override_lens = function() end,
-      })
-    end,
-  }, -- Conflicted with vscode_nvim, don't know way
+    opts = {
+      nearest_only = true,
+    },
+  },
   {
     "petertriho/nvim-scrollbar",
-    config = function()
+    opts = {
+      handle = {
+        text = " ",
+        blend = 60, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
+        color = nil,
+        color_nr = nil, -- cterm
+        highlight = "CursorLine",
+        hide_if_all_visible = true, -- Hides handle if all lines are visible
+      },
+    },
+    config = function(_, opts)
       -- require("scrollbar.handlers.search").setup({ nearest_only = true })
       require("scrollbar.handlers.gitsigns").setup()
-      require("scrollbar").setup({
-        handle = {
-          text = " ",
-          blend = 60, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
-          color = nil,
-          color_nr = nil, -- cterm
-          -- highlight = "StatusLineNC",
-          highlight = "CursorLine",
-          hide_if_all_visible = true, -- Hides handle if all lines are visible
-        },
-      })
+      require("scrollbar").setup(opts)
     end,
   },
 
