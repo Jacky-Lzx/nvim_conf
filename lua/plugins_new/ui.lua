@@ -92,7 +92,7 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons", lazy = true },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       options = {
         icons_enabled = true,
@@ -115,43 +115,31 @@ return {
     },
   },
   {
-    "kdheepak/tabline.nvim",
-    dependencies = { { "nvim-lualine/lualine.nvim", lazy = true }, { "nvim-tree/nvim-web-devicons", lazy = true } },
+    -- The command of Buffer delete
+    "moll/vim-bbye",
+    cmd = "Bdelete",
+    lazy = false,
+    -- keys = { "leader>x", "<cmd>Bdelete<cr>", desc = "delete buffer" },
     config = function()
-      opts = {
-        -- Defaults configuration options
-        enable = true,
-        options = {
-          -- If lualine is installed tabline will use separators configured in lualine by default.
-          -- These options can be used to override those settings.
-          section_separators = { "", "" },
-          component_separators = { "", "" },
-          max_bufferline_percent = 66, -- set to nil by default, and it uses vim.o.columns * 2/3
-          show_tabs_always = false, -- this shows tabs only when there are more than one tab or if the first tab is named
-          show_devicons = true, -- this shows devicons in buffer section
-          show_bufnr = false, -- this appends [bufnr] to buffer section,
-          show_filename_only = false, -- shows base filename only instead of relative path in filename
-          modified_icon = "+ ", -- change the default modified icon
-          modified_italic = false, -- set to true by default; this determines whether the filename turns italic if modified
-          show_tabs_only = false, -- this shows only tabs instead of tabs + buffers
-        },
-      }
+      vim.keymap.set("n", "<leader>x", "<CMD>Bdelete<CR>")
+    end
+  },
+  {
+    "kdheepak/tabline.nvim",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
+    keys = {
+      { "<leader>l", "<cmd>TablineBufferNext<cr>", desc = "next buffer" },
+      { "<leader>h", "<cmd>TablineBufferPrevious<cr>", desc = "previous buffer" },
+    },
+    config = function(_, opts)
       require("tabline").setup(opts)
+
       vim.cmd([[
         set guioptions-=e " Use showtabline in gui vim
         set sessionoptions+=tabpages,globals " store tabpages and globals in session
       ]])
-
-      -- vim.keymap.set('n', '<TAB>', '<CMD>TablineBufferNext<CR>')
-      -- vim.keymap.set('n', '<S-TAB>', '<CMD>TablineBufferPrevious<CR>')
-
-      vim.keymap.set("n", "<leader>l", "<CMD>TablineBufferNext<CR>")
-      vim.keymap.set("n", "<leader>h", "<CMD>TablineBufferPrevious<CR>")
-
-      -- vim.keymap.set('n', '<C-L>', '<CMD>TablineBufferNext<CR>')
-      -- vim.keymap.set('n', '<C-H>', '<CMD>TablineBufferPrevious<CR>')
-
-      vim.keymap.set("n", "<leader>x", "<CMD>Bdelete<CR>")
     end,
   },
 

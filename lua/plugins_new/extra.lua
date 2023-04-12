@@ -129,13 +129,6 @@ return {
 			vim.keymap.set({ "n", "x", "o" }, "<leader>gs", "<Plug>(leap-from-window)")
 		end,
 	},
-	-- 	-- The command of Buffer delete
-	{
-		"moll/vim-bbye",
-		config = function()
-			vim.keymap.set("n", "<leader>x", "<CMD>Bdelete<CR>")
-		end,
-	},
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
