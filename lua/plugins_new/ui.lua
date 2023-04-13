@@ -48,41 +48,6 @@ return {
     opts = {},
   },
   {
-    "ellisonleao/gruvbox.nvim",
-    priority = 1000,
-    lazy = false,
-    opts = {
-      undercurl = true,
-      underline = true,
-      bold = true,
-      italic = {
-        strings = true,
-        comments = true,
-        operators = false,
-        folds = true,
-      },
-      strikethrough = true,
-      invert_selection = false,
-      invert_signs = false,
-      invert_tabline = false,
-      invert_intend_guides = false,
-      inverse = true, -- invert background for search, diffs, statuslines and errors
-      contrast = "", -- can be "hard", "soft" or empty string
-      palette_overrides = {},
-      overrides = {},
-      dim_inactive = false,
-      -- transparent_mode = false,
-      transparent_mode = true,
-    },
-    config = function(_, opts)
-      require("gruvbox").setup(opts)
-
-      vim.o.background = "dark" -- or "light" for light mode
-      vim.cmd([[colorscheme gruvbox]])
-      vim.cmd([[colorscheme gruvbox]])
-    end,
-  },
-  {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
@@ -213,6 +178,7 @@ return {
       { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "keymaps" },
       { "<leader>fq", "<cmd>Telescope quickfix<cr>", desc = "quick fix" },
       { "<leader>fr", "<cmd>Telescope registers<cr>", desc = "registers" },
+      { "<leader>fc", "<cmd>Telescope colorscheme<cr>", desc = "colorscheme" },
       { "<leader>fm", "<cmd>Telescope noice<cr>", desc = "noice message history" },
       {
         "<leader>a",
