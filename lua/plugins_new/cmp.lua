@@ -10,30 +10,11 @@ return {
     -- install jsregexp (optional!:).
     build = "make install_jsregexp",
     cmd = "SnippetList",
+    -- stylua: ignore
     keys = {
-      {
-        "<M-l>",
-        "<cmd>lua require('luasnip').jump(1)<cr>",
-        mode = { "i", "s" },
-        silent = true,
-        desc = "luasnip jump 1",
-      },
-      {
-        "<M-h>",
-        "<cmd>lua require('luasnip').jump(-1)<cr>",
-        mode = { "i", "s" },
-        silent = true,
-        desc = "luasnip jump -1",
-      },
-      {
-        "<C-E>",
-        "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'",
-        mode = { "i", "s" },
-        silent = true,
-        expr = true,
-        desc = "luasnip choise",
-        remap = true,
-      },
+      { "<M-l>" , function() require('luasnip').jump(1) end,                         mode = { "i", "s" }, silent = true, desc = "luasnip jump 1" },
+      { "<M-h>" , function() require('luasnip').jump(-1) end,                        mode = { "i", "s" }, silent = true, desc = "luasnip jump -1" },
+      { "<C-E>" , "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'", mode = { "i", "s" }, silent = true, desc = "luasnip choise", remap = true, expr = true },
     },
     opts = {
       history = true,

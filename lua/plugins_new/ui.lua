@@ -73,23 +73,32 @@ return {
       },
     },
   },
+  -- {
+  --   -- The command of Buffer delete
+  --   "moll/vim-bbye",
+  --   lazy = true,
+  --   cmd = "Bdelete",
+  --   keys = { "<leader>x", desc = "delete buffer" },
+  --   config = function()
+  --     vim.keymap.set("n", "<leader>x", "<CMD>Bdelete<CR>")
+  --   end,
+  -- },
   {
-    -- The command of Buffer delete
-    "moll/vim-bbye",
-    lazy = true,
-    cmd = "Bdelete",
-    keys = { "<leader>x", desc = "delete buffer" },
-    config = function()
-      vim.keymap.set("n", "<leader>x", "<CMD>Bdelete<CR>")
-    end,
+    "echasnovski/mini.bufremove",
+      -- stylua: ignore
+      keys = {
+        { "<leader>x", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer"         },
+        { "<leader>X", function() require("mini.bufremove").delete(0, true)  end, desc = "Delete Buffer (Force)" },
+      },
   },
   {
     "kdheepak/tabline.nvim",
     lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {},
+    -- stylua: ignore
     keys = {
-      { "<leader>l", "<cmd>TablineBufferNext<cr>", desc = "next buffer" },
+      { "<leader>l", "<cmd>TablineBufferNext<cr>",     desc = "next buffer"     },
       { "<leader>h", "<cmd>TablineBufferPrevious<cr>", desc = "previous buffer" },
     },
     config = function(_, opts)
@@ -107,6 +116,7 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons", -- optional, for file icons
     },
+    -- stylua: ignore
     keys = {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
     },
@@ -115,10 +125,11 @@ return {
 
   {
     "numToStr/FTerm.nvim",
+    -- stylua: ignore
     keys = {
-      { "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>', mode = "n", desc = "Toggle float terminal" },
+      { "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>',            mode = "n", desc = "Toggle float terminal" },
       { "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', mode = "t", desc = "Toggle float terminal" },
-      { "<C-g>", mode = "n", desc = "Toggle lazygit" },
+      { "<C-g>",                                                      mode = "n", desc = "Toggle lazygit" },
     },
     opts = {
       border = "double",
@@ -198,6 +209,7 @@ return {
         },
       }
     end,
+    -- stylua: ignore
     keys = {
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "buffers" },
       { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>", desc = "lsp definitions" },
@@ -210,13 +222,7 @@ return {
       { "<leader>fc", "<cmd>Telescope colorscheme<cr>", desc = "colorscheme" },
       { "<leader>fm", "<cmd>Telescope noice<cr>", desc = "noice message history" },
       { "<leader>fn", "<cmd>Telescope notify<cr>", desc = "notify message history" },
-      {
-        "<leader>a",
-        function()
-          vim.lsp.buf.code_action()
-        end,
-        desc = "code action",
-      },
+      { "<leader>a", function() vim.lsp.buf.code_action() end, desc = "code action" },
     },
     config = function(_, opts)
       require("telescope").setup(opts)
@@ -231,21 +237,10 @@ return {
   {
     "folke/noice.nvim",
     lazy = false,
+    -- stylua: ignore
     keys = {
-      {
-        "<leader>nl",
-        function()
-          require("noice").cmd("last")
-        end,
-        desc = "noice last message",
-      },
-      {
-        "<leader>nh",
-        function()
-          require("noice").cmd("history")
-        end,
-        desc = "noice history",
-      },
+      { "<leader>nl", function() require("noice").cmd("last")    end, desc = "noice last message" },
+      { "<leader>nh", function() require("noice").cmd("history") end, desc = "noice history"      },
     },
     opts = {
       notify = {

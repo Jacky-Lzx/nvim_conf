@@ -2,17 +2,22 @@ return {
   {
     "preservim/tagbar",
     lazy = true,
-    keys = { { "<leader>t", "<cmd>TagbarToggle<cr>", desc = "toggle tagbar" } },
+    -- stylua: ignore
+    keys = {
+      { "<leader>t", "<cmd>TagbarToggle<cr>", desc = "toggle tagbar" }
+    },
     config = function() end,
   },
 
   "mg979/vim-visual-multi",
+
   {
     "cappyzawa/trim.nvim",
     config = function()
       require("trim").setup()
     end,
   },
+
   {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -47,20 +52,10 @@ return {
   },
   {
     "numToStr/Comment.nvim",
+    -- stylua: ignore
     keys = {
-      {
-        "<leader>/",
-        function()
-          require("Comment.api").toggle.linewise.current()
-        end,
-        desc = "comment current line",
-      },
-      {
-        "<leader>/",
-        "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
-        mode = "v",
-        desc = "comment current line",
-      },
+      { "<leader>/", function() require("Comment.api").toggle.linewise.current() end,                 mode = "n", desc = "comment current line", },
+      { "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>", mode = "v", desc = "comment current line", },
     },
     config = function()
       require("Comment").setup()
@@ -147,4 +142,15 @@ return {
   },
 
   "wakatime/vim-wakatime",
+
+  {
+    "Vonr/align.nvim",
+    -- stylua: ignore
+    keys = {
+      { "aa" , function() require("align").align_to_char(1, true)             end, mode = "x", noremap = true, silent = true, desc = "align to 1 char" },
+      { "as" , function() require("align").align_to_char(2, true, true)       end, mode = "x", noremap = true, silent = true, desc = "align to 2 char" },
+      { "aw" , function() require("align").align_to_string(false, true, true) end, mode = "x", noremap = true, silent = true, desc = "align to string" },
+    },
+    -- config = true,
+  },
 }
