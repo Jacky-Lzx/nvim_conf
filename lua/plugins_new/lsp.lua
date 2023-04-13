@@ -65,6 +65,7 @@ return {
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { "j-hui/fidget.nvim", opts = {} },
+      "SmiteshP/nvim-navic",
     },
     opts = {
       -- options for vim.diagnostic.config()
@@ -78,6 +79,7 @@ return {
     config = function(_, opts)
       vim.diagnostic.config(opts.diagnostics)
 
+      local navic = require("nvim-navic")
       -- require("mason").setup()
       require("mason-lspconfig").setup({ ensure_installed = { "lua_ls", "rust_analyzer" } })
 
@@ -110,6 +112,9 @@ return {
       require("lspconfig").marksman.setup({})
       require("lspconfig").ltex.setup({})
       require("lspconfig").clangd.setup({
+        on_attach = function(client, bufnr)
+          navic.attach(client, bufnr)
+        end,
         cmd = {
           "clangd",
           -- "--header-insertion=never",

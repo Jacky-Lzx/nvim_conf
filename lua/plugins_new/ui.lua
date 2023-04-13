@@ -172,6 +172,7 @@ return {
     opts = function()
       return {
         defaults = {
+          -- wrap_results = true,
           -- prompt_prefix = " ",
           -- selection_caret = " ",
           mappings = {
