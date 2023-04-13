@@ -40,7 +40,9 @@ return {
     "goolord/alpha-nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VimEnter",
-    opts = require("alpha.themes.startify").config,
+    config = function()
+      require("alpha").setup(require("alpha.themes.dashboard").config)
+    end,
   },
 
   {
