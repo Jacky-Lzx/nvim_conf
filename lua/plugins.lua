@@ -12,6 +12,22 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local opts = {
+  custom_keys = {
+    -- you can define custom key maps here.
+    -- To disable one of the defaults, set it to false
+
+    -- open lazygit log
+    ["<localleader>l"] = false,
+
+    -- open a terminal for the plugin dir
+    ["<localleader>t"] = false,
+  },
+  install = {
+    -- install missing plugins on startup. This doesn't increase startup time.
+    missing = true,
+    -- try to load one of these colorschemes when starting an installation during startup
+    colorscheme = { "gruvbox" },
+  },
   git = {
     clone_timeout = 600,
     url_format = "git@github.com:%s.git",

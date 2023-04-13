@@ -49,10 +49,5 @@ vim.keymap.set("n", "Q", "<CMD>:q<CR>")
 
 vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 
--- vim.keymap.set(
---     'n',
---     '<leader>t',
---     [[<Cmd>call VSCodeNotify('workbench.view.explorer')<CR>]]
--- )
 
 require("plugins_vscode")

@@ -31,18 +31,6 @@ vim.g.python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"
 -- vim.opt.formatoptions:remove { "r", "o" }
 vim.cmd([[ autocmd FileType * set formatoptions-=ro ]])
 
--- vim.keymap.set('v', '<leader>/', function()
---   vim.api.nvim_exec([[
---     call VSCodeNotifyVisual('editor.action.commentLine', 1)
---   ]], false)
--- end)
---
--- vim.keymap.set('v', '<C-/>', function()
---   vim.api.nvim_exec([[
---     call VSCodeNotifyVisual('editor.action.commentLine', 1)
---   ]], false)
--- end)
-
 vim.keymap.set("i", "<C-h>", "<Left>")
 vim.keymap.set("i", "<C-l>", "<Right>")
 vim.keymap.set("i", "<C-j>", "<Down>")
@@ -102,12 +90,12 @@ if vim.g.neovide then
 end
 
 if vim.g.neovide then
-  vim.g.neovide_input_use_logo = 1            -- enable use of the logo (cmd) key
-  vim.keymap.set("n", "<D-s>", ":w<CR>")      -- Save
-  vim.keymap.set("v", "<D-c>", '"+y')         -- Copy
-  vim.keymap.set("n", "<D-v>", '"+P')         -- Paste normal mode
-  vim.keymap.set("v", "<D-v>", '"+P')         -- Paste visual mode
-  vim.keymap.set("c", "<D-v>", "<C-R>+")      -- Paste command mode
+  vim.g.neovide_input_use_logo = 1 -- enable use of the logo (cmd) key
+  vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
+  vim.keymap.set("v", "<D-c>", '"+y') -- Copy
+  vim.keymap.set("n", "<D-v>", '"+P') -- Paste normal mode
+  vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
+  vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
   vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
 
   vim.g.neovide_scale_factor = 1.0

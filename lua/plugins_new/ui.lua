@@ -160,6 +160,31 @@ return {
     cmd = "Telescope",
     opts = function()
       return {
+        defaults = {
+          -- prompt_prefix = " ",
+          -- selection_caret = " ",
+          mappings = {
+            i = {
+              ["<M-Down>"] = function(...)
+                return require("telescope.actions").cycle_history_next(...)
+              end,
+              ["<M-Up>"] = function(...)
+                return require("telescope.actions").cycle_history_prev(...)
+              end,
+              ["<M-k>"] = function(...)
+                return require("telescope.actions").move_selection_previous(...)
+              end,
+              ["<M-j>"] = function(...)
+                return require("telescope.actions").move_selection_next(...)
+              end,
+            },
+            n = {
+              ["q"] = function(...)
+                return require("telescope.actions").close(...)
+              end,
+            },
+          },
+        },
         extensions = {
           ["fzf"] = {
             fuzzy = true, -- false will only do exact matching
@@ -184,6 +209,7 @@ return {
       { "<leader>fr", "<cmd>Telescope registers<cr>", desc = "registers" },
       { "<leader>fc", "<cmd>Telescope colorscheme<cr>", desc = "colorscheme" },
       { "<leader>fm", "<cmd>Telescope noice<cr>", desc = "noice message history" },
+      { "<leader>fn", "<cmd>Telescope notify<cr>", desc = "notify message history" },
       {
         "<leader>a",
         function()
@@ -198,6 +224,7 @@ return {
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("noice")
+      require("telescope").load_extension("notify")
     end,
   },
 
@@ -289,7 +316,22 @@ return {
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      { "rcarriga/nvim-notify", opts = { background_colour = "#282828" } },
+      "rcarriga/nvim-notify",
+    },
+  },
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      render = "compact",
+      stages = "fade",
+      background_colour = "#282828",
+      timeout = 2000,
+      max_height = function()
+        return math.floor(vim.o.lines * 0.5)
+      end,
+      max_width = function()
+        return math.floor(vim.o.columns * 0.5)
+      end,
     },
   },
 
