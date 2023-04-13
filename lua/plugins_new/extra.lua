@@ -1,15 +1,4 @@
 return {
-  {
-    "folke/neoconf.nvim",
-    cmd = "Neoconf",
-  },
-  {
-    "folke/neodev.nvim",
-    config = function()
-      require("neodev").setup()
-    end,
-  },
-
   -- use({ "stevearc/aerial.nvim", config = require("aerial").setup() })
   {
     "lervag/vimtex",
@@ -96,11 +85,6 @@ return {
     --   })
     -- end,
   },
-  {
-    "folke/neoconf.nvim",
-    cmd = "Neoconf",
-  },
-  "folke/neodev.nvim",
 
   -- use 'easymotion/vim-easymotion'
   {
