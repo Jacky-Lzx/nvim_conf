@@ -2,11 +2,8 @@ return {
   -- use({ "stevearc/aerial.nvim", config = require("aerial").setup() })
   {
     "lervag/vimtex",
-    lazy = false,
+    lazy = true,
     event = "BufEnter *.tex",
-    init = function()
-      vim.cmd([[let maplocalleader = "\\"]])
-    end,
     config = function()
       -- Viewer options: One may configure the viewer either by specifying a built-in
       -- viewer method:
