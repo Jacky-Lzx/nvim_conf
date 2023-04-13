@@ -11,8 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-plugins = {}
-opts = {
+local lazy_opts = {
   git = {
     clone_timeout = 600,
     url_format = "git@github.com:%s.git",
@@ -51,8 +50,8 @@ require("lazy").setup({
     "ggandor/leap.nvim",
     dependencies = { "tpope/vim-repeat" },
     keys = {
-      { "<leader>s", "<Plug>(leap-forward-to)", mode = { "n", "x", "o" }, desc = "leap jump forward" },
-      { "<leader>S", "<Plug>(leap-backward-to)", mode = { "n", "x", "o" }, desc = "leap jump backward" },
+      { "<leader>s",  "<Plug>(leap-forward-to)",  mode = { "n", "x", "o" }, desc = "leap jump forward" },
+      { "<leader>S",  "<Plug>(leap-backward-to)", mode = { "n", "x", "o" }, desc = "leap jump backward" },
       { "<leader>gs", "<Plug>(leap-from-window)", mode = { "n", "x", "o" }, desc = "leap jump window" },
     },
   },
@@ -96,9 +95,9 @@ require("lazy").setup({
     "ibhagwan/smartyank.nvim",
     opts = {
       highlight = {
-        enabled = true, -- highlight yanked text
+        enabled = true,        -- highlight yanked text
         higroup = "IncSearch", -- highlight group of yanked text
-        timeout = 400, -- timeout for clearing the highlight
+        timeout = 400,         -- timeout for clearing the highlight
       },
       clipboard = {
         enabled = true,
@@ -112,10 +111,10 @@ require("lazy").setup({
         enabled = true,
         -- escseq = 'tmux',     -- use tmux escape sequence, only enable if
         -- you're using tmux and have issues (see #4)
-        ssh_only = true, -- false to OSC52 yank also in local sessions
-        silent = false, -- true to disable the "n chars copied" echo
+        ssh_only = true,       -- false to OSC52 yank also in local sessions
+        silent = false,        -- true to disable the "n chars copied" echo
         echo_hl = "Directory", -- highlight group of the OSC52 echo message
       },
     },
   },
-}, opts)
+}, lazy_opts)
