@@ -145,4 +145,6 @@ return {
       vim.keymap.set("n", "<leader>gf", "<CMD>Format<CR>", {})
     end,
   },
+
+  "wakatime/vim-wakatime",
 }
