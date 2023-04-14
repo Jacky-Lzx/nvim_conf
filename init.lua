@@ -57,6 +57,8 @@ vim.keymap.set("n", "<C-q>", "<CMD>:qa<CR>")
 vim.keymap.set("n", "qq", "<CMD>:q<CR>")
 vim.keymap.set("n", "Q", "<CMD>:q<CR>")
 
+vim.keymap.set("n", "<A-z>", "<CMD>set wrap!<CR>")
+
 vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 -- vim.keymap.set('n', '<leader>x',function ()
 --   bufnr = api.nvim_get_current_buf()
