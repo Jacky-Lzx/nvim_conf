@@ -1,5 +1,12 @@
 return {
   {
+    "echasnovski/mini.cursorword",
+    version = false,
+    config = function()
+      require("mini.cursorword").setup()
+    end,
+  },
+  {
     "preservim/tagbar",
     lazy = true,
     -- stylua: ignore
