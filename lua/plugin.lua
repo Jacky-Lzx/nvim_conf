@@ -64,6 +64,6 @@ local opts = {
   },
 }
 
-require("lazy").setup("plugins_new", opts)
+require("lazy").setup("plugins", opts)
 
 vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>")
