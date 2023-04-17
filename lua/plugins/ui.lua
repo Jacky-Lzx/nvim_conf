@@ -227,6 +227,8 @@ return {
       { "<leader>fc", "<cmd>Telescope colorscheme<cr>", desc = "colorscheme" },
       { "<leader>fm", "<cmd>Telescope noice<cr>", desc = "noice message history" },
       { "<leader>fn", "<cmd>Telescope notify<cr>", desc = "notify message history" },
+      { "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>", desc = "document symbols" },
+      -- { "<leader>fs", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "workspace symbols" },
       { "<leader>a", function() vim.lsp.buf.code_action() end, desc = "code action" },
     },
     config = function(_, opts)

@@ -1,3 +1,3 @@
-return "dracula"
--- return "gruvbox"
+-- return "dracula"
+return "gruvbox"
 -- return "tokyonight"
