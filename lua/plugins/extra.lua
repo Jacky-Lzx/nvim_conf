@@ -3,7 +3,8 @@ return {
   {
     "lervag/vimtex",
     lazy = true,
-    event = "BufEnter *.tex",
+    -- event = "BufEnter *.tex",
+    ft = "tex",
     config = function()
       -- Viewer options: One may configure the viewer either by specifying a built-in
       -- viewer method:
