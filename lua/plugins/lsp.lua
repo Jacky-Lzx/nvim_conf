@@ -76,7 +76,7 @@ return {
     opts = {
       -- options for vim.diagnostic.config()
       diagnostics = {
-        underline = true,
+        underline = false,
         update_in_insert = false,
         virtual_text = { spacing = 4, prefix = "●" },
         severity_sort = true,
@@ -124,6 +124,15 @@ return {
         cmd = {
           "clangd",
           -- "--header-insertion=never",
+        },
+      })
+      require("lspconfig").rust_analyzer.setup({
+        settings = {
+          ["rust-analyzer"] = {
+            diagnostics = {
+              enable = false,
+            },
+          },
         },
       })
 
