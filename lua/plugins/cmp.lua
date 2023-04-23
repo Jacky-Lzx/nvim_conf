@@ -132,7 +132,7 @@ return {
             end,
           },
           { name = "luasnip" },
-          { name = "buffer" },
+          -- { name = "buffer" },
           { name = "async_path" },
         }),
         formatting = {
