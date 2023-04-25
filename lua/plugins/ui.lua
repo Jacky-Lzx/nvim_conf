@@ -159,9 +159,6 @@ return {
       end)
     end,
   },
-  {
-    "cappyzawa/trim.nvim",
-  },
 
   {
     "nvim-telescope/telescope.nvim",

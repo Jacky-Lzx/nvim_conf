@@ -20,6 +20,7 @@ return {
 
   {
     "cappyzawa/trim.nvim",
+    event = "BufWritePre",
     config = function()
       require("trim").setup()
     end,
@@ -71,6 +72,7 @@ return {
 
   {
     "mhartington/formatter.nvim",
+    event = "BufWritePre",
     init = function()
       vim.cmd([[
       augroup FormatAutogroup
