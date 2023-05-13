@@ -28,4 +28,7 @@ vim.keymap.set("n", "Q", "<CMD>:q<CR>")
 
 vim.keymap.set("n", "<A-z>", "<CMD>set wrap!<CR>")
 
+vim.keymap.set("v", "<M-m>", 'c\\( <c-r>" \\)')
+vim.keymap.set("i", "<M-m>", '\\(  \\)<esc>hhi')
+
 vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
