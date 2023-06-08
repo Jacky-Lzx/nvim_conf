@@ -30,7 +30,7 @@ local opts = {
   },
   git = {
     clone_timeout = 600,
-    url_format = "git@github.com:%s.git",
+    -- url_format = "git@github.com:%s.git",
   },
   ui = {
     -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
