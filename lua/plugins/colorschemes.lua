@@ -40,7 +40,7 @@ else
         bold = true,
         italic = {
           strings = true,
-          comments = true,
+          comments = false,
           operators = false,
           folds = true,
         },

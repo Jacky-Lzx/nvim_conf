@@ -350,4 +350,6 @@ return {
       end
     end,
   },
+
+  -- { "Bekaboo/dropbar.nvim" },
 }
