@@ -4,10 +4,10 @@ return {
     opts = {},
   },
 
-  {
-    "lewis6991/gitsigns.nvim",
-    opts = {},
-  },
+  -- {
+  --   "lewis6991/gitsigns.nvim",
+  --   opts = {},
+  -- },
   {
     -- Conflicted with vscode_nvim, don't know way
     "kevinhwang91/nvim-hlslens",
@@ -162,7 +162,6 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
-    version = "0.1.1",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-ui-select.nvim",

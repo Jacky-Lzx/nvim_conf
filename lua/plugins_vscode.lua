@@ -83,6 +83,11 @@ require("lazy").setup({
     },
     config = function()
       require("Comment").setup()
+
+      local ft = require("Comment.ft")
+      ft.cpp = { "//%s", "/*%s*/" }
+      ft.c = { "//%s", "/*%s*/" }
+      ft.python = { "#%s" }
     end,
   },
   {
