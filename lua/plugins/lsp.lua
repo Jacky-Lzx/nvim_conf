@@ -92,6 +92,7 @@ return {
       require("lspconfig").pyright.setup({})
       -- require("lspconfig").pylsp.setup({})
       -- require("lspconfig").python_lsp_server.setup({})
+      require("lspconfig").jsonls.setup({})
 
       require("lspconfig").lua_ls.setup({
         settings = {
