@@ -1,3 +1,4 @@
 -- return "dracula"
-return "gruvbox"
+-- return "gruvbox"
+return "catppuccin"
 -- return "tokyonight"

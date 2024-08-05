@@ -27,6 +27,22 @@ elseif colorscheme == "tokyonight" then
       end,
     },
   }
+elseif colorscheme == "catppuccin" then
+  return {
+    {
+      "catppuccin/nvim",
+      name = "catppuccin",
+      priority = 1000,
+      opts = {
+        -- flavour = "mocha"
+      },
+      config = function(_, opts)
+        require("catppuccin").setup(opts)
+
+        vim.cmd([[colorscheme catppuccin-mocha]])
+      end,
+    },
+  }
 else
   -- Fallback to gruvbox
   return {
