@@ -35,6 +35,14 @@ elseif colorscheme == "catppuccin" then
       priority = 1000,
       opts = {
         -- flavour = "mocha"
+        integrations = {
+          gitsigns = true,
+          hop = true,
+          leap = true,
+          noice = true,
+          which_key = true,
+          nvim_surround = true,
+        },
       },
       config = function(_, opts)
         require("catppuccin").setup(opts)

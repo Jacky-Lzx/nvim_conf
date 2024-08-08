@@ -19,10 +19,57 @@ local lazy_opts = {
 }
 
 require("lazy").setup({
+  -- {
+  --   "phaazon/hop.nvim",
+  --   lazy = true,
+  --   branch = "v2", -- optional but strongly recommended
+  --   keys = {
+  --     {
+  --       "<leader>j",
+  --       function()
+  --         require("hop").hint_lines({ current_line_only = false })
+  --       end,
+  --       mode = { "n", "v" },
+  --       desc = "hop jump",
+  --     },
+  --     {
+  --       "<leader>k",
+  --       function()
+  --         require("hop").hint_lines({ current_line_only = false })
+  --       end,
+  --       mode = { "n", "v" },
+  --       desc = "hop jump",
+  --     },
+  --   },
+  --   opts = {},
+  --   config = function(_, opts)
+  --     require("hop").setup(opts)
+  --   end,
+  -- },
   {
-    "phaazon/hop.nvim",
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    opts = {
+      -- flavour = "mocha"
+      integrations = {
+        hop = true,
+        leap = true,
+        -- noice = true,
+        -- which_key = true,
+        nvim_surround = true,
+      },
+    },
+    config = function(_, opts)
+      require("catppuccin").setup(opts)
+
+      vim.cmd([[colorscheme catppuccin-mocha]])
+    end,
+  },
+  {
+    "smoka7/hop.nvim",
     lazy = true,
-    branch = "v2", -- optional but strongly recommended
+    version = "*",
     keys = {
       {
         "<leader>j",
@@ -41,9 +88,9 @@ require("lazy").setup({
         desc = "hop jump",
       },
     },
-    opts = {},
-    config = function(_, opts)
-      require("hop").setup(opts)
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
     end,
   },
   {

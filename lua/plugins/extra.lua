@@ -88,18 +88,45 @@ return {
   },
 
   -- use 'easymotion/vim-easymotion'
+  -- {
+  --   "phaazon/hop.nvim",
+  --   lazy = true,
+  --   branch = "v2", -- optional but strongly recommended
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<leader>j", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "hop jump" },
+  --     { "<leader>k", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "hop jump" },
+  --   },
+  --   opts = {},
+  --   config = function(_, opts)
+  --     require("hop").setup(opts)
+  --   end,
+  -- },
   {
-    "phaazon/hop.nvim",
+    "smoka7/hop.nvim",
     lazy = true,
-    branch = "v2", -- optional but strongly recommended
-    -- stylua: ignore
+    version = "*",
     keys = {
-      { "<leader>j", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "hop jump" },
-      { "<leader>k", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "hop jump" },
+      {
+        "<leader>j",
+        function()
+          require("hop").hint_lines({ current_line_only = false })
+        end,
+        mode = { "n", "v" },
+        desc = "hop jump",
+      },
+      {
+        "<leader>k",
+        function()
+          require("hop").hint_lines({ current_line_only = false })
+        end,
+        mode = { "n", "v" },
+        desc = "hop jump",
+      },
     },
-    opts = {},
-    config = function(_, opts)
-      require("hop").setup(opts)
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
     end,
   },
   {
