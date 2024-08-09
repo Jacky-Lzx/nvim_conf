@@ -1,20 +1,41 @@
 return {
+  -- Show colors in the text: e.g. "#b3e2a7"
   {
     "norcalli/nvim-colorizer.lua",
     opts = {},
+    config = function(_)
+      require("colorizer").setup()
+    end,
   },
 
-  -- {
-  --   "lewis6991/gitsigns.nvim",
-  --   opts = {},
-  -- },
   {
-    -- Conflicted with vscode_nvim, don't know way
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      signcolumn = false,
+      numhl = true,
+      current_line_blame = true,
+    },
+    config = function(_, opts)
+      require("gitsigns").setup(opts)
+      require("scrollbar.handlers.gitsigns").setup()
+    end,
+  },
+
+  {
+    -- Conflicted with vscode_nvim, don't know why
     "kevinhwang91/nvim-hlslens",
+    keys = { "n", "N", "/", "?" },
     opts = {
       nearest_only = true,
     },
+    config = function(_, opts)
+      -- require('hlslens').setup() is not required
+      require("scrollbar.handlers.search").setup(
+        opts -- hlslens config overrides
+      )
+    end,
   },
+
   {
     "petertriho/nvim-scrollbar",
     opts = {
@@ -23,20 +44,32 @@ return {
         blend = 60, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
         color = nil,
         color_nr = nil, -- cterm
-        highlight = "CursorLine",
+        highlight = "Visual",
         hide_if_all_visible = true, -- Hides handle if all lines are visible
+      },
+      handelers = {
+        gitsigns = true, -- for gitsigns
+        search = true, -- for hlslens
+      },
+      marks = {
+        Search = {
+          color = "#8fc7d6",
+        },
+        GitAdd = { text = "┃" },
+        GitChange = { text = "┃" },
+        GitDelete = { text = "_" },
       },
     },
     config = function(_, opts)
-      -- require("scrollbar.handlers.search").setup({ nearest_only = true })
-      require("scrollbar.handlers.gitsigns").setup()
       require("scrollbar").setup(opts)
     end,
   },
 
+  -- Show where your cursor moves when jumping large distances
   -- use({ "edluffy/specs.nvim", config = require("plugin-settings.specs") })
 
   {
+    -- Greeting page
     "goolord/alpha-nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VimEnter",
@@ -47,8 +80,18 @@ return {
 
   {
     "folke/which-key.nvim",
-    opts = {},
+    event = "VeryLazy",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      ---@type false | "classic" | "modern" | "helix"
+      preset = "modern",
+    },
+    keys = {
+      -- stylua: ignore
+      { "<leader>?", function() require("which-key").show({ global = false }) end, desc = "Buffer Local Keymaps (which-key)", },
+    },
   },
+
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -57,7 +100,6 @@ return {
       return {
         options = {
           icons_enabled = true,
-          -- theme = "gruvbox",
           theme = colorscheme,
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
@@ -77,49 +119,61 @@ return {
       }
     end,
   },
+
   -- {
-  --   -- The command of Buffer delete
-  --   "moll/vim-bbye",
-  --   lazy = true,
-  --   cmd = "Bdelete",
-  --   keys = { "<leader>x", desc = "delete buffer" },
-  --   config = function()
-  --     vim.keymap.set("n", "<leader>x", "<CMD>Bdelete<CR>")
+  --   "echasnovski/mini.bufremove",
+  --     -- stylua: ignore
+  --     keys = {
+  --       { "<leader>x", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer"         },
+  --       { "<leader>X", function() require("mini.bufremove").delete(0, true)  end, desc = "Delete Buffer (Force)" },
+  --     },
+  -- },
+
+  -- This repository has been archived by the owner on Aug 18, 2023. It is now read-only.
+  -- {
+  --   "kdheepak/tabline.nvim",
+  --   lazy = false,
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   opts = {},
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<leader>l", "<cmd>TablineBufferNext<cr>",     desc = "next buffer"     },
+  --     { "<leader>h", "<cmd>TablineBufferPrevious<cr>", desc = "previous buffer" },
+  --   },
+  --   config = function(_, opts)
+  --     require("tabline").setup(opts)
+  --
+  --     vim.cmd([[
+  --       set guioptions-=e " Use showtabline in gui vim
+  --       set sessionoptions+=tabpages,globals " store tabpages and globals in session
+  --     ]])
   --   end,
   -- },
-  {
-    "echasnovski/mini.bufremove",
-      -- stylua: ignore
-      keys = {
-        { "<leader>x", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer"         },
-        { "<leader>X", function() require("mini.bufremove").delete(0, true)  end, desc = "Delete Buffer (Force)" },
-      },
-  },
-  {
-    "kdheepak/tabline.nvim",
-    lazy = false,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {},
-    -- stylua: ignore
-    keys = {
-      { "<leader>l", "<cmd>TablineBufferNext<cr>",     desc = "next buffer"     },
-      { "<leader>h", "<cmd>TablineBufferPrevious<cr>", desc = "previous buffer" },
-    },
-    config = function(_, opts)
-      require("tabline").setup(opts)
 
-      vim.cmd([[
-        set guioptions-=e " Use showtabline in gui vim
-        set sessionoptions+=tabpages,globals " store tabpages and globals in session
-      ]])
+  -- New replacement of tabline
+  {
+    "romgrk/barbar.nvim",
+    version = "^1.0.0", -- optional: only update when a new 1.x version is released
+    dependencies = {
+      "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+    },
+    init = function()
+      vim.g.barbar_auto_setup = false
     end,
+    opts = {
+      animation = false,
+    },
+    event = { "BufAdd", "FileReadPre" },
+    keys = {
+      { "<leader>h", "<cmd>BufferPrevious<cr>", desc = "Next buffer" },
+      { "<leader>l", "<cmd>BufferNext<cr>", desc = "Previous buffer" },
+      { "<leader>x", "<cmd>BufferClose<cr>", desc = "Close buffer" },
+    },
   },
 
   {
     "nvim-tree/nvim-tree.lua",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons", -- optional, for file icons
-    },
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional, for file icons
     -- stylua: ignore
     keys = {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
@@ -133,10 +187,10 @@ return {
     keys = {
       { "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>',            mode = "n", desc = "Toggle float terminal" },
       { "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', mode = "t", desc = "Toggle float terminal" },
-      { "<C-g>",                                                      mode = "n", desc = "Toggle lazygit" },
+      { "<C-g>",                                                      mode = "n", desc = "Toggle Lazygit" },
     },
     opts = {
-      border = "double",
+      border = "rounded",
       dimensions = {
         height = 0.9,
         width = 0.9,
@@ -152,7 +206,6 @@ return {
           width = 0.9,
         },
       })
-
       -- Use this to toggle lazygit in a floating terminal
       vim.keymap.set("n", "<C-g>", function()
         lg:toggle()
@@ -183,10 +236,10 @@ return {
               ["<M-Up>"] = function(...)
                 return require("telescope.actions").cycle_history_prev(...)
               end,
-              ["<M-k>"] = function(...)
+              ["<C-k>"] = function(...)
                 return require("telescope.actions").move_selection_previous(...)
               end,
-              ["<M-j>"] = function(...)
+              ["<C-j>"] = function(...)
                 return require("telescope.actions").move_selection_next(...)
               end,
             },
@@ -212,20 +265,20 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "buffers" },
-      { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>", desc = "lsp definitions" },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "find files" },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "live grep" },
-      { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "help tags" },
-      { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "keymaps" },
-      { "<leader>fq", "<cmd>Telescope quickfix<cr>", desc = "quick fix" },
-      { "<leader>fr", "<cmd>Telescope registers<cr>", desc = "registers" },
-      { "<leader>fc", "<cmd>Telescope colorscheme<cr>", desc = "colorscheme" },
-      { "<leader>fm", "<cmd>Telescope noice<cr>", desc = "noice message history" },
-      { "<leader>fn", "<cmd>Telescope notify<cr>", desc = "notify message history" },
-      { "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>", desc = "document symbols" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>",                  desc = "buffers" },
+      { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",          desc = "lsp definitions" },
+      { "<leader>ff", "<cmd>Telescope find_files<cr>",               desc = "find files" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>",                desc = "live grep" },
+      { "<leader>fh", "<cmd>Telescope help_tags<cr>",                desc = "help tags" },
+      { "<leader>fk", "<cmd>Telescope keymaps<cr>",                  desc = "keymaps" },
+      { "<leader>fq", "<cmd>Telescope quickfix<cr>",                 desc = "quick fix" },
+      { "<leader>fr", "<cmd>Telescope registers<cr>",                desc = "registers" },
+      { "<leader>fc", "<cmd>Telescope colorscheme<cr>",              desc = "colorscheme" },
+      { "<leader>fm", "<cmd>Telescope noice<cr>",                    desc = "noice message history" },
+      { "<leader>fn", "<cmd>Telescope notify<cr>",                   desc = "notify message history" },
+      { "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>",     desc = "document symbols" },
       -- { "<leader>fs", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "workspace symbols" },
-      { "<leader>a", function() vim.lsp.buf.code_action() end, desc = "code action" },
+      { "<leader>a", function() vim.lsp.buf.code_action() end,       desc = "code action" },
     },
     config = function(_, opts)
       require("telescope").setup(opts)
@@ -239,7 +292,15 @@ return {
 
   {
     "folke/noice.nvim",
-    lazy = false,
+    event = "VeryLazy",
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    },
     -- stylua: ignore
     keys = {
       { "<leader>nl", function() require("noice").cmd("last")    end, desc = "noice last message" },
@@ -298,32 +359,21 @@ return {
       },
       -- you can enable a preset for easier configuration
       presets = {
-        bottom_search = true, -- use a classic bottom cmdline for search
+        bottom_search = false, -- use a classic bottom cmdline for search
         command_palette = true, -- position the cmdline and popupmenu together
         long_message_to_split = true, -- long messages will be sent to a split
         inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
+        lsp_doc_border = true, -- add a border to hover docs and signature help
       },
-    },
-    config = function(_, opts)
-      require("noice").setup(opts)
-    end,
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
     },
   },
   {
     "rcarriga/nvim-notify",
     opts = {
-      render = "compact",
-      stages = "fade",
+      -- render = "compact",
+      -- stages = "fade",
       background_colour = "#282828",
-      timeout = 2000,
+      timeout = 3000,
       max_height = function()
         return math.floor(vim.o.lines * 0.5)
       end,
@@ -333,22 +383,23 @@ return {
     },
   },
 
-  {
-    "stevearc/dressing.nvim",
-    lazy = true,
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.select(...)
-      end
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.input(...)
-      end
-    end,
-  },
+  -- Forgot why installing this plugin. Uninstalling it seems no change
+  -- {
+  --   "stevearc/dressing.nvim",
+  --   lazy = true,
+  --   init = function()
+  --     ---@diagnostic disable-next-line: duplicate-set-field
+  --     vim.ui.select = function(...)
+  --       require("lazy").load({ plugins = { "dressing.nvim" } })
+  --       return vim.ui.select(...)
+  --     end
+  --     ---@diagnostic disable-next-line: duplicate-set-field
+  --     vim.ui.input = function(...)
+  --       require("lazy").load({ plugins = { "dressing.nvim" } })
+  --       return vim.ui.input(...)
+  --     end
+  --   end,
+  -- },
 
   -- { "Bekaboo/dropbar.nvim" },
 }

@@ -36,12 +36,16 @@ elseif colorscheme == "catppuccin" then
       opts = {
         -- flavour = "mocha"
         integrations = {
+          alpha = true,
           gitsigns = true,
           hop = true,
           leap = true,
           noice = true,
+          notify = true,
           which_key = true,
           nvim_surround = true,
+          barbar = true,
+          nvimtree = true,
         },
       },
       config = function(_, opts)
