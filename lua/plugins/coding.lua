@@ -6,6 +6,7 @@ return {
       require("mini.cursorword").setup()
     end,
   },
+
   {
     "preservim/tagbar",
     lazy = true,
@@ -16,25 +17,21 @@ return {
     config = function() end,
   },
 
-  "mg979/vim-visual-multi",
+  -- "mg979/vim-visual-multi",
 
   {
     "cappyzawa/trim.nvim",
     event = "BufWritePre",
-    config = function()
-      require("trim").setup()
-    end,
+    opts = {},
   },
 
   {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end,
+    event = "VeryLazy",
+    opts = {},
   },
+
   {
     "mbbill/undotree",
     lazy = false,
@@ -58,6 +55,7 @@ return {
       ]])
     end,
   },
+
   {
     "numToStr/Comment.nvim",
     -- stylua: ignore
@@ -170,16 +168,15 @@ return {
     end,
   },
 
-  "wakatime/vim-wakatime",
+  { "wakatime/vim-wakatime", lazy = true },
 
   {
     "Vonr/align.nvim",
     -- stylua: ignore
     keys = {
-      { "aa" , function() require("align").align_to_char(1, true)             end, mode = "x", noremap = true, silent = true, desc = "align to 1 char" },
-      { "as" , function() require("align").align_to_char(2, true, true)       end, mode = "x", noremap = true, silent = true, desc = "align to 2 char" },
-      { "aw" , function() require("align").align_to_string(false, true, true) end, mode = "x", noremap = true, silent = true, desc = "align to string" },
+      -- { "aa" , function() require("align").align_to_char(1, true)             end,            mode = "x", noremap = true, silent = true, desc = "align to 1 char" },
+      -- { "as" , function() require("align").align_to_char(2, true, true)       end,            mode = "x", noremap = true, silent = true, desc = "align to 2 char" },
+      { "as" , function() require'align'.align_to_string({ preview = true, regex = true, }) end, mode = "x", noremap = true, silent = true, desc = "align to string" },
     },
-    -- config = true,
   },
 }
