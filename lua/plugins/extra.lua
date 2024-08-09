@@ -27,6 +27,7 @@ return {
       vim.cmd([[let maplocalleader = "\\"]])
     end,
   },
+
   {
     "dstein64/vim-startuptime",
     cmd = "StartupTime",
@@ -53,38 +54,12 @@ return {
       },
       osc52 = {
         enabled = true,
-        -- escseq = 'tmux',     -- use tmux escape sequence, only enable if
-        -- you're using tmux and have issues (see #4)
+        -- escseq = 'tmux',     -- use tmux escape sequence, only enable if you're using tmux and have issues (see #4)
         ssh_only = true, -- false to OSC52 yank also in local sessions
         silent = false, -- true to disable the "n chars copied" echo
         echo_hl = "Directory", -- highlight group of the OSC52 echo message
       },
     },
-    -- config = function()
-    --   require("smartyank").setup({
-    --     highlight = {
-    --       enabled = true, -- highlight yanked text
-    --       higroup = "IncSearch", -- highlight group of yanked text
-    --       timeout = 400, -- timeout for clearing the highlight
-    --     },
-    --     clipboard = {
-    --       enabled = true,
-    --     },
-    --     tmux = {
-    --       enabled = true,
-    --       -- remove `-w` to disable copy to host client's clipboard
-    --       cmd = { "tmux", "set-buffer", "-w" },
-    --     },
-    --     osc52 = {
-    --       enabled = true,
-    --       -- escseq = 'tmux',     -- use tmux escape sequence, only enable if
-    --       -- you're using tmux and have issues (see #4)
-    --       ssh_only = true, -- false to OSC52 yank also in local sessions
-    --       silent = false, -- true to disable the "n chars copied" echo
-    --       echo_hl = "Directory", -- highlight group of the OSC52 echo message
-    --     },
-    --   })
-    -- end,
   },
 
   -- use 'easymotion/vim-easymotion'
@@ -102,32 +77,19 @@ return {
   --     require("hop").setup(opts)
   --   end,
   -- },
+
   {
     "smoka7/hop.nvim",
     lazy = true,
     version = "*",
+    -- stylua: ignore
     keys = {
-      {
-        "<leader>j",
-        function()
-          require("hop").hint_lines({ current_line_only = false })
-        end,
-        mode = { "n", "v" },
-        desc = "hop jump",
-      },
-      {
-        "<leader>k",
-        function()
-          require("hop").hint_lines({ current_line_only = false })
-        end,
-        mode = { "n", "v" },
-        desc = "hop jump",
-      },
+      { "<leader>j", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "hop jump", },
+      { "<leader>k", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "hop jump", },
     },
-    config = function()
-      -- you can configure Hop the way you like here; see :h hop-config
-      require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-    end,
+    opts = {
+      keys = "etovxqpdygfblzhckisuran",
+    },
   },
   {
     "ggandor/leap.nvim",
@@ -157,9 +119,22 @@ return {
     version = false, -- wait till new 0.7.0 release to put it back on semver
     event = { "BufReadPre", "BufNewFile" },
     opts = {
+      -- Module mappings. Use `''` (empty string) to disable one.
+      mappings = {
+        -- Textobjects
+        object_scope = "ii",
+        object_scope_with_border = "ai",
+
+        -- Motions (jump to respective border line; if not present - body line)
+        goto_top = "[i",
+        goto_bottom = "]i",
+      },
       -- symbol = "▏",
       symbol = "│",
-      options = { try_as_border = true },
+      options = {
+        border = "both",
+        try_as_border = true,
+      },
     },
     init = function()
       vim.api.nvim_create_autocmd("FileType", {

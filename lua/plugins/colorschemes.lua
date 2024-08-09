@@ -46,6 +46,10 @@ elseif colorscheme == "catppuccin" then
           nvim_surround = true,
           barbar = true,
           nvimtree = true,
+          mini = {
+            enabled = true,
+            indentscope_color = "blue", -- catppuccin color (eg. `lavender`) Default: text
+          },
         },
       },
       config = function(_, opts)
