@@ -1,11 +1,17 @@
-vim.g.neovide_input_macos_alt_is_meta = true
+-- removed
+-- vim.g.neovide_input_macos_alt_is_meta = true
+
+-- vim.g.neovide_input_macos_option_key_is_meta = "only_left"
+
+-- vim.g.transparency = 0.2
+
 -- Helper function for transparency formatting
 local alpha = function()
   return string.format("%x", math.floor(255 * (vim.g.neovide_transparency or 0.8)))
 end
 -- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
-vim.g.neovide_transparency = 0.4
-vim.g.transparency = 0.8
+vim.g.neovide_transparency = 0.8
+vim.g.transparency = 0.2
 vim.g.neovide_background_color = "#282828" .. alpha()
 -- Add keybinds to change transparency
 local change_transparency = function(delta)
