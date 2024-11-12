@@ -58,8 +58,8 @@ require("lazy").setup({
     version = "*",
     -- stylua: ignore
     keys = {
-      { "<leader>j", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "hop jump", },
-      { "<leader>k", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "hop jump", },
+      { "<leader>j", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "Hop jump", },
+      { "<leader>k", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "Hop jump", },
     },
     opts = {
       keys = "etovxqpdygfblzhckisuran",
@@ -70,9 +70,9 @@ require("lazy").setup({
     dependencies = { "tpope/vim-repeat" },
     -- stylua: ignore
     keys = {
-      { "<leader>s",  "<Plug>(leap-forward-to)",  mode = { "n", "x", "o" }, desc = "leap jump forward" },
-      { "<leader>S",  "<Plug>(leap-backward-to)", mode = { "n", "x", "o" }, desc = "leap jump backward" },
-      { "<leader>gs", "<Plug>(leap-from-window)", mode = { "n", "x", "o" }, desc = "leap jump window" },
+      { "<leader>s",  "<Plug>(leap-forward-to)",  mode = { "n", "x", "o" }, desc = "Leap jump forward" },
+      { "<leader>S",  "<Plug>(leap-backward-to)", mode = { "n", "x", "o" }, desc = "Leap jump backward" },
+      { "<leader>gs", "<Plug>(leap-from-window)", mode = { "n", "x", "o" }, desc = "Leap jump window" },
     },
   },
   {

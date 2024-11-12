@@ -9,7 +9,7 @@ vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.hlsearch = true
+vim.opt.hlsearch = false
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
