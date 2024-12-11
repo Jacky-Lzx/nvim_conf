@@ -36,7 +36,7 @@ local opts = {
     colorscheme = { "gruvbox" },
   },
   -- automatically check for plugin updates
-  checker = { enabled = true },
+  -- checker = { enabled = true },
   git = {
     clone_timeout = 600,
     -- url_format = "git@github.com:%s.git",
