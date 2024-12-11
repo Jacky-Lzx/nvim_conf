@@ -88,7 +88,7 @@ return {
       local navic = require("nvim-navic")
       -- require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls", "shfmt", "stylua" },
+        ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls" },
       })
 
       require("lspconfig").pyright.setup({})
