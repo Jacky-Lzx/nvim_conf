@@ -11,8 +11,8 @@ vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz")
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 vim.keymap.set({ "n", "x" }, "<S-H>", "^", { desc = "start of line" })
 vim.keymap.set({ "n", "x" }, "<S-L>", "$", { desc = "end of line" })
