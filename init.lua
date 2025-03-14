@@ -15,6 +15,13 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
+vim.opt.scrolloff = 15
+vim.opt.sidescrolloff = 10
+vim.opt.startofline = false
+
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 

@@ -22,9 +22,9 @@ vim.keymap.set("n", "y<S-L>", "y$", { desc = "yank to end of line" })
 -- vim.keymap.set("n", "//", "<CMD>:set hlsearch!<CR>")
 vim.keymap.set("n", "//", "<CMD>:noh<CR>")
 
-vim.keymap.set("n", "<C-q>", "<CMD>:qa<CR>")
+vim.keymap.set("n", "Q", "<CMD>:qa<CR>")
 vim.keymap.set("n", "qq", "<CMD>:q<CR>")
-vim.keymap.set("n", "Q", "<CMD>:q<CR>")
+-- vim.keymap.set("n", "Q", "<CMD>:q<CR>")
 
 vim.keymap.set("n", "<A-z>", "<CMD>set wrap!<CR>")
 

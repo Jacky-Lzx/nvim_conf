@@ -41,6 +41,7 @@ elseif colorscheme == "catppuccin" then
           gitsigns = true,
           hop = true,
           leap = true,
+          cmp = true,
           noice = true,
           notify = true,
           which_key = true,
