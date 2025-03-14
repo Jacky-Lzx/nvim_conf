@@ -1,4 +1,4 @@
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -40,6 +40,55 @@ return {
 
   -- formatters
   {
+    "stevearc/conform.nvim",
+    event = "BufWritePre",
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+        -- Conform will run multiple formatters sequentially
+        python = { "isort", "black" },
+        -- You can customize some of the format options for the filetype (:help conform.format)
+        rust = { "rustfmt", lsp_format = "fallback" },
+        -- Conform will run the first available formatter
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+      format_on_save = {
+        -- These options will be passed to conform.format()
+        timeout_ms = 500,
+        lsp_format = "fallback",
+      },
+    },
+  },
+
+  {
+    "mfussenegger/nvim-lint",
+    config = function()
+      require("lint").linters_by_ft = {
+        markdown = { "vale" },
+        verilog = { "verilator" },
+      }
+
+      local verilator = require("lint").linters.verilator
+
+      verilator.args = {
+        "+1800-2017ext+sv",
+      }
+
+      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+        callback = function()
+          -- try_lint without arguments runs the linters defined in `linters_by_ft`
+          -- for the current filetype
+          require("lint").try_lint()
+
+          -- You can call `try_lint` with a linter name or a list of names to always
+          -- run specific linters, independent of the `linters_by_ft` configuration
+          -- require("lint").try_lint("cspell")
+        end,
+      })
+    end,
+  },
+
+  {
     "jose-elias-alvarez/null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "mason.nvim" },
@@ -52,6 +101,7 @@ return {
           nls.builtins.diagnostics.fish,
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.shfmt,
+          -- nls.builtins.formatting.verible_verilog_format,
           -- nls.builtins.diagnostics.flake8,
         },
       }
@@ -92,6 +142,16 @@ return {
       })
 
       require("lspconfig").pyright.setup({})
+
+      -- require("lspconfig").svls.setup({
+      --   root_dir = function(fname)
+      --     -- return require("lspconfig.util").find_git_ancestor(fname)
+      --     return vim.fs.dirname(fname)
+      --   end,
+      --   cmd = { "svls" },
+      --   filetypes = { "verilog", "systemverilog" },
+      -- })
+
       -- require("lspconfig").pylsp.setup({})
       -- require("lspconfig").python_lsp_server.setup({})
       require("lspconfig").jsonls.setup({})
@@ -119,6 +179,14 @@ return {
       })
 
       require("lspconfig").marksman.setup({})
+
+      require("lspconfig").verible.setup({
+        -- filetypes = { "verilog", "systemverilog", "v" },
+        root_dir = function(fname)
+          -- return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
+          return vim.fs.dirname(fname)
+        end,
+      })
       -- require("lspconfig").ltex.setup({})
       require("lspconfig").clangd.setup({
         on_attach = function(client, bufnr)
