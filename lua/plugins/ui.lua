@@ -85,6 +85,10 @@ return {
     opts = {
       ---@type false | "classic" | "modern" | "helix"
       preset = "modern",
+      win = { title = false },
+      spec = {
+        { "<leader>f", group = "Telescope" },
+      },
     },
     keys = {
       -- stylua: ignore
@@ -252,7 +256,7 @@ return {
         },
         extensions = {
           ["fzf"] = {
-            fuzzy = true, -- false will only do exact matching
+            -- fuzzy = true, -- false will only do exact matching
             override_generic_sorter = true, -- override the generic sorter
             override_file_sorter = true, -- override the file sorter
             case_mode = "smart_case", -- or "ignore_case" or "respect_case", the default case_mode is "smart_case"
@@ -368,12 +372,14 @@ return {
       },
     },
   },
+
   {
+    -- A fancy, configurable, notification manager for NeoVim
     "rcarriga/nvim-notify",
     opts = {
       -- render = "compact",
       -- stages = "fade",
-      background_colour = "#282828",
+      -- background_colour = "#282828",
       timeout = 3000,
       max_height = function()
         return math.floor(vim.o.lines * 0.5)
