@@ -101,106 +101,35 @@ return {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
         },
+        -- stylua: ignore
         mapping = cmp.mapping.preset.insert({
-          -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-          -- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          -- ["<C-Space>"] = cmp.mapping.complete(),
-          -- ["<C-e>"] = cmp.mapping.abort(),
-          -- ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          -- ["<S-CR>"] = cmp.mapping.confirm({
-          --   behavior = cmp.ConfirmBehavior.Replace,
-          --   select = true,
-          -- }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ["<C-k>"] = cmp.mapping.select_prev_item(),
-          ["<M-k>"] = cmp.mapping.select_prev_item(),
-          ["<S-TAB>"] = cmp.mapping.select_prev_item(),
-          -- 下一个
-          ["<C-j>"] = cmp.mapping.select_next_item(),
-          ["<M-j>"] = cmp.mapping.select_next_item(),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            else
-              fallback()
-            end
-            -- if cmp.visible() then
-            --   if #cmp.get_entries() == 1 then
-            --     cmp.confirm({ select = true })
-            --   else
-            --     cmp.select_next_item()
-            --   end
-            -- --[[ Replace with your snippet engine (see above sections on this page)
-            --   elseif snippy.can_expand_or_advance() then
-            --     snippy.expand_or_advance() ]]
-            -- elseif has_words_before() then
-            --   cmp.complete()
-            --   if #cmp.get_entries() == 1 then
-            --     cmp.confirm({ select = true })
-            --   end
-            -- else
-            --   fallback()
-            -- end
-          end, { "i", "s" }),
-          -- ["<Tab>"] = {
-          --   c = function(_)
-          --     if cmp.visible() then
-          --       if #cmp.get_entries() == 1 then
-          --         cmp.confirm({ select = true })
-          --       else
-          --         cmp.select_next_item()
-          --       end
-          --     else
-          --       cmp.complete()
-          --       if #cmp.get_entries() == 1 then
-          --         cmp.confirm({ select = true })
-          --       end
-          --     end
-          --   end,
-          -- },
-          -- 出现补全
-          ["<A-/>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-          -- 取消
-          ["<A-,>"] = cmp.mapping({
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
-          }),
-          -- 确认
-          -- Accept currently selected item. If none selected, `select` first item.
-          -- Set `select` to `false` to only confirm explicitly selected items.
-          -- ["<CR>"] = cmp.mapping.confirm({
-          --   select = false,
-          --   -- behavior = cmp.ConfirmBehavior.Replace,
-          -- }),
-          -- ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-          ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-          ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+          ["<M-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+          ["<M-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+          -- Show/Remove completion
+          ["<A-/>"] = cmp.mapping(function(_) if cmp.visible() then cmp.abort() else cmp.complete() end end, { "i", "c" }),
+          -- ["<A-/>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 
-          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.abort(),
+          -- ["<C-m>"] = cmp.mapping(cmp.complete(), { "i", "c" }),
+
+          ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+          ["<M-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+          ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+          ["<M-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+
+          ["<Tab>"] = cmp.mapping.confirm({ select = false }),
           ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ["<S-CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          -- Close current completion and insert a newline
+          ["<S-CR>"] = cmp.mapping(function(fallback) if cmp.visible() then cmp.close() end fallback() end, { "i", "s" }),
         }),
+        -- stylua: ignore
         sources = cmp.config.sources({
-          -- { name = "nvim_lsp" },
           { name = "copilot", group_indx = 2 },
-          {
-            name = "nvim_lsp",
-            entry_filter = function(entry, ctx)
-              return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
-            end,
-          },
+          { name = "nvim_lsp", entry_filter = function(entry, _) return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind() end, },
           { name = "luasnip" },
-          -- { name = "buffer" },
           { name = "async_path" },
+          -- { name = "buffer" },
         }),
         formatting = {
           format = lspkind.cmp_format({
@@ -210,16 +139,7 @@ return {
             symbol_map = { Copilot = "" },
           }),
         },
-        enabled = function()
-          -- disable completion in comments
-          local context = require("cmp.config.context")
-          -- keep command mode completion enabled when cursor is in a comment
-          if vim.api.nvim_get_mode().mode == "c" then
-            return true
-          else
-            return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
-          end
-        end,
+        enabled = true,
         experimental = {
           ghost_text = {
             hl_group = "LspCodeLens",
@@ -227,13 +147,22 @@ return {
         },
       }
     end,
+
     config = function(_, opts)
       local cmp = require("cmp")
       cmp.setup(opts)
 
+      local commandline_keymappings = {
+        ["<Tab>"] = { c = cmp.mapping.confirm({ select = true }) },
+        ["<M-j>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
+        ["<C-n>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
+        ["<C-p>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
+        ["<M-k>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
+      }
+
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline(commandline_keymappings),
         sources = {
           { name = "buffer" },
         },
@@ -241,20 +170,19 @@ return {
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline(commandline_keymappings),
         sources = cmp.config.sources({
           { name = "async_path" },
         }, {
           { name = "cmdline" },
         }),
-        matching = { disallow_symbol_nonprefix_matching = false },
+        -- matching = { disallow_symbol_nonprefix_matching = false },
       })
 
       -- If you want insert `(` after select function or method item
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
       local handlers = require("nvim-autopairs.completion.handlers")
-
       cmp.event:on(
         "confirm_done",
         cmp_autopairs.on_confirm_done({
@@ -274,8 +202,6 @@ return {
           },
         })
       )
-
-      vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
     end,
   },
 }
