@@ -5,6 +5,19 @@ local has_words_before = function()
 end
 -- require("plugin-settings.cmp")
 return {
+
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end,
+  },
+
   {
     "L3MON4D3/LuaSnip",
     lazy = true,
@@ -49,6 +62,14 @@ return {
   --     require("mini.pairs").setup(opts)
   --   end,
   -- },
+
+  -- Integrate copilot completion in cmp
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
 
   {
     "hrsh7th/nvim-cmp",
@@ -99,23 +120,28 @@ return {
           ["<C-j>"] = cmp.mapping.select_next_item(),
           ["<M-j>"] = cmp.mapping.select_next_item(),
           ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              else
-                cmp.select_next_item()
-              end
-            --[[ Replace with your snippet engine (see above sections on this page)
-              elseif snippy.can_expand_or_advance() then
-                snippy.expand_or_advance() ]]
-            elseif has_words_before() then
-              cmp.complete()
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              end
+            if cmp.visible() and has_words_before() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
             else
               fallback()
             end
+            -- if cmp.visible() then
+            --   if #cmp.get_entries() == 1 then
+            --     cmp.confirm({ select = true })
+            --   else
+            --     cmp.select_next_item()
+            --   end
+            -- --[[ Replace with your snippet engine (see above sections on this page)
+            --   elseif snippy.can_expand_or_advance() then
+            --     snippy.expand_or_advance() ]]
+            -- elseif has_words_before() then
+            --   cmp.complete()
+            --   if #cmp.get_entries() == 1 then
+            --     cmp.confirm({ select = true })
+            --   end
+            -- else
+            --   fallback()
+            -- end
           end, { "i", "s" }),
           -- ["<Tab>"] = {
           --   c = function(_)
@@ -165,6 +191,7 @@ return {
         }),
         sources = cmp.config.sources({
           -- { name = "nvim_lsp" },
+          { name = "copilot", group_indx = 2 },
           {
             name = "nvim_lsp",
             entry_filter = function(entry, ctx)
@@ -176,22 +203,11 @@ return {
           { name = "async_path" },
         }),
         formatting = {
-          -- format = function(_, item)
-          --   local icons = require("lazyvim.config").icons.kinds
-          --   if icons[item.kind] then
-          --     item.kind = icons[item.kind] .. item.kind
-          --   end
-          --   return item
-          -- end,
           format = lspkind.cmp_format({
-            with_text = true, -- do not show text alongside icons
-            -- mode = 'symbol', -- show only symbol annotations
+            mode = "symbol_text", -- show only symbol annotations
             maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
             ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-            before = function(entry, vim_item)
-              vim_item.menu = "[" .. entry.source.name .. "]"
-              return vim_item
-            end,
+            symbol_map = { Copilot = "" },
           }),
         },
         enabled = function()
@@ -258,6 +274,8 @@ return {
           },
         })
       )
+
+      vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
     end,
   },
 }
