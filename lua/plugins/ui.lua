@@ -212,6 +212,44 @@ return {
   },
 
   {
+    "kosayoda/nvim-lightbulb",
+    event = "LspAttach",
+    opts = {
+      autocmd = { enabled = true },
+    },
+  },
+  {
+    "rachartier/tiny-code-action.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
+    },
+    event = "LspAttach",
+    -- stylua: ignore
+    keys = {
+      { "<leader>a", function() require("tiny-code-action").code_action() end, desc = "Code action", noremap = true, silent = true, },
+    },
+    opts = {
+      --- The backend to use, currently only "vim", "delta" and "difftastic" are supported
+      backend = "delta",
+      backend_opts = {
+        delta = {
+          -- Header from delta can be quite large.
+          -- You can remove them by setting this to the number of lines to remove
+          header_lines_to_remove = 4,
+          args = {
+            "--config",
+            os.getenv("HOME") .. "/.config/nvim/configs/.gitconfig",
+          },
+        },
+      },
+    },
+    config = function(_, opts)
+      require("tiny-code-action").setup(opts)
+    end,
+  },
+
+  {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
