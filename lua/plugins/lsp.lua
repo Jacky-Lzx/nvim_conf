@@ -5,6 +5,25 @@ for type, icon in pairs(signs) do
 end
 
 return {
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "InsertEnter",
+    opts = {
+      bind = true,
+      handler_opts = {
+        border = "rounded",
+      },
+    },
+    -- stylua: ignore
+    keys = {
+      { "gk", function() vim.lsp.buf.signature_help()  end, mode = { "n" }, desc = "toggle signature", noremap = true, silent = true },
+      -- No use
+      -- { "<C-i>", function() require("lsp_signature").toggle_float_win() end, mode = { "i" }, desc = "toggle signature", noremap = true, silent = true },
+    },
+    config = function(_, opts)
+      require("lsp_signature").setup(opts)
+    end,
+  },
   -- cmdline tools and lsp servers
   {
 
