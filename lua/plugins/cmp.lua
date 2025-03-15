@@ -45,6 +45,9 @@ return {
       -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my_snippets/friendly-snippets" } })
       require("luasnip.loaders.from_lua").lazy_load({ paths = { "./my_snippets/lua" } })
 
+      -- local ls = require("luasnip")
+      -- ls.filetype_extend("systemverilog", { "verilog" })
+
       vim.api.nvim_create_user_command("SnippetList", require("luasnip.extras.snippet_list").open, {})
     end,
   },
