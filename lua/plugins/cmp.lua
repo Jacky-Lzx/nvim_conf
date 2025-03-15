@@ -39,9 +39,11 @@ return {
       delete_check_events = "TextChanged",
     },
     config = function(_, opts)
-      require("luasnip.loaders.from_vscode").load({ paths = { "./my_snippets" } }) -- Load snippets from my-snippets folder
-
       require("luasnip").setup(opts)
+
+      require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my_snippets/snippets" } }) -- Load snippets from my-snippets folder
+      -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my_snippets/friendly-snippets" } })
+      require("luasnip.loaders.from_lua").lazy_load({ paths = { "./my_snippets/lua" } })
 
       vim.api.nvim_create_user_command("SnippetList", require("luasnip.extras.snippet_list").open, {})
     end,
