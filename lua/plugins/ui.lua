@@ -133,27 +133,6 @@ return {
   --     },
   -- },
 
-  -- This repository has been archived by the owner on Aug 18, 2023. It is now read-only.
-  -- {
-  --   "kdheepak/tabline.nvim",
-  --   lazy = false,
-  --   dependencies = { "nvim-tree/nvim-web-devicons" },
-  --   opts = {},
-  --   -- stylua: ignore
-  --   keys = {
-  --     { "<leader>l", "<cmd>TablineBufferNext<cr>",     desc = "next buffer"     },
-  --     { "<leader>h", "<cmd>TablineBufferPrevious<cr>", desc = "previous buffer" },
-  --   },
-  --   config = function(_, opts)
-  --     require("tabline").setup(opts)
-  --
-  --     vim.cmd([[
-  --       set guioptions-=e " Use showtabline in gui vim
-  --       set sessionoptions+=tabpages,globals " store tabpages and globals in session
-  --     ]])
-  --   end,
-  -- },
-
   -- New replacement of tabline
   {
     "romgrk/barbar.nvim",
@@ -166,9 +145,24 @@ return {
     end,
     opts = {
       animation = false,
+      -- Automatically hide the tabline when there are this many buffers left.
+      -- Set to any value >=0 to enable.
+      auto_hide = 1,
+      -- Set the filetypes which barbar will offset itself for
+      sidebar_filetypes = {
+        -- Default values: {event = 'BufWinLeave', text = '', align = 'left'}
+        NvimTree = {
+          text = "NvimTree",
+          event = "BufWinLeave",
+        },
+        undotree = {
+          text = "UndoTree",
+        },
+      },
     },
     event = { "BufAdd", "FileReadPre" },
     keys = {
+      -- { "<leader>e" }, -- When NvimTree is loaded, also load barbar
       { "<leader>h", "<cmd>BufferPrevious<cr>", desc = "Next buffer" },
       { "<leader>l", "<cmd>BufferNext<cr>", desc = "Previous buffer" },
       { "<leader>x", "<cmd>BufferClose<cr>", desc = "Close buffer" },
