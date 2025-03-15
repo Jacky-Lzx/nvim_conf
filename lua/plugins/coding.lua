@@ -1,4 +1,86 @@
-return {
+-- @param t1 table: table to be concatenated
+-- @param t2 table: table to be concatenated
+-- @return table: concatenated table
+local function concat_tables(t1, t2)
+  for _, v in ipairs(t2) do
+    table.insert(t1, v)
+  end
+  return t1
+end
+
+local verilog = require("plugins.languages.verilog")
+
+local M = {
+  {
+    "CRAG666/code_runner.nvim",
+    config = function()
+      require("code_runner").setup({
+        options = {
+          -- term = {
+          --   position = "vert",
+          --   size = 20,
+          --   winblend = 10,
+          --   hide_numbers = true,
+          --   list = true,
+          -- },
+        },
+        filetype = {
+          -- java = {
+          --   "cd $dir &&",
+          --   "javac $fileName &&",
+          --   "java $fileNameWithoutExt",
+          -- },
+          -- python = "python3 -u",
+          -- typescript = "deno run",
+          -- rust = {
+          --   "cd $dir &&",
+          --   "rustc $fileName &&",
+          --   "$dir/$fileNameWithoutExt",
+          -- },
+          -- c = function(...)
+          --   c_base = {
+          --     "cd $dir &&",
+          --     "gcc $fileName -o",
+          --     "/tmp/$fileNameWithoutExt",
+          --   }
+          --   local c_exec = {
+          --     "&& /tmp/$fileNameWithoutExt &&",
+          --     "rm /tmp/$fileNameWithoutExt",
+          --   }
+          --   vim.ui.input({ prompt = "Add more args:" }, function(input)
+          --     c_base[4] = input
+          --     vim.print(vim.tbl_extend("force", c_base, c_exec))
+          --     require("code_runner.commands").run_from_fn(vim.list_extend(c_base, c_exec))
+          --   end)
+          -- end,
+          -- verilog = {
+          --   "cd $dir &&",
+          --   "sh compile.sh &&",
+          --   "./$fileNameWithoutExt",
+          -- },
+          verilog = function()
+            local verilog_compile = {
+              "cd $dir &&",
+              "sh compile.sh",
+            }
+            local verilog_exec = {
+              "&&",
+            }
+            -- Set default name to current file name without extension
+            local default_name = vim.fn.expand("%:t:r")
+            -- Replace the last '_' in default_name with '.'
+            default_name = default_name:gsub("_(%w+)$", ".%1")
+
+            vim.ui.input({ prompt = "Executable name:", default = default_name }, function(input)
+              verilog_exec[2] = "./" .. input
+            end)
+            require("code_runner.commands").run_from_fn(vim.list_extend(verilog_compile, verilog_exec))
+          end,
+        },
+      })
+    end,
+  },
+
   {
     "echasnovski/mini.cursorword",
     version = false,
@@ -190,3 +272,9 @@ return {
     },
   },
 }
+
+concat_tables(M, verilog)
+
+-- Concatenate tables
+
+return M
