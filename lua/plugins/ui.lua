@@ -240,10 +240,16 @@ return {
               ["<M-Up>"] = function(...)
                 return require("telescope.actions").cycle_history_prev(...)
               end,
-              ["<C-k>"] = function(...)
+              ["<C-d>"] = function(...)
+                require("telescope.actions").preview_scrolling_down(...)
+              end,
+              ["<C-u>"] = function(...)
+                require("telescope.actions").preview_scrolling_up(...)
+              end,
+              ["<M-k>"] = function(...)
                 return require("telescope.actions").move_selection_previous(...)
               end,
-              ["<C-j>"] = function(...)
+              ["<M-j>"] = function(...)
                 return require("telescope.actions").move_selection_next(...)
               end,
             },
