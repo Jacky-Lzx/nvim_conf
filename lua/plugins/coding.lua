@@ -9,6 +9,8 @@ local function concat_tables(t1, t2)
 end
 
 local verilog = require("plugins.languages.verilog")
+local python = require("plugins.languages.python")
+local markdown = require("plugins.languages.markdown")
 
 local M = {
   {
@@ -274,6 +276,8 @@ local M = {
 }
 
 concat_tables(M, verilog)
+concat_tables(M, python)
+concat_tables(M, markdown)
 
 -- Concatenate tables
 
