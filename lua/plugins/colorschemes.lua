@@ -1,4 +1,4 @@
-local colorscheme = require("colorscheme")
+local colorscheme = Colorscheme or "gruvbox"
 
 if colorscheme == "dracula" then
   return {

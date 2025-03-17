@@ -100,11 +100,10 @@ return {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = function()
-      local colorscheme = require("colorscheme")
       return {
         options = {
           icons_enabled = true,
-          theme = colorscheme,
+          theme = Colorscheme,
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
           disabled_filetypes = {

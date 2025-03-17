@@ -15,3 +15,5 @@ Enabled_languages = {
   "rust",
   "lua",
 }
+
+Colorscheme = "catppuccin"
