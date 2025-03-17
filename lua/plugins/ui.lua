@@ -216,6 +216,7 @@ return {
     event = "LspAttach",
     opts = {
       autocmd = { enabled = true },
+      -- virtual_text = { enabled = true },
     },
   },
   {
@@ -427,6 +428,20 @@ return {
         return math.floor(vim.o.columns * 0.5)
       end,
     },
+    config = function(_, opts)
+      local notify = require("notify")
+      vim.notify = notify
+      print = function(...)
+        local print_safe_args = {}
+        local args = { ... }
+        for i = 1, #args do
+          table.insert(print_safe_args, tostring(args[i]))
+        end
+        notify("print(): " .. table.concat(print_safe_args, " "), "info")
+      end
+
+      notify.setup(opts)
+    end,
   },
 
   -- Forgot why installing this plugin. Uninstalling it seems no change
