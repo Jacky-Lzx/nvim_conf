@@ -1,6 +1,8 @@
 -- Verilog related plugins
 
-return {
+local M = {}
+
+M.plugins = {
   -- {'HonkW93/automatic-verilog'},
   -- {
   --   "mingo99/verilog-autoinst.nvim",
@@ -14,3 +16,5 @@ return {
   --   opts = {},
   -- },
 }
+
+return M

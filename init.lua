@@ -40,6 +40,8 @@ vim.g.python3_host_prog = "/opt/homebrew/anaconda3/envs/neovim/bin/python3"
 -- vim.opt.formatoptions:remove { "r", "o" }
 vim.cmd([[ autocmd FileType * set formatoptions-=ro ]])
 
+require("global")
+
 if vim.g.neovide then
   require("neovide")
 end

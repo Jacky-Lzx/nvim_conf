@@ -8,9 +8,11 @@ local function concat_tables(t1, t2)
   return t1
 end
 
-local verilog = require("plugins.languages.verilog")
-local python = require("plugins.languages.python")
-local markdown = require("plugins.languages.markdown")
+local enabled_languages = {
+  "verilog",
+  "python",
+  "markdown",
+}
 
 local M = {
   {
@@ -275,10 +277,9 @@ local M = {
   },
 }
 
-concat_tables(M, verilog)
-concat_tables(M, python)
-concat_tables(M, markdown)
-
--- Concatenate tables
+for i = 1, #enabled_languages do
+  local lang = require("plugins.languages." .. enabled_languages[i])
+  concat_tables(M, lang.plugins)
+end
 
 return M

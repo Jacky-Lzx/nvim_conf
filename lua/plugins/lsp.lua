@@ -65,11 +65,12 @@ return {
       formatters_by_ft = {
         lua = { "stylua" },
         -- Conform will run multiple formatters sequentially
-        python = { "isort", "black" },
+        -- python = { "isort", "black" },
         -- You can customize some of the format options for the filetype (:help conform.format)
         rust = { "rustfmt", lsp_format = "fallback" },
         -- Conform will run the first available formatter
         javascript = { "prettierd", "prettier", stop_after_first = true },
+        markdown = { "prettier" },
       },
       format_on_save = {
         -- These options will be passed to conform.format()
@@ -77,13 +78,17 @@ return {
         lsp_format = "fallback",
       },
     },
+    config = function(_, opts)
+      opts["formatters_by_ft"]["python"] = require("plugins.languages.python").setup(G.language.formatter)
+      require("conform").setup(opts)
+    end,
   },
 
   {
     "mfussenegger/nvim-lint",
     config = function()
       require("lint").linters_by_ft = {
-        markdown = { "vale" },
+        -- markdown = { "vale" },
         verilog = { "verilator" },
       }
 
@@ -146,6 +151,7 @@ return {
       -- options for vim.diagnostic.config()
       diagnostics = {
         underline = false,
+        signs = false,
         update_in_insert = false,
         virtual_text = { spacing = 4, prefix = "●" },
         severity_sort = true,
@@ -160,7 +166,8 @@ return {
         ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls" },
       })
 
-      require("lspconfig").pyright.setup({})
+      -- require("lspconfig").pyright.setup({})
+      require("plugins.languages.python").setup(G.language.lsp)
 
       -- require("lspconfig").svls.setup({
       --   root_dir = function(fname)
@@ -176,28 +183,44 @@ return {
       require("lspconfig").jsonls.setup({})
 
       require("lspconfig").lua_ls.setup({
-        settings = {
-          Lua = {
+        on_init = function(client)
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if
+              path ~= vim.fn.stdpath("config")
+              and (vim.loop.fs_stat(path .. "/.luarc.json") or vim.loop.fs_stat(path .. "/.luarc.jsonc"))
+            then
+              return
+            end
+          end
+
+          client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
             runtime = {
-              -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-              version = "LuaJIT",
+              -- Tell the language server which version of Lua you're using
+              -- (most likely LuaJIT in the case of Neovim)
+              -- version = "LuaJIT",
             },
-            diagnostics = {
-              -- Get the language server to recognize the `vim` global
-              globals = { "vim", "use" },
-            },
+            -- Make the server aware of Neovim runtime files
             workspace = {
-              -- Make the server aware of Neovim runtime files
-              library = vim.api.nvim_get_runtime_file("", true),
-              checkThirdParty = false, -- THIS IS THE IMPORTANT LINE TO ADD -- https://github.com/neovim/nvim-lspconfig/issues/1700 -- Disables prompt
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+                -- Depending on the usage, you might want to add additional paths here.
+                -- "${3rd}/luv/library"
+                -- "${3rd}/busted/library",
+              },
+              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+              -- library = vim.api.nvim_get_runtime_file("", true)
             },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = { enable = false },
-          },
+          })
+        end,
+        settings = {
+          Lua = {},
         },
       })
 
-      require("lspconfig").marksman.setup({})
+      -- require("lspconfig").marksman.setup({})
+      require("lspconfig").vale_ls.setup({})
 
       require("lspconfig").verible.setup({
         -- filetypes = { "verilog", "systemverilog", "v" },

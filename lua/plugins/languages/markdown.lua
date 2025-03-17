@@ -1,4 +1,6 @@
-return {
+local M = {}
+
+M.plugins = {
   {
     "3rd/image.nvim",
     ft = { "markdown" },
@@ -52,3 +54,4 @@ return {
     },
   },
 }
+return M
