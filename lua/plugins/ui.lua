@@ -262,6 +262,19 @@ return {
     opts = function()
       return {
         defaults = {
+          -- Flex layout swaps between `horizontal` and `vertical` strategies based on the window width
+          layout_strategy = "flex",
+          layout_config = {
+            width = 0.9,
+            height = 0.9,
+            horizontal = {
+              preview_width = 0.55,
+            },
+            vertical = {
+              preview_height = 0.6,
+            },
+          },
+          -- laygout_config = {},
           -- wrap_results = true,
           -- prompt_prefix = " ",
           -- selection_caret = " ",
@@ -279,11 +292,33 @@ return {
               ["<C-u>"] = function(...)
                 require("telescope.actions").preview_scrolling_up(...)
               end,
+              ["<C-h>"] = function(...)
+                require("telescope.actions").preview_scrolling_left(...)
+              end,
+              ["<C-l>"] = function(...)
+                require("telescope.actions").preview_scrolling_right(...)
+              end,
               ["<M-k>"] = function(...)
                 return require("telescope.actions").move_selection_previous(...)
               end,
               ["<M-j>"] = function(...)
                 return require("telescope.actions").move_selection_next(...)
+              end,
+              ["<M-d>"] = function(...)
+                require("telescope.actions").results_scrolling_down(...)
+                -- require("telescope.actions").move_to_middle(...)
+                require("telescope.actions").center(...)
+              end,
+              ["<M-u>"] = function(...)
+                require("telescope.actions").results_scrolling_up(...)
+                -- require("telescope.actions").move_to_middle(...)
+                require("telescope.actions").center(...)
+              end,
+              ["<M-h>"] = function(...)
+                require("telescope.actions").results_scrolling_left(...)
+              end,
+              ["<M-l>"] = function(...)
+                require("telescope.actions").results_scrolling_right(...)
               end,
             },
             n = {
