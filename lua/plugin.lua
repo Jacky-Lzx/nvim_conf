@@ -19,26 +19,16 @@ local opts = {
   spec = {
     { import = "plugins" },
   },
-  custom_keys = {
-    -- you can define custom key maps here.
-    -- To disable one of the defaults, set it to false
-
-    -- open lazygit log
-    ["<localleader>l"] = false,
-
-    -- open a terminal for the plugin dir
-    ["<localleader>t"] = false,
-  },
   install = {
     -- install missing plugins on startup. This doesn't increase startup time.
     missing = true,
     -- try to load one of these colorschemes when starting an installation during startup
-    colorscheme = { "gruvbox" },
+    colorscheme = { "catppuccin" },
   },
   -- automatically check for plugin updates
   -- checker = { enabled = true },
   git = {
-    clone_timeout = 600,
+    timeout = 120,
     -- url_format = "git@github.com:%s.git",
   },
   ui = {
@@ -72,4 +62,4 @@ local opts = {
 
 require("lazy").setup(opts)
 
-vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>")
+vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Open Lazy.nvim" })
