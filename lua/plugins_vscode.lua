@@ -72,7 +72,7 @@ require("lazy").setup({
     keys = {
       { "<leader>s",  "<Plug>(leap-forward-to)",  mode = { "n", "x", "o" }, desc = "Leap jump forward" },
       { "<leader>S",  "<Plug>(leap-backward-to)", mode = { "n", "x", "o" }, desc = "Leap jump backward" },
-      { "<leader>gs", "<Plug>(leap-from-window)", mode = { "n", "x", "o" }, desc = "Leap jump window" },
+    -- { "<leader>gs", "<Plug>(leap-from-window)", mode = { "n", "x", "o" }, desc = "Leap jump window" },
     },
   },
   {
