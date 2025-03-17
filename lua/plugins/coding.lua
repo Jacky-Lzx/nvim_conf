@@ -8,12 +8,6 @@ local function concat_tables(t1, t2)
   return t1
 end
 
-local enabled_languages = {
-  "verilog",
-  "python",
-  "markdown",
-}
-
 local M = {
   {
     "CRAG666/code_runner.nvim",
@@ -277,8 +271,8 @@ local M = {
   },
 }
 
-for i = 1, #enabled_languages do
-  local lang = require("plugins.languages." .. enabled_languages[i])
+for i = 1, #Enabled_languages do
+  local lang = require("plugins.languages." .. Enabled_languages[i])
   concat_tables(M, lang.plugins)
 end
 

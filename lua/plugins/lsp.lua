@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
@@ -62,16 +64,7 @@ return {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     opts = {
-      formatters_by_ft = {
-        lua = { "stylua" },
-        -- Conform will run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        -- You can customize some of the format options for the filetype (:help conform.format)
-        rust = { "rustfmt", lsp_format = "fallback" },
-        -- Conform will run the first available formatter
-        javascript = { "prettierd", "prettier", stop_after_first = true },
-        markdown = { "prettier" },
-      },
+      formatters_by_ft = utils.language_setup_return_table(G.language.formatter),
       format_on_save = {
         -- These options will be passed to conform.format()
         timeout_ms = 500,
@@ -79,7 +72,8 @@ return {
       },
     },
     config = function(_, opts)
-      opts["formatters_by_ft"]["python"] = require("plugins.languages.python").setup(G.language.formatter)
+      opts["formatters_by_ft"].javascript = { "prettierd", "prettier", stop_after_first = true }
+
       require("conform").setup(opts)
     end,
   },
@@ -87,16 +81,7 @@ return {
   {
     "mfussenegger/nvim-lint",
     config = function()
-      require("lint").linters_by_ft = {
-        -- markdown = { "vale" },
-        verilog = { "verilator" },
-      }
-
-      local verilator = require("lint").linters.verilator
-
-      verilator.args = {
-        "+1800-2017ext+sv",
-      }
+      require("lint").linters_by_ft = utils.language_setup_return_table(G.language.linter)
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()
@@ -166,69 +151,10 @@ return {
         ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls" },
       })
 
-      -- require("lspconfig").pyright.setup({})
-      require("plugins.languages.python").setup(G.language.lsp)
+      utils.language_setup(G.language.lsp)
 
-      -- require("lspconfig").svls.setup({
-      --   root_dir = function(fname)
-      --     -- return require("lspconfig.util").find_git_ancestor(fname)
-      --     return vim.fs.dirname(fname)
-      --   end,
-      --   cmd = { "svls" },
-      --   filetypes = { "verilog", "systemverilog" },
-      -- })
-
-      -- require("lspconfig").pylsp.setup({})
-      -- require("lspconfig").python_lsp_server.setup({})
       require("lspconfig").jsonls.setup({})
 
-      require("lspconfig").lua_ls.setup({
-        on_init = function(client)
-          if client.workspace_folders then
-            local path = client.workspace_folders[1].name
-            if
-              path ~= vim.fn.stdpath("config")
-              and (vim.loop.fs_stat(path .. "/.luarc.json") or vim.loop.fs_stat(path .. "/.luarc.jsonc"))
-            then
-              return
-            end
-          end
-
-          client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-            runtime = {
-              -- Tell the language server which version of Lua you're using
-              -- (most likely LuaJIT in the case of Neovim)
-              -- version = "LuaJIT",
-            },
-            -- Make the server aware of Neovim runtime files
-            workspace = {
-              checkThirdParty = false,
-              library = {
-                vim.env.VIMRUNTIME,
-                -- Depending on the usage, you might want to add additional paths here.
-                -- "${3rd}/luv/library"
-                -- "${3rd}/busted/library",
-              },
-              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
-              -- library = vim.api.nvim_get_runtime_file("", true)
-            },
-          })
-        end,
-        settings = {
-          Lua = {},
-        },
-      })
-
-      -- require("lspconfig").marksman.setup({})
-      require("lspconfig").vale_ls.setup({})
-
-      require("lspconfig").verible.setup({
-        -- filetypes = { "verilog", "systemverilog", "v" },
-        root_dir = function(fname)
-          -- return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
-          return vim.fs.dirname(fname)
-        end,
-      })
       -- require("lspconfig").ltex.setup({})
       require("lspconfig").clangd.setup({
         on_attach = function(client, bufnr)
@@ -237,15 +163,6 @@ return {
         cmd = {
           "clangd",
           -- "--header-insertion=never",
-        },
-      })
-      require("lspconfig").rust_analyzer.setup({
-        settings = {
-          ["rust-analyzer"] = {
-            diagnostics = {
-              enable = false,
-            },
-          },
         },
       })
 
@@ -267,36 +184,34 @@ return {
 
       -- vim.keymap.set('n', '<leader>gf', vim.lsp.buf.format(), {})
 
-      vim.keymap.set("n", "<space>E", vim.diagnostic.open_float)
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-      vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+      vim.keymap.set("n", "<space>E", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+      vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, { desc = "List all diagnostics" })
 
       -- Use LspAttach autocommand to only map the following keys
       -- after the language server attaches to the current buffer
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
-          -- Enable completion triggered by <c-x><c-o>
-          vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-
           -- Buffer local mappings.
           -- See `:help vim.lsp.*` for documentation on any of the below functions
-          local opts = { buffer = ev.buf }
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          -- local opts_local = { buffer = ev.buf }
+          local opts_local = {}
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts_local)
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts_local)
           -- vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts_local)
           -- vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-          vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-          vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+          vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts_local)
+          vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts_local)
           vim.keymap.set("n", "<space>wl", function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, opts)
-          vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+          end, opts_local)
+          vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts_local)
           vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "Rename" })
           -- vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { buffer = ev.buf, desc = "Code actions" })
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts_local)
           -- vim.keymap.set("n", "<space>f", function()
           -- 	vim.lsp.buf.format({ async = true })
           -- end, opts)

@@ -1,5 +1,23 @@
 local M = {}
 
+function M.setup(setting_name)
+  if setting_name == G.language.lsp then
+    require("lspconfig").marksman.setup({})
+    require("lspconfig").vale_ls.setup({})
+    return
+  end
+
+  if setting_name == G.language.formatter then
+    return { "prettier" }
+  end
+
+  if setting_name == G.language.linter then
+    return nil
+  end
+
+  require("notify")("Unknown setting for language `markdown`: " .. setting_name)
+end
+
 M.plugins = {
   {
     "3rd/image.nvim",
@@ -54,4 +72,5 @@ M.plugins = {
     },
   },
 }
+
 return M
