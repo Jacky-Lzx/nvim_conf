@@ -45,7 +45,7 @@ vim.cmd([[ autocmd FileType * set formatoptions-=ro ]])
 require("global")
 
 if vim.g.neovide then
-  require("neovide")
+  require("neovide.neovide")
 end
 
 require("plugin")
