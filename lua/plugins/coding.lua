@@ -10,6 +10,31 @@ end
 
 local M = {
   {
+    -- highlight and search for todo comments like TODO, HACK, BUG in your code base.
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    -- stylua: ignore
+    keys = {
+      { "<leader>td", "<cmd>TodoTelescope<cr>", desc = "List todo comments" },
+    },
+    config = true,
+  },
+
+  {
+    "echasnovski/mini.align",
+    version = "*",
+    opts = {
+      mappings = {
+        start = "gA",
+        start_with_preview = "ga",
+      },
+    },
+    config = function(_, opts)
+      require("mini.align").setup(opts)
+    end,
+  },
+
+  {
     "CRAG666/code_runner.nvim",
     config = function()
       require("code_runner").setup({
@@ -87,15 +112,15 @@ local M = {
     end,
   },
 
-  {
-    "preservim/tagbar",
-    lazy = true,
-    -- stylua: ignore
-    keys = {
-      { "<leader>t", "<cmd>TagbarToggle<cr>", desc = "toggle tagbar" }
-    },
-    config = function() end,
-  },
+  -- {
+  --   "preservim/tagbar",
+  --   lazy = true,
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<leader>tt", "<cmd>TagbarToggle<cr>", desc = "toggle tagbar" }
+  --   },
+  --   config = function() end,
+  -- },
 
   -- "mg979/vim-visual-multi",
 
@@ -260,15 +285,15 @@ local M = {
 
   { "wakatime/vim-wakatime", lazy = false },
 
-  {
-    "Vonr/align.nvim",
-    -- stylua: ignore
-    keys = {
-      -- { "aa" , function() require("align").align_to_char(1, true)             end,            mode = "x", noremap = true, silent = true, desc = "align to 1 char" },
-      -- { "as" , function() require("align").align_to_char(2, true, true)       end,            mode = "x", noremap = true, silent = true, desc = "align to 2 char" },
-      { "as" , function() require'align'.align_to_string({ preview = true, regex = true, }) end, mode = "x", noremap = true, silent = true, desc = "align to string" },
-    },
-  },
+  -- {
+  --   "Vonr/align.nvim",
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "aa" , function() require("align").align_to_char(1, true)             end,            mode = "x", noremap = true, silent = true, desc = "align to 1 char" },
+  --     { "as" , function() require("align").align_to_char(2, true, true)       end,            mode = "x", noremap = true, silent = true, desc = "align to 2 char" },
+  --     { "as" , function() require'align'.align_to_string({ preview = true, regex = true, }) end, mode = "x", noremap = true, silent = true, desc = "align to string" },
+  --   },
+  -- },
 }
 
 for i = 1, #Enabled_languages do

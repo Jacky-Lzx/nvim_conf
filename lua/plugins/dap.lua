@@ -18,6 +18,7 @@ return {
     },
     -- stylua: ignore
     keys = {
+      {"<leader>d"},
       {"<F5>", function() require("dap").continue() end, mode = "n", desc = "Continue"},
       {"<F6>", function() require("dap").step_over() end, mode = "n", desc = "Step over"},
       {"<F7>", function() require("dap").step_into() end, mode = "n", desc = "Step into"},

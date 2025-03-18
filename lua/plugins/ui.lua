@@ -1,4 +1,16 @@
 return {
+  {
+    -- Distraction-free coding
+    "folke/zen-mode.nvim",
+    dependencies = { { "folke/twilight.nvim", opts = { context = 10 } } }, -- Dims inactive portions of the code you're editing.
+    cmd = "ZenMode",
+    opts = {
+      plugins = {
+        twilight = { enabled = true },
+      },
+    },
+  },
+
   -- Show colors in the text: e.g. "#b3e2a7"
   {
     "norcalli/nvim-colorizer.lua",
@@ -24,7 +36,19 @@ return {
   {
     -- Conflicted with vscode_nvim, don't know why
     "kevinhwang91/nvim-hlslens",
-    keys = { "n", "N", "/", "?" },
+    -- stylua: ignore
+    keys = {
+      { "n", "nzz<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Next match", noremap = true, silent = true },
+      { "N", "Nzz<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Previous match", noremap = true, silent = true },
+      { "*", "*<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Next match", noremap = true, silent = true },
+      { "#", "#<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Previous match", noremap = true, silent = true },
+      { "g*", "g*<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Next match", noremap = true, silent = true },
+      { "g#", "g#<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Previous match", noremap = true, silent = true },
+      { "//", "<Cmd>noh<CR>", mode = "n", desc = "Clear highlight", noremap = true, silent = true },
+
+      { "/" },
+      { "?" },
+    },
     opts = {
       nearest_only = true,
     },
@@ -85,10 +109,20 @@ return {
     opts = {
       ---@type false | "classic" | "modern" | "helix"
       preset = "modern",
-      win = { title = false },
-      spec = {
-        { "<leader>f", group = "Telescope" },
+      win = {
+        no_overlap = false,
+        title = false,
       },
+      spec = {
+        { "<leader>d", group = "Dap", icon = "" },
+        { "<leader>f", group = "Telescope" },
+        { "<leader>n", group = "Noice" },
+        { "<leader>w", group = "Workspace" },
+      },
+      -- expand all nodes wighout a description
+      expand = function(node)
+        return not node.desc
+      end,
     },
     keys = {
       -- stylua: ignore
@@ -160,11 +194,15 @@ return {
       },
     },
     event = { "BufAdd", "FileReadPre" },
+    -- stylua: ignore
     keys = {
       -- { "<leader>e" }, -- When NvimTree is loaded, also load barbar
-      { "<leader>h", "<cmd>BufferPrevious<cr>", desc = "Next buffer" },
-      { "<leader>l", "<cmd>BufferNext<cr>", desc = "Previous buffer" },
-      { "<leader>x", "<cmd>BufferClose<cr>", desc = "Close buffer" },
+      -- { "<leader>h", "<cmd>BufferPrevious<cr>", desc = "Previous buffer" },
+      -- { "<leader>l", "<cmd>BufferNext<cr>", desc = "Next buffer" },
+      -- { "<leader>x", "<cmd>BufferClose<cr>", desc = "Close buffer" },
+      { "<M-h>", "<cmd>BufferPrevious<cr>", mode = { "n" }, desc = "Previous buffer" },
+      { "<M-l>", "<cmd>BufferNext<cr>",     mode = { "n" }, desc = "Next buffer"     },
+      { "<M-w>", "<cmd>BufferClose<cr>",    mode = { "n" }, desc = "Close buffer"    },
     },
   },
 
@@ -176,38 +214,6 @@ return {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
     },
     opts = {},
-  },
-
-  {
-    "numToStr/FTerm.nvim",
-    -- stylua: ignore
-    keys = {
-      { "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>',            mode = "n", desc = "Toggle float terminal" },
-      { "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', mode = "t", desc = "Toggle float terminal" },
-      { "<C-g>",                                                      mode = "n", desc = "Toggle Lazygit" },
-    },
-    opts = {
-      border = "rounded",
-      dimensions = {
-        height = 0.9,
-        width = 0.9,
-      },
-    },
-    init = function()
-      local fterm = require("FTerm")
-      local lg = fterm:new({
-        ft = "lazygit",
-        cmd = "lazygit --use-config-file=$HOME/.config/lazygit/config.yml",
-        dimensions = {
-          height = 0.9,
-          width = 0.9,
-        },
-      })
-      -- Use this to toggle lazygit in a floating terminal
-      vim.keymap.set("n", "<C-g>", function()
-        lg:toggle()
-      end)
-    end,
   },
 
   {
@@ -342,22 +348,20 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      { "<leader>fb", "<cmd>Telescope buffers<cr>",                  desc = "buffers" },
-      { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",          desc = "lsp definitions" },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>",               desc = "find files" },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>",                desc = "live grep" },
-      { "<leader>fh", "<cmd>Telescope help_tags<cr>",                desc = "help tags" },
-      { "<leader>fk", "<cmd>Telescope keymaps<cr>",                  desc = "keymaps" },
-      { "<leader>fq", "<cmd>Telescope quickfix<cr>",                 desc = "quick fix" },
-      { "<leader>fr", "<cmd>Telescope registers<cr>",                desc = "registers" },
-      -- { "<leader>fc", "<cmd>Telescope colorscheme<cr>",              desc = "colorscheme" },
-      { "<leader>fc", "<cmd>Telescope highlights<cr>",               desc = "highlights" },
-      { "<leader>fm", "<cmd>Telescope noice<cr>",                    desc = "noice message history" },
-      { "<leader>fn", "<cmd>Telescope notify<cr>",                   desc = "notify message history" },
-      { "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>",     desc = "document symbols" },
-      -- { "<leader>fs", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "workspace symbols" },
-      -- Set in lspconfig
-      -- { "<leader>a", function() vim.lsp.buf.code_action() end,       desc = "code action" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>",                  desc = "Buffers" },
+      { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",          desc = "Lsp definitions" },
+      { "<leader>ff", "<cmd>Telescope find_files<cr>",               desc = "Find files" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>",                desc = "Live grep" },
+      { "<leader>fh", "<cmd>Telescope help_tags<cr>",                desc = "Help tags" },
+      { "<leader>fk", "<cmd>Telescope keymaps<cr>",                  desc = "Keymaps" },
+      { "<leader>fq", "<cmd>Telescope quickfix<cr>",                 desc = "Quick fix" },
+      { "<leader>fr", "<cmd>Telescope registers<cr>",                desc = "Registers" },
+      -- { "<leader>fc", "<cmd>Telescope colorscheme<cr>",           desc = "Colorscheme" },
+      { "<leader>fc", "<cmd>Telescope highlights<cr>",               desc = "Highlights" },
+      { "<leader>fm", "<cmd>Telescope noice<cr>",                    desc = "Noice message history" },
+      { "<leader>fn", "<cmd>Telescope notify<cr>",                   desc = "Notify message history" },
+      { "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>",     desc = "Document symbols" },
+      -- { "<leader>fs", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace symbols" },
     },
     config = function(_, opts)
       require("telescope").setup(opts)

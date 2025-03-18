@@ -6,7 +6,7 @@ function M.setup(setting_name)
       settings = {
         ["rust-analyzer"] = {
           diagnostics = {
-            enable = false,
+            enable = true,
           },
         },
       },
