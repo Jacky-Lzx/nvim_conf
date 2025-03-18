@@ -23,6 +23,7 @@ local M = {
   {
     "echasnovski/mini.align",
     version = "*",
+    event = "BufRead",
     opts = {
       mappings = {
         start = "gA",
@@ -36,6 +37,7 @@ local M = {
 
   {
     "CRAG666/code_runner.nvim",
+    cmd = { "RunCode" },
     config = function()
       require("code_runner").setup({
         options = {
@@ -107,6 +109,7 @@ local M = {
   {
     "echasnovski/mini.cursorword",
     version = false,
+    event = "BufRead",
     config = function()
       require("mini.cursorword").setup()
     end,
@@ -139,7 +142,7 @@ local M = {
 
   {
     "mbbill/undotree",
-    lazy = false,
+    lazy = true,
     keys = {
       { "<leader>ut", "<cmd>UndotreeToggle<cr>", desc = "toggle undo-tree" },
     },

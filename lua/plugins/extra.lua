@@ -38,6 +38,7 @@ return {
 
   {
     "ibhagwan/smartyank.nvim",
+    events = { "BufRead" },
     opts = {
       highlight = {
         enabled = true, -- highlight yanked text

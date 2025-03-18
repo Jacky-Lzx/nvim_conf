@@ -14,6 +14,7 @@ return {
   -- Show colors in the text: e.g. "#b3e2a7"
   {
     "norcalli/nvim-colorizer.lua",
+    event = "BufRead",
     opts = {},
     config = function(_)
       require("colorizer").setup()
@@ -22,6 +23,7 @@ return {
 
   {
     "lewis6991/gitsigns.nvim",
+    event = "BufRead",
     opts = {
       signcolumn = false,
       numhl = true,
@@ -62,6 +64,7 @@ return {
 
   {
     "petertriho/nvim-scrollbar",
+    event = "BufWinEnter",
     opts = {
       handle = {
         text = " ",

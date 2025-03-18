@@ -94,6 +94,7 @@ return {
 
   {
     "mfussenegger/nvim-lint",
+    event = { "BufWritePre" },
     config = function()
       require("lint").linters_by_ft = utils.language_setup_return_table(G.language.linter)
 
@@ -237,6 +238,7 @@ return {
   },
   {
     "lewis6991/hover.nvim",
+    event = "BufRead",
     config = function()
       require("hover").setup({
         init = function()

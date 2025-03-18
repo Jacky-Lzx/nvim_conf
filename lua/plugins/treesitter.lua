@@ -2,6 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    event = "BufReadPost",
     opts = {
       auto_install = true,
       highlight = {
@@ -30,7 +31,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter-context",
-    lazy = false,
+    event = "BufReadPost",
     opts = {
       enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
       max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
