@@ -7,44 +7,6 @@ end
 return {
 
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    dependencies = {
-      -- { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
-      { "zbirenbaum/copilot.lua" }, -- or zbirenbaum/copilot.lua
-      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-    },
-    build = "make tiktoken", -- Only on MacOS or Linux
-    cmd = { "CopilotChat", "CopilotChatToggle", "CopilotChatPrompts" },
-    opts = {
-      mappings = {
-        submit_prompt = {
-          normal = "<Leader>s",
-          insert = "<C-s>",
-        },
-        show_diff = {
-          -- full_diff = true,
-        },
-      },
-      -- See Configuration section for options
-    },
-    -- See Commands section for default commands if you want to lazy load on them
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-        filetypes = {
-          markdown = true,
-        },
-      })
-    end,
-  },
-
-  {
     "L3MON4D3/LuaSnip",
     lazy = true,
     event = "InsertEnter",
