@@ -206,15 +206,16 @@ return {
     },
   },
 
-  {
-    "nvim-tree/nvim-tree.lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional, for file icons
-    -- stylua: ignore
-    keys = {
-      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
-    },
-    opts = {},
-  },
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   lazy = true,
+  --   dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional, for file icons
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
+  --   },
+  --   opts = {},
+  -- },
 
   {
     "kosayoda/nvim-lightbulb",
@@ -230,7 +231,6 @@ return {
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope.nvim" },
     },
-    event = "LspAttach",
     -- stylua: ignore
     keys = {
       { "<leader>a", function() require("tiny-code-action").code_action() end, desc = "Code action", noremap = true, silent = true, },
@@ -250,9 +250,6 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("tiny-code-action").setup(opts)
-    end,
   },
 
   {
