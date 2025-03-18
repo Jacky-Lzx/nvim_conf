@@ -20,6 +20,26 @@ end
 
 M.plugins = {
   {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = "markdown",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons", "hrsh7th/nvim-cmp" }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {
+      completions = { lsp = { enabled = true } },
+    },
+    config = function(_, opts)
+      require("render-markdown").setup(opts)
+
+      local cmp = require("cmp")
+      cmp.setup({
+        sources = cmp.config.sources({
+          { name = "render-markdown" },
+        }),
+      })
+    end,
+  },
+  {
     "HakonHarnes/img-clip.nvim",
     opts = {
       -- add options here
