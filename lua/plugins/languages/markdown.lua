@@ -21,11 +21,11 @@ end
 M.plugins = {
   {
     "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    cmd = { "MarkdownPreviewToggle" },
     build = "cd app && yarn install",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-    end,
+    -- init = function()
+    --   vim.g.mkdp_filetypes = { "markdown" }
+    -- end,
     ft = { "markdown" },
   },
   {
@@ -74,7 +74,11 @@ M.plugins = {
         },
       },
     },
-    opts = {},
+    opts = {
+      window_overlap_clear_enabled = true,
+      editor_only_render_when_focused = false, -- auto show/hide images when the editor gains/looses focus
+      tmux_show_only_in_active_window = true, -- auto show/hide images in the correct Tmux window (needs visual-activity off)
+    },
   },
   -- {
   --   "edluffy/hologram.nvim",
