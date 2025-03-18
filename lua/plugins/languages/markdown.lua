@@ -20,6 +20,21 @@ end
 
 M.plugins = {
   {
+    "HakonHarnes/img-clip.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add options here
+      -- or leave it empty to use the default settings
+      default = {
+        dir_path = "Figures_Markdown", ---@type string | fun(): string
+      },
+    },
+    keys = {
+      -- suggested keymap
+      { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+    },
+  },
+  {
     "3rd/image.nvim",
     ft = { "markdown" },
     dependencies = {
