@@ -131,6 +131,10 @@ return {
   --   end,
   -- },
 
+  -- Useful status updates for LSP
+  -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+  { "j-hui/fidget.nvim", lazy = true, opts = {} },
+
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
@@ -141,10 +145,8 @@ return {
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { "j-hui/fidget.nvim", opts = {} },
       "SmiteshP/nvim-navic",
+      "j-hui/fidget.nvim",
     },
     opts = {
       -- options for vim.diagnostic.config()

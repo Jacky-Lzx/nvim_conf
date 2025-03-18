@@ -7,7 +7,7 @@ return {
     dependencies = { "folke/snacks.nvim", lazy = true },
     -- stylua: ignore
     keys = {
-      { "<leader>E",  "<cmd>Yazi<cr>",        desc = "Open yazi at the current file", mode = { "n", "v" }},
+      { "<leader>e",  "<cmd>Yazi<cr>",        desc = "Open yazi at the current file", mode = { "n", "v" }},
       { "<leader>cw", "<cmd>Yazi cwd<cr>",    desc = "Open yazi in nvim's working directory"             },
       { "<c-up>",     "<cmd>Yazi toggle<cr>", desc = "Resume the last yazi session"                      },
     },
@@ -41,7 +41,7 @@ return {
         width = 0.9,
       },
     },
-    init = function()
+    config = function(_, opts)
       local fterm = require("FTerm")
       local lg = fterm:new({
         ft = "lazygit",
@@ -51,6 +51,9 @@ return {
           width = 0.9,
         },
       })
+
+      require("FTerm").setup(opts)
+
       -- Use this to toggle lazygit in a floating terminal
       vim.keymap.set("n", "<C-g>", function()
         lg:toggle()
