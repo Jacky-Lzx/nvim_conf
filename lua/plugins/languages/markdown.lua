@@ -2,8 +2,25 @@ local M = {}
 
 function M.setup(setting_name)
   if setting_name == G.language.lsp then
-    require("lspconfig").marksman.setup({})
-    require("lspconfig").vale_ls.setup({})
+    require("lspconfig").marksman.setup({
+      on_attach = LspOnAttach,
+      capabilities = LspCapabilities,
+    })
+    -- require("lspconfig").marksman.setup({
+    --   on_attach = function(ignore, bufnr)
+    --     on_attach(ignore, bufnr)
+    --     -- Enable code lens autorefresh
+    --     vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, {
+    --       buffer = bufnr,
+    --       callback = vim.lsp.codelens.refresh,
+    --     })
+    --     -- This is needed to show the code lenses initially
+    --     vim.lsp.codelens.refresh()
+    --   end,
+    --   -- capabilities = capabilities,
+    -- })
+
+    -- require("lspconfig").vale_ls.setup({})
     return
   end
 
@@ -36,6 +53,13 @@ M.plugins = {
     ---@type render.md.UserConfig
     opts = {
       completions = { lsp = { enabled = true } },
+      render_modes = true,
+      checkbox = { checked = { scope_highlight = "@markup.strikethrough" } },
+      indent = {
+        enabled = true,
+        skip_heading = true,
+      },
+      latex = { enabled = false },
     },
     config = function(_, opts)
       require("render-markdown").setup(opts)

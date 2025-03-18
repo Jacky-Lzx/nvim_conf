@@ -53,6 +53,15 @@ elseif colorscheme == "catppuccin" then
             indentscope_color = "blue", -- catppuccin color (eg. `lavender`) Default: text
           },
         },
+        custom_highlights = function(colors)
+          return {
+            -- Comment = { fg = colors.flamingo },
+            -- TabLineSel = { bg = colors.pink },
+            -- CmpBorder = { fg = colors.surface2 },
+            -- Pmenu = { bg = colors.none },
+            LineNr = { fg = colors.surface2 },
+          }
+        end,
       },
       config = function(_, opts)
         require("catppuccin").setup(opts)

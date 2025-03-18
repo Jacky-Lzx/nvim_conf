@@ -113,7 +113,8 @@ return {
         -- stylua: ignore
         sources = cmp.config.sources({
           { name = "copilot", group_indx = 2 },
-          { name = "nvim_lsp", entry_filter = function(entry, _) return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind() end, },
+          -- { name = "nvim_lsp", entry_filter = function(entry, _) return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind() end, },
+          { name = "nvim_lsp", entry_filter = true},
           { name = "luasnip" },
           { name = "async_path" },
           -- { name = "buffer" },
