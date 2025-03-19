@@ -82,6 +82,7 @@ return {
       "rcarriga/nvim-notify",
       "nvim-lualine/lualine.nvim",
     },
+    cmd = "OverseerRun",
     opts = {
       template_dirs = { "templates.overseer" },
       -- templates = { "convert_md_to_pdf" },

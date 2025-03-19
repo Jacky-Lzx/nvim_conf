@@ -3,7 +3,7 @@ return {
   "just",
   "make",
   "npm",
-  "shell",
+  -- "shell",
   "tox",
   "vscode",
   "mage",
