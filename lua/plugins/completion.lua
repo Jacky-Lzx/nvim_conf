@@ -35,62 +35,30 @@ return {
       -- C-k: Toggle signature help (if signature.enabled = true)
       --
       -- See :h blink-cmp-config-keymap for defining your own keymap
+      -- stylua: ignore
       keymap = {
-        --         -- ["<C-m>"] = cmp.mapping(cmp.complete(), { "i", "c" }),
-        --
-        --         ["<M-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-        --         ["<M-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-        --
-        --         -- Close current completion and insert a newline
-        --         ["<S-CR>"] = cmp.mapping(function(fallback) if cmp.visible() then cmp.close() end fallback() end, { "i", "s" }),
-
         -- If the command/function returns false or nil, the next command/function will be run.
         preset = "default",
-        ["<A-k>"] = {
-          function(cmp)
-            return cmp.select_prev({ auto_insert = false })
-          end,
-          "fallback",
-        },
-        ["<A-j>"] = {
-          function(cmp)
-            return cmp.select_next({ auto_insert = false })
-          end,
-          "fallback",
-        },
-        ["<C-p>"] = {
-          function(cmp)
-            return cmp.select_prev({ auto_insert = false })
-          end,
-          "fallback",
-        },
-        ["<C-n>"] = {
-          function(cmp)
-            return cmp.select_next({ auto_insert = false })
-          end,
-          "fallback",
-        },
+        ["<A-k>"] = { function(cmp) return cmp.select_prev({ auto_insert = false }) end, "fallback", },
+        ["<A-j>"] = { function(cmp) return cmp.select_next({ auto_insert = false }) end, "fallback", },
+        ["<C-p>"] = { function(cmp) return cmp.select_prev({ auto_insert = false }) end, "fallback", },
+        ["<C-n>"] = { function(cmp) return cmp.select_next({ auto_insert = false }) end, "fallback", },
 
         ["<C-u"] = { "scroll_documentation_up", "fallback" },
         ["<C-d>"] = { "scroll_documentation_down", "fallback" },
         ["<A-u>"] = { "scroll_documentation_up", "fallback" },
         ["<A-d>"] = { "scroll_documentation_down", "fallback" },
 
-        -- stylua: ignore
         ["<Tab>"] = { function(cmp) return cmp.accept() end, "fallback", },
-        -- stylua: ignore
         ["<CR>"] = { function(cmp) return cmp.accept() end, "fallback", },
+        -- Close current completion and insert a newline
+        ["<S-CR>"] = { function(cmp) cmp.hide() return false end, "fallback", },
 
-        -- stylua: ignore
         -- Show/Remove completion
         ["<A-/>"] = { function(cmp) if cmp.is_menu_visible() then return cmp.hide() else return cmp.show() end end, "fallback", },
 
         -- show with a list of providers
-        ["<C-space>"] = {
-          function(cmp)
-            cmp.show({ providers = { "snippets" } })
-          end,
-        },
+        ["<C-space>"] = { function(cmp) cmp.show({ providers = { "snippets" } }) end, },
       },
 
       appearance = {
@@ -128,6 +96,10 @@ return {
             module = "blink-copilot",
             score_offset = 100,
             async = true,
+            opts = {
+              kind_icon = "",
+              kind_hl = "DevIconCopilot",
+            },
           },
           spell = {
             name = "Spell",
@@ -160,7 +132,7 @@ return {
           },
           cmdline = {
             min_keyword_length = 2,
-            -- ignores cmdline completions when executing shell commands
+            -- Ignores cmdline completions when executing shell commands
             enabled = function()
               return vim.fn.getcmdtype() ~= ":" or not vim.fn.getcmdline():match("^[%%0-9,'<>%-]*!")
             end,
@@ -168,14 +140,10 @@ return {
         },
       },
 
-      -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
-      -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-      -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
-      --
-      -- See the fuzzy documentation for more information
-      fuzzy = { implementation = "prefer_rust_with_warning" },
+      fuzzy = {
+        implementation = "prefer_rust_with_warning",
+      },
 
-      -- opts_extend = { "sources.default" },
       completion = {
         -- NOTE: some LSPs may add auto brackets themselves anyway
         accept = { auto_brackets = { enabled = true } },
@@ -189,19 +157,16 @@ return {
               kind_icon = {
                 ellipsis = false,
                 text = function(ctx)
-                  -- local lspkind = require("lspkind")
                   local icon = ctx.kind_icon
-                  if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                  if icon then
+                    -- Do nothing
+                  elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
                     local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
                     if dev_icon then
                       icon = dev_icon
                     end
-                  elseif ctx.source_name == "copilot" then
-                    icon = ""
                   else
-                    icon = require("lspkind").symbolic(ctx.kind, {
-                      mode = "symbol",
-                    })
+                    icon = require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
                   end
 
                   return icon .. ctx.icon_gap
@@ -212,7 +177,9 @@ return {
                 -- keep the highlight groups in sync with the icons.
                 highlight = function(ctx)
                   local hl = ctx.kind_hl
-                  if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                  if hl then
+                    -- Do nothing
+                  elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
                     local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
                     if dev_icon then
                       hl = dev_hl
@@ -225,8 +192,6 @@ return {
           },
         },
         documentation = {
-          -- border = "single",
-          -- winhighlight = "NormalFloat:BlinkBorder",
           auto_show = true,
           -- Delay before showing the documentation window
           auto_show_delay_ms = 200,
@@ -261,11 +226,6 @@ return {
           show_without_menu = true,
         },
       },
-      -- completion = {
-      --   menu = { border = "single" },
-      --   documentation = { window = { border = "single" } },
-      -- },
-      -- signature = { window = { border = "single" } },
       cmdline = {
         completion = {
           menu = {

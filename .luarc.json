@@ -1,10 +1,14 @@
 {
-  "diagnostics.disable": [
-    "undefined-field",
-    "undefined-doc-name"
+  "runtime.version": "LuaJIT",
+  "runtime.path": [
+    "lua/?.lua",
+    "lua/?/init.lua"
   ],
   "diagnostics.globals": [
-    "vim",
-    "use"
+    "vim"
+  ],
+  "workspace.checkThirdParty": false,
+  "workspace.library": [
+    "$VIMRUNTIME"
   ]
 }
