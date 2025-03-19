@@ -447,7 +447,7 @@ return {
     opts = {
       -- render = "compact",
       -- stages = "fade",
-      -- background_colour = "#282828",
+      fps = 60,
       timeout = 3000,
       max_height = function()
         return math.floor(vim.o.lines * 0.5)
@@ -465,7 +465,10 @@ return {
         for i = 1, #args do
           table.insert(print_safe_args, tostring(args[i]))
         end
-        notify("print(): " .. table.concat(print_safe_args, " "), "info")
+        notify(table.concat(print_safe_args, "\n"), vim.log.levels.INFO, {
+          title = "Print results",
+          icon = "󰐪",
+        })
       end
 
       notify.setup(opts)
