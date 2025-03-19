@@ -1,4 +1,12 @@
 return {
+
+  {
+    "echasnovski/mini.diff",
+    event = "BufReadPost",
+    version = "*",
+    opts = {},
+  },
+
   {
     "nvim-tree/nvim-web-devicons",
     opts = {
