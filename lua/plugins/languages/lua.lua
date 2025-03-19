@@ -23,6 +23,20 @@ function M.setup(setting_name)
   require("notify")("Unknown setting for language `lua`: " .. setting_name)
 end
 
-M.plugins = {}
+M.plugins = {
+  -- Provide neovim config completion
+  -- Have its settings in blink.cmp in `completion.lua`
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+}
 
 return M

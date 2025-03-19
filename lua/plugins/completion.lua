@@ -76,12 +76,18 @@ return {
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         -- "buffer" source is used to complete words
-        default = { "copilot", "lsp", "path", "snippets", "buffer", "spell" },
+        default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer", "spell" },
         per_filetype = {
           codecompanion = { "codecompanion" },
         },
 
         providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
+          },
           lsp = {
             -- Default
             -- Filter text items from the LSP provider, since we have the buffer provider for that
