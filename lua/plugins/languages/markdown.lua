@@ -5,23 +5,7 @@ function M.setup(setting_name)
     local capabilities = require("blink.cmp").get_lsp_capabilities()
     require("lspconfig").marksman.setup({
       capabilities = capabilities,
-      -- on_attach = LspOnAttach,
-      -- capabilities = LspCapabilities,
     })
-    -- require("lspconfig").marksman.setup({
-    --   on_attach = function(ignore, bufnr)
-    --     on_attach(ignore, bufnr)
-    --     -- Enable code lens autorefresh
-    --     vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, {
-    --       buffer = bufnr,
-    --       callback = vim.lsp.codelens.refresh,
-    --     })
-    --     -- This is needed to show the code lenses initially
-    --     vim.lsp.codelens.refresh()
-    --   end,
-    --   -- capabilities = capabilities,
-    -- })
-
     require("lspconfig").vale_ls.setup({
       capabilities = capabilities,
     })
@@ -40,23 +24,32 @@ function M.setup(setting_name)
 end
 
 M.plugins = {
-  -- {
-  --   "iamcco/markdown-preview.nvim",
-  --   cmd = { "MarkdownPreviewToggle" },
-  --   build = "cd app && yarn install",
-  --   -- init = function()
-  --   --   vim.g.mkdp_filetypes = { "markdown" }
-  --   -- end,
-  --   ft = { "markdown" },
-  -- },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle" },
+    build = "cd app && yarn install",
+    -- init = function()
+    --   -- require("markdown-preview").setup(opts)
+    --   vim.g.mkdp_filetypes = { "markdown" }
+    -- end,
+    ft = { "markdown" },
+  },
   {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = "markdown",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons", "hrsh7th/nvim-cmp" }, -- if you prefer nvim-web-devicons
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons", -- if you prefer nvim-web-devicons
+    },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
       completions = { lsp = { enabled = true } },
+      -- Vim modes that will show a rendered view of the markdown file, :h mode(), for all enabled
+      -- components. Individual components can be enabled for other modes. Remaining modes will be
+      -- unaffected by this plugin.
+      -- Default: render_modes = { "n", "c", "t" },
+      -- Set to true to enable render in all modes
       render_modes = true,
       checkbox = { checked = { scope_highlight = "@markup.strikethrough" } },
       indent = {
@@ -69,6 +62,7 @@ M.plugins = {
       require("render-markdown").setup(opts)
     end,
   },
+
   {
     "HakonHarnes/img-clip.nvim",
     opts = {
@@ -86,16 +80,6 @@ M.plugins = {
   {
     "3rd/image.nvim",
     ft = { "markdown" },
-    -- build = false,
-    -- dependencies = {
-    --   {
-    --     "vhyrro/luarocks.nvim",
-    --     priority = 1001, -- this plugin needs to run before anything else
-    --     opts = {
-    --       rocks = { "magick" },
-    --     },
-    --   },
-    -- },
     opts = {
       processor = "magick_cli",
       window_overlap_clear_enabled = true,
@@ -121,8 +105,6 @@ M.plugins = {
     dependencies = {
       -- Required.
       "nvim-lua/plenary.nvim",
-
-      -- see below for full list of optional dependencies 👇
     },
     opts = {
       workspaces = {
@@ -131,8 +113,6 @@ M.plugins = {
           path = "~/Documents_lzx/Obsidian/Research",
         },
       },
-
-      -- see below for full list of options 👇
     },
   },
 }
