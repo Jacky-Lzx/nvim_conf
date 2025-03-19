@@ -14,6 +14,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = {
+      -- Show variable values as virtual texts
       "theHamsta/nvim-dap-virtual-text",
     },
     -- stylua: ignore
@@ -35,7 +36,11 @@ return {
     },
 
     config = function()
-      require("nvim-dap-virtual-text").setup()
+      require("nvim-dap-virtual-text").setup({
+        -- position of virtual text, see `:h nvim_buf_set_extmark()`, default tries to inline the virtual text. Use 'eol' to set to end of line
+        -- virt_text_pos = vim.fn.has("nvim-0.10") == 1 and "inline" or "eol",
+        virt_text_pos = "eol",
+      })
 
       local dap, dapui = require("dap"), require("dapui")
 
