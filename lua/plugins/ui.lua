@@ -23,11 +23,14 @@ return {
 
   {
     "lewis6991/gitsigns.nvim",
-    event = "BufRead",
+    event = "BufReadPost",
     opts = {
       signcolumn = false,
       numhl = true,
+      -- wrod_diff = true,
+      -- Toggle the line blame by `:Gitsigns toggle_current_line_blame`
       current_line_blame = true,
+      attach_to_untracked = true,
     },
     config = function(_, opts)
       require("gitsigns").setup(opts)
@@ -64,7 +67,7 @@ return {
 
   {
     "petertriho/nvim-scrollbar",
-    event = "BufWinEnter",
+    event = "BufReadPost",
     opts = {
       handle = {
         text = " ",
@@ -136,25 +139,12 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    event = "BufReadPre",
     opts = function()
       return {
         options = {
-          icons_enabled = true,
-          theme = Colorscheme,
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
-          disabled_filetypes = {
-            statusline = {},
-            winbar = {},
-          },
-          ignore_focus = {},
-          always_divide_middle = true,
-          globalstatus = false,
-          refresh = {
-            statusline = 1000,
-            tabline = 1000,
-            winbar = 1000,
-          },
         },
       }
     end,
