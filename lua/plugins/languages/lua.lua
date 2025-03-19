@@ -2,7 +2,9 @@ local M = {}
 
 function M.setup(setting_name)
   if setting_name == G.language.lsp then
+    local capabilities = require("blink.cmp").get_lsp_capabilities()
     require("lspconfig").lua_ls.setup({
+      capabilities = capabilities,
       on_init = function(client)
         if client.workspace_folders then
           local path = client.workspace_folders[1].name

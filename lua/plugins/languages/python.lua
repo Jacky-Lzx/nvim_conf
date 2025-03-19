@@ -5,7 +5,10 @@ M.plugins = {}
 
 function M.setup(setting_name)
   if setting_name == G.language.lsp then
-    require("lspconfig").pyright.setup({})
+    local capabilities = require("blink.cmp").get_lsp_capabilities()
+    require("lspconfig").pyright.setup({
+      capabilities = capabilities,
+    })
     return
 
     -- require("lspconfig").pyright.setup({

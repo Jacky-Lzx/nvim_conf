@@ -19,7 +19,9 @@ M.plugins = {
 
 function M.setup(setting_name)
   if setting_name == G.language.lsp then
+    local capabilities = require("blink.cmp").get_lsp_capabilities()
     require("lspconfig").verible.setup({
+      capabilities = capabilities,
       -- filetypes = { "verilog", "systemverilog", "v" },
       root_dir = function(fname)
         -- return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])

@@ -32,7 +32,7 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { "gk", function() vim.lsp.buf.signature_help()  end, mode = { "n" }, desc = "toggle signature", noremap = true, silent = true },
+      { "gK", function() vim.lsp.buf.signature_help()  end, mode = { "n" }, desc = "toggle signature", noremap = true, silent = true },
       -- No use
       -- { "<C-i>", function() require("lsp_signature").toggle_float_win() end, mode = { "i" }, desc = "toggle signature", noremap = true, silent = true },
     },
@@ -143,11 +143,11 @@ return {
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
       { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
-      "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp",
+      -- "hrsh7th/cmp-nvim-lsp",
       "SmiteshP/nvim-navic",
       "j-hui/fidget.nvim",
+      "saghen/blink.cmp",
     },
     opts = {
       -- options for vim.diagnostic.config()
@@ -261,7 +261,7 @@ return {
 
       -- Setup keymaps
       vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
-      vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
+      -- vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
     end,
   },
 }

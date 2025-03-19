@@ -64,24 +64,23 @@ return {
   {
     "zbirenbaum/copilot.lua",
 
-    dependencies = {
-      {
-        "zbirenbaum/copilot-cmp",
-        config = function()
-          require("copilot_cmp").setup()
-        end,
-      },
-    },
+    -- dependencies = {
+    --   {
+    --     "zbirenbaum/copilot-cmp",
+    --     config = function()
+    --       require("copilot_cmp").setup()
+    --     end,
+    --   },
+    -- },
     -- cmd = "Copilot",
     event = "VeryLazy",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-        filetypes = {
-          markdown = true,
-        },
-      })
-    end,
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+      filetypes = {
+        markdown = true,
+        help = true,
+      },
+    },
   },
 }

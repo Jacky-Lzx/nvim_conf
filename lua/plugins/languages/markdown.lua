@@ -2,9 +2,11 @@ local M = {}
 
 function M.setup(setting_name)
   if setting_name == G.language.lsp then
+    local capabilities = require("blink.cmp").get_lsp_capabilities()
     require("lspconfig").marksman.setup({
-      on_attach = LspOnAttach,
-      capabilities = LspCapabilities,
+      capabilities = capabilities,
+      -- on_attach = LspOnAttach,
+      -- capabilities = LspCapabilities,
     })
     -- require("lspconfig").marksman.setup({
     --   on_attach = function(ignore, bufnr)
@@ -20,7 +22,9 @@ function M.setup(setting_name)
     --   -- capabilities = capabilities,
     -- })
 
-    -- require("lspconfig").vale_ls.setup({})
+    require("lspconfig").vale_ls.setup({
+      capabilities = capabilities,
+    })
     return
   end
 
@@ -36,15 +40,15 @@ function M.setup(setting_name)
 end
 
 M.plugins = {
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle" },
-    build = "cd app && yarn install",
-    -- init = function()
-    --   vim.g.mkdp_filetypes = { "markdown" }
-    -- end,
-    ft = { "markdown" },
-  },
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   cmd = { "MarkdownPreviewToggle" },
+  --   build = "cd app && yarn install",
+  --   -- init = function()
+  --   --   vim.g.mkdp_filetypes = { "markdown" }
+  --   -- end,
+  --   ft = { "markdown" },
+  -- },
   {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = "markdown",
@@ -63,13 +67,6 @@ M.plugins = {
     },
     config = function(_, opts)
       require("render-markdown").setup(opts)
-
-      local cmp = require("cmp")
-      cmp.setup({
-        sources = cmp.config.sources({
-          { name = "render-markdown" },
-        }),
-      })
     end,
   },
   {
@@ -89,27 +86,23 @@ M.plugins = {
   {
     "3rd/image.nvim",
     ft = { "markdown" },
-    dependencies = {
-      {
-        "vhyrro/luarocks.nvim",
-        priority = 1001, -- this plugin needs to run before anything else
-        opts = {
-          rocks = { "magick" },
-        },
-      },
-    },
+    -- build = false,
+    -- dependencies = {
+    --   {
+    --     "vhyrro/luarocks.nvim",
+    --     priority = 1001, -- this plugin needs to run before anything else
+    --     opts = {
+    --       rocks = { "magick" },
+    --     },
+    --   },
+    -- },
     opts = {
+      processor = "magick_cli",
       window_overlap_clear_enabled = true,
       editor_only_render_when_focused = false, -- auto show/hide images when the editor gains/looses focus
       tmux_show_only_in_active_window = true, -- auto show/hide images in the correct Tmux window (needs visual-activity off)
     },
   },
-  -- {
-  --   "edluffy/hologram.nvim",
-  --   opts = {
-  --     auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
-  --   },
-  -- },
 
   -- Obsidian Plugin
   {
