@@ -1,17 +1,4 @@
 return {
-  {
-    "https://github.com/HiPhish/rainbow-delimiters.nvim",
-    event = "BufReadPost",
-    config = true,
-    main = "rainbow-delimiters.setup",
-  },
-
-  {
-    "echasnovski/mini.diff",
-    event = "BufReadPost",
-    version = "*",
-    opts = {},
-  },
 
   {
     "nvim-tree/nvim-web-devicons",
@@ -24,6 +11,20 @@ return {
         },
       },
     },
+  },
+
+  {
+    "https://github.com/HiPhish/rainbow-delimiters.nvim",
+    event = "BufReadPost",
+    config = true,
+    main = "rainbow-delimiters.setup",
+  },
+
+  {
+    "echasnovski/mini.diff",
+    event = "BufReadPost",
+    version = "*",
+    opts = {},
   },
 
   {
@@ -194,24 +195,15 @@ return {
               function()
                 return navic.get_location()
               end,
-              -- cond = function()
-              --   return navic.is_available()
-              -- end,
+              cond = function()
+                return navic.is_available()
+              end,
             },
           },
         },
       }
     end,
   },
-
-  -- {
-  --   "echasnovski/mini.bufremove",
-  --     -- stylua: ignore
-  --     keys = {
-  --       { "<leader>x", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer"         },
-  --       { "<leader>X", function() require("mini.bufremove").delete(0, true)  end, desc = "Delete Buffer (Force)" },
-  --     },
-  -- },
 
   -- New replacement of tabline
   {
@@ -243,26 +235,22 @@ return {
     event = { "BufAdd", "FileReadPre" },
     -- stylua: ignore
     keys = {
-      -- { "<leader>e" }, -- When NvimTree is loaded, also load barbar
-      -- { "<leader>h", "<cmd>BufferPrevious<cr>", desc = "Previous buffer" },
-      -- { "<leader>l", "<cmd>BufferNext<cr>", desc = "Next buffer" },
-      -- { "<leader>x", "<cmd>BufferClose<cr>", desc = "Close buffer" },
-      { "<M-h>", "<cmd>BufferPrevious<cr>", mode = { "n" }, desc = "Previous buffer" },
-      { "<M-l>", "<cmd>BufferNext<cr>",     mode = { "n" }, desc = "Next buffer"     },
-      { "<M-w>", "<cmd>BufferClose<cr>",    mode = { "n" }, desc = "Close buffer"    },
+      { "<A-<>", "<CMD>BufferMovePrevious<CR>", mode = {"n"}, desc = "Move buffer left"  },
+      { "<A->>", "<CMD>BufferMoveNext<CR>",     mode = {"n"}, desc = "Move buffer right" },
+      { "<A-1>", "<CMD>BufferGoto 1<CR>",       mode = {"n"}, desc = "Go to buffer 1"    },
+      { "<A-2>", "<CMD>BufferGoto 2<CR>",       mode = {"n"}, desc = "Go to buffer 2"    },
+      { "<A-3>", "<CMD>BufferGoto 3<CR>",       mode = {"n"}, desc = "Go to buffer 3"    },
+      { "<A-4>", "<CMD>BufferGoto 4<CR>",       mode = {"n"}, desc = "Go to buffer 4"    },
+      { "<A-5>", "<CMD>BufferGoto 5<CR>",       mode = {"n"}, desc = "Go to buffer 5"    },
+      { "<A-6>", "<CMD>BufferGoto 6<CR>",       mode = {"n"}, desc = "Go to buffer 6"    },
+      { "<A-7>", "<CMD>BufferGoto 7<CR>",       mode = {"n"}, desc = "Go to buffer 7"    },
+      { "<A-8>", "<CMD>BufferGoto 8<CR>",       mode = {"n"}, desc = "Go to buffer 8"    },
+      { "<A-9>", "<CMD>BufferGoto 9<CR>",       mode = {"n"}, desc = "Go to buffer 9"    },
+      { "<M-h>", "<CMD>BufferPrevious<CR>",     mode = {"n"}, desc = "Previous buffer"   },
+      { "<M-l>", "<CMD>BufferNext<CR>",         mode = {"n"}, desc = "Next buffer"       },
+      { "<M-w>", "<CMD>BufferClose<CR>",        mode = {"n"}, desc = "Close buffer"      },
     },
   },
-
-  -- {
-  --   "nvim-tree/nvim-tree.lua",
-  --   lazy = true,
-  --   dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional, for file icons
-  --   -- stylua: ignore
-  --   keys = {
-  --     { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
-  --   },
-  --   opts = {},
-  -- },
 
   {
     "kosayoda/nvim-lightbulb",
@@ -327,53 +315,24 @@ return {
           -- wrap_results = true,
           -- prompt_prefix = " ",
           -- selection_caret = " ",
+          -- stylua: ignore
           mappings = {
             i = {
-              ["<M-Down>"] = function(...)
-                return require("telescope.actions").cycle_history_next(...)
-              end,
-              ["<M-Up>"] = function(...)
-                return require("telescope.actions").cycle_history_prev(...)
-              end,
-              ["<C-d>"] = function(...)
-                require("telescope.actions").preview_scrolling_down(...)
-              end,
-              ["<C-u>"] = function(...)
-                require("telescope.actions").preview_scrolling_up(...)
-              end,
-              ["<C-h>"] = function(...)
-                require("telescope.actions").preview_scrolling_left(...)
-              end,
-              ["<C-l>"] = function(...)
-                require("telescope.actions").preview_scrolling_right(...)
-              end,
-              ["<M-k>"] = function(...)
-                return require("telescope.actions").move_selection_previous(...)
-              end,
-              ["<M-j>"] = function(...)
-                return require("telescope.actions").move_selection_next(...)
-              end,
-              ["<M-d>"] = function(...)
-                require("telescope.actions").results_scrolling_down(...)
-                -- require("telescope.actions").move_to_middle(...)
-                require("telescope.actions").center(...)
-              end,
-              ["<M-u>"] = function(...)
-                require("telescope.actions").results_scrolling_up(...)
-                -- require("telescope.actions").move_to_middle(...)
-                require("telescope.actions").center(...)
-              end,
-              ["<M-h>"] = function(...)
-                require("telescope.actions").results_scrolling_left(...)
-              end,
-              ["<M-l>"] = function(...)
-                require("telescope.actions").results_scrolling_right(...)
-              end,
+              ["<M-Down>"] = function(...) require("telescope.actions").cycle_history_next(...)                                              end,
+              ["<M-Up>"]   = function(...) require("telescope.actions").cycle_history_prev(...)                                              end,
+              ["<C-d>"]    = function(...) require("telescope.actions").preview_scrolling_down(...)                                          end,
+              ["<C-u>"]    = function(...) require("telescope.actions").preview_scrolling_up(...)                                            end,
+              ["<C-h>"]    = function(...) require("telescope.actions").preview_scrolling_left(...)                                          end,
+              ["<C-l>"]    = function(...) require("telescope.actions").preview_scrolling_right(...)                                         end,
+              ["<M-k>"]    = function(...) require("telescope.actions").move_selection_previous(...)                                         end,
+              ["<M-j>"]    = function(...) require("telescope.actions").move_selection_next(...)                                             end,
+              ["<M-d>"]    = function(...) require("telescope.actions").results_scrolling_down(...) require("telescope.actions").center(...) end,
+              ["<M-u>"]    = function(...) require("telescope.actions").results_scrolling_up(...) require("telescope.actions").center(...)   end,
+              ["<M-h>"]    = function(...) require("telescope.actions").results_scrolling_left(...)                                          end,
+              ["<M-l>"]    = function(...) require("telescope.actions").results_scrolling_right(...)                                         end,
             },
             n = {
-              ["q"] = function(...)
-                return require("telescope.actions").close(...)
-              end,
+              ["q"]        = function(...) require("telescope.actions").close(...)                                                           end,
             },
           },
         },
@@ -528,24 +487,4 @@ return {
       notify.setup(opts)
     end,
   },
-
-  -- Forgot why installing this plugin. Uninstalling it seems no change
-  -- {
-  --   "stevearc/dressing.nvim",
-  --   lazy = true,
-  --   init = function()
-  --     ---@diagnostic disable-next-line: duplicate-set-field
-  --     vim.ui.select = function(...)
-  --       require("lazy").load({ plugins = { "dressing.nvim" } })
-  --       return vim.ui.select(...)
-  --     end
-  --     ---@diagnostic disable-next-line: duplicate-set-field
-  --     vim.ui.input = function(...)
-  --       require("lazy").load({ plugins = { "dressing.nvim" } })
-  --       return vim.ui.input(...)
-  --     end
-  --   end,
-  -- },
-
-  -- { "Bekaboo/dropbar.nvim" },
 }
