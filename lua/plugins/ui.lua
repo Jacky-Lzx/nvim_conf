@@ -1,6 +1,13 @@
 return {
 
   {
+    "https://github.com/HiPhish/rainbow-delimiters.nvim",
+    event = "BufReadPost",
+    config = true,
+    main = "rainbow-delimiters.setup",
+  },
+
+  {
     "echasnovski/mini.diff",
     event = "BufReadPost",
     version = "*",

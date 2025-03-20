@@ -13,6 +13,7 @@ local M = {
     -- highlight and search for todo comments like TODO, HACK, BUG in your code base.
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    event = "BufReadPost",
     -- stylua: ignore
     keys = {
       { "<leader>td", "<cmd>TodoTelescope<cr>", desc = "List todo comments" },
