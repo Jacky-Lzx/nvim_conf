@@ -58,6 +58,19 @@ local opts = {
       },
     },
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "matchparen",
+        "gzip",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "zipPlugin",
+        "tutor",
+      },
+    },
+  },
 }
 
 require("lazy").setup(opts)
