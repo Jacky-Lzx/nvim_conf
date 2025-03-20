@@ -1,13 +1,14 @@
 local M = {}
 
-function M.setup(setting_name)
+function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
-    local capabilities = require("blink.cmp").get_lsp_capabilities()
     require("lspconfig").marksman.setup({
-      capabilities = capabilities,
+      on_attach = extra.on_attach,
+      capabilities = extra.capabilities,
     })
     require("lspconfig").vale_ls.setup({
-      capabilities = capabilities,
+      on_attach = extra.on_attach,
+      capabilities = extra.capabilities,
     })
     return
   end

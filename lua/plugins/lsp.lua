@@ -133,8 +133,13 @@ return {
   -- },
 
   -- Useful status updates for LSP
-  -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-  { "j-hui/fidget.nvim", lazy = true, opts = {} },
+  {
+    "SmiteshP/nvim-navic",
+    lazy = true,
+    opts = {
+      highlight = true,
+    },
+  },
 
   {
     -- LSP Configuration & Plugins
@@ -146,7 +151,9 @@ return {
       "williamboman/mason-lspconfig.nvim",
       -- "hrsh7th/cmp-nvim-lsp",
       "SmiteshP/nvim-navic",
-      "j-hui/fidget.nvim",
+      -- Show lsp status on the bottom-left
+      -- Have no idea why it still works when not installed
+      -- "j-hui/fidget.nvim",
       "saghen/blink.cmp",
     },
     opts = {
@@ -162,13 +169,20 @@ return {
     config = function(_, opts)
       vim.diagnostic.config(opts.diagnostics)
 
-      local navic = require("nvim-navic")
-      -- require("mason").setup()
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls" },
       })
 
-      utils.language_setup(G.language.lsp)
+      local extra = {
+        on_attach = function(client, bufnr)
+          if client.server_capabilities.documentSymbolProvider then
+            require("nvim-navic").attach(client, bufnr)
+          end
+        end,
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
+      }
+
+      utils.language_setup(G.language.lsp, extra)
 
       require("lspconfig").jsonls.setup({})
 

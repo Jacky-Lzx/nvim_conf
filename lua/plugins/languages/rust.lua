@@ -1,10 +1,12 @@
 local M = {}
 
-function M.setup(setting_name)
+function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
     local capabilities = require("blink.cmp").get_lsp_capabilities()
     require("lspconfig").rust_analyzer.setup({
-      capabilities = capabilities,
+      on_attach = extra.on_attach,
+      capabilities = extra.capabilities,
+
       settings = {
         ["rust-analyzer"] = {
           diagnostics = {

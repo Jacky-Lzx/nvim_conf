@@ -1,10 +1,10 @@
 local M = {}
 
-function M.setup(setting_name)
+function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
-    local capabilities = require("blink.cmp").get_lsp_capabilities()
+    -- on_attach = extra.on_attach,
+    -- capabilities = extra.capabilities,
 
-    -- require("notify")("Unknown setting for language `python`: " .. setting_name)
     return
   end
 
