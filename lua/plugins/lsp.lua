@@ -13,8 +13,8 @@ return {
     cmd = "Trouble",
     -- stylua: ignore
     keys = {
-      { "<leader>tx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)", },
-      { "<leader>tX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)", },
+      { "<leader>q", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)", },
+      { "<leader>tq", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)", },
       { "<leader>ts", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)", },
       { "<leader>tl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references / ... (Trouble)", },
       { "<leader>tL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)", },
@@ -204,7 +204,8 @@ return {
       -- vim.keymap.set("n", "<leader>E", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
-      vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "List all diagnostics" })
+      -- Use Trouble instead
+      -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "List all diagnostics" })
 
       -- Use LspAttach autocommand to only map the following keys
       -- after the language server attaches to the current buffer

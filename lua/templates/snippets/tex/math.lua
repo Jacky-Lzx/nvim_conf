@@ -22,7 +22,7 @@ return {
   -- stylua: ignore
   autosnippet({ trig = "mk", name = "inline_math", desc = "In-line math block" }, fmta([[ \( <> \) <>]], { i(1), i(0) })),
   -- stylua: ignore
-  autosnippet({ trig = "dm", name = "inline_math", desc = "In-line math block" },
+  autosnippet({ trig = "dm", name = "inline_math", desc = "In-line math block"},
     fmta( [[
       \[
         <>

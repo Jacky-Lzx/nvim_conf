@@ -22,12 +22,10 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-      -- NOTE: some LSPs may add auto brackets themselves
       -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
       -- 'super-tab' for mappings similar to vscode (tab to accept)
       -- 'enter' for enter to accept
       -- 'none' for no mappings
-      --
       -- All presets have the following mappings:
       -- C-space: Open menu or open docs if already open
       -- C-n/C-p or Up/Down: Select next/previous item
@@ -104,7 +102,7 @@ return {
                 return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
               end, items)
             end,
-            score_offset = 70,
+            score_offset = 80,
           },
           copilot = {
             name = "copilot",
@@ -119,6 +117,7 @@ return {
           spell = {
             name = "Spell",
             module = "blink-cmp-spell",
+            score_offset = 10,
             opts = {
               use_cmp_spell_sorting = true,
               -- -- EXAMPLE: Only enable source in `@spell` captures, and disable it
@@ -141,7 +140,7 @@ return {
           -- Hide snippets after trigger character
           -- Trigger characters are defined by the sources. For example, for Lua, the trigger characters are ., ", '.
           snippets = {
-            score_offset = 80,
+            score_offset = 70,
             should_show_items = function(ctx)
               return ctx.trigger.initial_kind ~= "trigger_character"
             end,

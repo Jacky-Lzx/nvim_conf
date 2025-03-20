@@ -35,7 +35,7 @@ vim.keymap.set("i", "<M-m>", "\\(  \\)<esc>hhi")
 vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 
 vim.keymap.set("i", "<M-n>", function()
-  local cond_line_begin = require("luasnip.extras.conditions.expand").line_begin
-  print(cond_line_begin)
-  print(cond_line_begin.func)
+  local conds = require("templates.snippets.tex.utils.conditions")
+
+  print(conds.in_env("itemize"))
 end, { desc = "test" })

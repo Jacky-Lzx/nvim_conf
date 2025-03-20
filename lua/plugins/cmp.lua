@@ -27,6 +27,7 @@ return {
     opts = function()
       local types = require("luasnip.util.types")
       return {
+        update_events = { "TextChanged", "TextChangedI" },
         history = true,
         delete_check_events = "TextChanged",
         exit_roots = true,

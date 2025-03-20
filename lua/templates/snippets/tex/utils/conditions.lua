@@ -2,6 +2,8 @@
 -- LuaSnip Conditions
 --]
 
+local cond_obj = require("luasnip.extras.conditions")
+
 local M = {}
 
 local MATH_ENV = {
@@ -39,29 +41,50 @@ function M.in_beamer()
 end
 
 -- general env function
-local function env(name)
-  local is_inside = vim.fn["vimtex#env#is_inside"](name)
-  return (is_inside[1] > 0 and is_inside[2] > 0)
+local function in_env(name)
+  local buf = vim.api.nvim_get_current_buf()
+  local node = vim.treesitter.get_node()
+
+  while node do
+    if string.match(node:type(), "environment$") then
+      local begin_node = node:named_child(0)
+      if begin_node and begin_node:type() == "begin" then
+        local text_group_node = begin_node:named_child(0)
+        if text_group_node then
+          local env_name_node = text_group_node:named_child(0)
+          if env_name_node and vim.treesitter.get_node_text(env_name_node, buf) == name then
+            return true
+          end
+        end
+      end
+    end
+    node = node:parent()
+  end
+  return false
 end
 
+M.in_env = cond_obj.make_condition(in_env)
+
 function M.in_preamble()
-  return not env("document")
+  return not M.in_env("document")
 end
 
 function M.in_text()
-  return env("document") and not M.in_math()
+  return M.env("document") and not M.in_math()
 end
 
 function M.in_tikz()
-  return env("tikzpicture")
+  return M.env("tikzpicture")
 end
 
-function M.in_bullets()
-  return env("itemize") or env("enumerate")
+local function in_bullets()
+  return in_env("itemize") or in_env("enumerate")
 end
+
+M.in_bullets = cond_obj.make_condition(in_bullets)
 
 function M.in_align()
-  return env("align") or env("align*") or env("aligned")
+  return M.env("align") or M.env("align*") or M.env("aligned")
 end
 
 return M
