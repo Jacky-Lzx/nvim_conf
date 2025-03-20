@@ -147,11 +147,13 @@ return {
         no_overlap = false,
         title = false,
       },
+      -- stylua: ignore
       spec = {
-        { "<leader>d", group = "Dap", icon = "" },
-        { "<leader>f", group = "Telescope" },
-        { "<leader>n", group = "Noice" },
-        { "<leader>w", group = "Workspace" },
+        { "<leader>cc", group = "CodeCompanion", icon = "" },
+        { "<leader>d",  group = "Dap",           icon = "" },
+        { "<leader>f",  group = "Telescope"                 },
+        { "<leader>n",  group = "Noice"                     },
+        { "<leader>w",  group = "Workspace"                 },
       },
       -- expand all nodes wighout a description
       expand = function(node)
@@ -167,7 +169,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    event = "BufReadPre",
+    event = "BufWinEnter",
     opts = function()
       return {
         options = {
