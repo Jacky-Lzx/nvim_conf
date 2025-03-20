@@ -78,7 +78,7 @@ return {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     opts = {
-      formatters_by_ft = utils.language_setup_return_table(G.language.formatter),
+      formatters_by_ft = utils.language_setup(G.language.formatter),
       format_on_save = {
         -- These options will be passed to conform.format()
         timeout_ms = 500,
@@ -96,7 +96,7 @@ return {
     "mfussenegger/nvim-lint",
     event = { "BufWritePre" },
     config = function()
-      require("lint").linters_by_ft = utils.language_setup_return_table(G.language.linter)
+      require("lint").linters_by_ft = utils.language_setup(G.language.linter)
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()

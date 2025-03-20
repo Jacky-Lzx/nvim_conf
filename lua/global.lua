@@ -1,4 +1,9 @@
--- Global enumerations
+---@meta
+
+---@alias setting string
+
+---@class Global_settings
+---@field language table<setting>
 G = {
   language = {
     lsp = "lsp",
@@ -7,7 +12,9 @@ G = {
   },
 }
 
--- Enabled languages. Language-specific settings are stored in lua/plugins/languages/
+---@type table<string>
+---Enabled_languages
+---  Language-specific settings are stored in `lua/plugins/languages/`
 Enabled_languages = {
   "latex",
   "verilog",
@@ -17,4 +24,6 @@ Enabled_languages = {
   "lua",
 }
 
+---@type string
+---Enabled colorscheme
 Colorscheme = "catppuccin"
