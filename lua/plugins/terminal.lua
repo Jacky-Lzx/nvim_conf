@@ -1,9 +1,6 @@
 return {
-  ---@type LazySpec
   {
     "mikavilpas/yazi.nvim",
-    lazy = true,
-    -- event = "VeryLazy",
     dependencies = { "folke/snacks.nvim", lazy = true },
     -- stylua: ignore
     keys = {
