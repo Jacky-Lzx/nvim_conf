@@ -21,6 +21,6 @@ vim.opt.clipboard = ""
 -- vim.opt.formatoptions:remove { "r", "o" }
 vim.cmd([[ autocmd FileType * set formatoptions-=ro ]])
 
-require("vscode.plugins_vscode")
+require("vscode_setting.plugins_vscode")
 
 require("keymapping")
