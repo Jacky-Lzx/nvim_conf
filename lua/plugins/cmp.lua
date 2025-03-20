@@ -18,14 +18,34 @@ return {
     cmd = "SnippetList",
     -- stylua: ignore
     keys = {
-      { "<M-l>" , function() require('luasnip').jump(1) end,                         mode = { "i", "s" }, silent = true, desc = "luasnip jump 1" },
-      { "<M-h>" , function() require('luasnip').jump(-1) end,                        mode = { "i", "s" }, silent = true, desc = "luasnip jump -1" },
+      { "<A-l>" , function() require('luasnip').jump(1) end,                         mode = { "i", "s" }, silent = true, desc = "luasnip jump 1" },
+      { "<A-h>" , function() require('luasnip').jump(-1) end,                        mode = { "i", "s" }, silent = true, desc = "luasnip jump -1" },
+      { "<A-j>" , function() local ls = require('luasnip'); if ls.choice_active() then ls.change_choice(1) end end,                mode = { "i", "s" }, silent = true, desc = "luasnip jump 1" },
+      { "<A-k>" , function() local ls = require('luasnip'); if ls.choice_active() then ls.change_choice(-1) end end,               mode = { "i", "s" }, silent = true, desc = "luasnip jump -1" },
       { "<C-E>" , "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'", mode = { "i", "s" }, silent = true, desc = "luasnip choise", remap = true, expr = true },
     },
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-    },
+    opts = function()
+      local types = require("luasnip.util.types")
+      return {
+        history = true,
+        delete_check_events = "TextChanged",
+        exit_roots = true,
+        ext_opts = {
+          [types.choiceNode] = {
+            active = {
+              virt_text = { { "", "BlinkCmpKindEnum" } },
+            },
+            snippet_passive = {
+              virt_text = { { "", "BlinkCmpLabel" } },
+            },
+            passive = {
+              virt_text = { { "", "BlinkCmpLabel" } },
+            },
+          },
+        },
+        enable_autosnippets = true,
+      }
+    end,
     config = function(_, opts)
       require("luasnip").setup(opts)
 
