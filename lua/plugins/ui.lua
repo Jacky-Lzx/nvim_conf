@@ -1,5 +1,4 @@
 return {
-
   {
     "https://github.com/HiPhish/rainbow-delimiters.nvim",
     event = "BufReadPost",
@@ -168,13 +167,38 @@ return {
 
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      { "AndreM222/copilot-lualine" },
+    },
     event = "BufWinEnter",
     opts = function()
+      local navic = require("nvim-navic")
+
       return {
         options = {
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch", "diff", "diagnostics" },
+          lualine_c = { "filename", { "copilot", show_colors = true } },
+          lualine_x = { "lsp_status" },
+          lualine_y = { "encoding", "fileformat", "filetype", "progress" },
+          lualine_z = { "location" },
+        },
+        winbar = {
+          lualine_a = {
+            {
+              function()
+                return navic.get_location()
+              end,
+              -- cond = function()
+              --   return navic.is_available()
+              -- end,
+            },
+          },
         },
       }
     end,
