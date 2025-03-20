@@ -81,16 +81,20 @@ return {
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         -- "buffer" source is used to complete words
         default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer", "spell" },
+        -- default = { "lazydev", "copilot", "lsp", "path", "snippets", "spell" },
         per_filetype = {
           codecompanion = { "codecompanion" },
         },
 
         providers = {
+          buffer = {
+            score_offset = 20,
+          },
           lazydev = {
             name = "LazyDev",
             module = "lazydev.integrations.blink",
             -- make lazydev completions top priority (see `:h blink.cmp`)
-            score_offset = 100,
+            score_offset = 90,
           },
           lsp = {
             -- Default
@@ -100,6 +104,7 @@ return {
                 return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
               end, items)
             end,
+            score_offset = 70,
           },
           copilot = {
             name = "copilot",
@@ -136,6 +141,7 @@ return {
           -- Hide snippets after trigger character
           -- Trigger characters are defined by the sources. For example, for Lua, the trigger characters are ., ", '.
           snippets = {
+            score_offset = 80,
             should_show_items = function(ctx)
               return ctx.trigger.initial_kind ~= "trigger_character"
             end,
