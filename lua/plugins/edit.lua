@@ -1,4 +1,38 @@
 return {
+
+  {
+    -- Extende `a`/`i` textobjects
+    "echasnovski/mini.ai",
+    version = "*",
+    event = "BufReadPost",
+    config = true,
+  },
+
+  {
+    "echasnovski/mini.bracketed",
+    version = "*",
+    event = "BufReadPost",
+    config = true,
+  },
+
+  {
+    "echasnovski/mini.surround",
+    version = "*",
+    event = "BufReadPost",
+    config = true,
+    keys = {
+      -- Disable the vanilla `s` keybinding
+      { "s", "<NOP>", mode = { "n", "x", "o" } },
+    },
+  },
+
+  {
+    "echasnovski/mini.operators",
+    version = "*",
+    event = "BufReadPost",
+    config = true,
+  },
+
   {
     "echasnovski/mini.pairs",
     version = "*",
@@ -30,12 +64,12 @@ return {
     end,
   },
 
-  {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
-    opts = {},
-  },
+  -- {
+  --   "kylechui/nvim-surround",
+  --   version = "*", -- Use for stability; omit to use `main` branch for the latest features
+  --   event = "VeryLazy",
+  --   opts = {},
+  -- },
 
   {
     "cappyzawa/trim.nvim",
@@ -147,40 +181,5 @@ return {
     opts = {
       equivalence_classes = { " \t\r\n", "([{", ")]}", "'\"`" },
     },
-  },
-
-  {
-    "echasnovski/mini.indentscope",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      -- Module mappings. Use `''` (empty string) to disable one.
-      mappings = {
-        -- Textobjects
-        object_scope = "ii",
-        object_scope_with_border = "ai",
-
-        -- Motions (jump to respective border line; if not present - body line)
-        goto_top = "[i",
-        goto_bottom = "]i",
-      },
-      -- symbol = "▏",
-      symbol = "│",
-      options = {
-        border = "both",
-        try_as_border = true,
-      },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-        callback = function()
-          vim.b.miniindentscope_disable = true
-        end,
-      })
-    end,
-    config = function(_, opts)
-      require("mini.indentscope").setup(opts)
-    end,
   },
 }

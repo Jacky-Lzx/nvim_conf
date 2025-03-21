@@ -14,10 +14,48 @@ return {
   },
 
   {
-    "https://github.com/HiPhish/rainbow-delimiters.nvim",
+    "HiPhish/rainbow-delimiters.nvim",
     event = "BufReadPost",
     config = true,
     main = "rainbow-delimiters.setup",
+  },
+
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    dependencies = {
+      "HiPhish/rainbow-delimiters.nvim",
+    },
+    main = "ibl",
+    event = "BufReadPost",
+    config = function()
+      local highlight = {
+        "RainbowYellow",
+        "RainbowGreen",
+        "RainbowOrange",
+        "RainbowViolet",
+        "RainbowPink",
+        "RainbowRosewater",
+        "RainbowRed",
+      }
+      local hooks = require("ibl.hooks")
+      -- create the highlight groups in the highlight setup hook, so they are reset
+      -- every time the colorscheme changes
+      -- stylua: ignore
+      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        vim.api.nvim_set_hl(0, "RainbowYellow",    { fg = "#f9e2af" })
+        vim.api.nvim_set_hl(0, "RainbowGreen",     { fg = "#a6e3a1" })
+        vim.api.nvim_set_hl(0, "RainbowOrange",    { fg = "#fab387" })
+        vim.api.nvim_set_hl(0, "RainbowViolet",    { fg = "#cba6f7" })
+        vim.api.nvim_set_hl(0, "RainbowPink",      { fg = "#f5c2e7" })
+        vim.api.nvim_set_hl(0, "RainbowRosewater", { fg = "#f5e0dc" })
+        vim.api.nvim_set_hl(0, "RainbowRed",       { fg = "#f38ba8" })
+      end)
+
+      vim.g.rainbow_delimiters = { highlight = highlight }
+      require("ibl").setup({ scope = { highlight = highlight } })
+
+      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+    end,
   },
 
   {
@@ -90,6 +128,9 @@ return {
       require("scrollbar.handlers.search").setup(
         opts -- hlslens config overrides
       )
+      -- Set vim highlight group for HlSearchLens
+      -- vim.cmd([[highlight link HlSearchLens CurSearch]])
+      vim.api.nvim_set_hl(0, "HlSearchLens", { link = "CurSearch" })
     end,
   },
 
@@ -197,14 +238,14 @@ return {
         -- stylua: ignore
         winbar = {
           lualine_b = {
-            { function() return " "                  end, draw_enpty = true, },
-            { function() return navic.get_location() end,                    },
+            { function() return " "                  end },
+            { function() return navic.get_location() end },
           },
         },
         -- stylua: ignore
         inactive_winbar = {
           -- Always show winbar
-          lualine_b = { function() return " " end, draw_enpty = true, }, },
+          lualine_b = { function() return " " end }, },
       }
     end,
   },
@@ -239,17 +280,17 @@ return {
     event = { "BufAdd", "FileReadPre" },
     -- stylua: ignore
     keys = {
-      { "<A-<>", "<CMD>BufferMovePrevious<CR>", mode = {"n"}, desc = "Move buffer left"  },
-      { "<A->>", "<CMD>BufferMoveNext<CR>",     mode = {"n"}, desc = "Move buffer right" },
-      { "<A-1>", "<CMD>BufferGoto 1<CR>",       mode = {"n"}, desc = "Go to buffer 1"    },
-      { "<A-2>", "<CMD>BufferGoto 2<CR>",       mode = {"n"}, desc = "Go to buffer 2"    },
-      { "<A-3>", "<CMD>BufferGoto 3<CR>",       mode = {"n"}, desc = "Go to buffer 3"    },
-      { "<A-4>", "<CMD>BufferGoto 4<CR>",       mode = {"n"}, desc = "Go to buffer 4"    },
-      { "<A-5>", "<CMD>BufferGoto 5<CR>",       mode = {"n"}, desc = "Go to buffer 5"    },
-      { "<A-6>", "<CMD>BufferGoto 6<CR>",       mode = {"n"}, desc = "Go to buffer 6"    },
-      { "<A-7>", "<CMD>BufferGoto 7<CR>",       mode = {"n"}, desc = "Go to buffer 7"    },
-      { "<A-8>", "<CMD>BufferGoto 8<CR>",       mode = {"n"}, desc = "Go to buffer 8"    },
-      { "<A-9>", "<CMD>BufferGoto 9<CR>",       mode = {"n"}, desc = "Go to buffer 9"    },
+      { "<M-<>", "<CMD>BufferMovePrevious<CR>", mode = {"n"}, desc = "Move buffer left"  },
+      { "<M->>", "<CMD>BufferMoveNext<CR>",     mode = {"n"}, desc = "Move buffer right" },
+      { "<M-1>", "<CMD>BufferGoto 1<CR>",       mode = {"n"}, desc = "Go to buffer 1"    },
+      { "<M-2>", "<CMD>BufferGoto 2<CR>",       mode = {"n"}, desc = "Go to buffer 2"    },
+      { "<M-3>", "<CMD>BufferGoto 3<CR>",       mode = {"n"}, desc = "Go to buffer 3"    },
+      { "<M-4>", "<CMD>BufferGoto 4<CR>",       mode = {"n"}, desc = "Go to buffer 4"    },
+      { "<M-5>", "<CMD>BufferGoto 5<CR>",       mode = {"n"}, desc = "Go to buffer 5"    },
+      { "<M-6>", "<CMD>BufferGoto 6<CR>",       mode = {"n"}, desc = "Go to buffer 6"    },
+      { "<M-7>", "<CMD>BufferGoto 7<CR>",       mode = {"n"}, desc = "Go to buffer 7"    },
+      { "<M-8>", "<CMD>BufferGoto 8<CR>",       mode = {"n"}, desc = "Go to buffer 8"    },
+      { "<M-9>", "<CMD>BufferGoto 9<CR>",       mode = {"n"}, desc = "Go to buffer 9"    },
       { "<M-h>", "<CMD>BufferPrevious<CR>",     mode = {"n"}, desc = "Previous buffer"   },
       { "<M-l>", "<CMD>BufferNext<CR>",         mode = {"n"}, desc = "Next buffer"       },
       { "<M-w>", "<CMD>BufferClose<CR>",        mode = {"n"}, desc = "Close buffer"      },
@@ -489,6 +530,43 @@ return {
       end
 
       notify.setup(opts)
+    end,
+  },
+
+  {
+    "echasnovski/mini.indentscope",
+    version = "*",
+    event = { "BufReadPost" },
+    opts = function()
+      return {
+        -- Module mappings. Use `''` (empty string) to disable one.
+        mappings = {
+          -- Textobjects
+          object_scope = "ii",
+          object_scope_with_border = "ai",
+
+          -- Motions (jump to respective border line; if not present - body line)
+          goto_top = "[i",
+          goto_bottom = "]i",
+        },
+        -- symbol = "▏",
+        symbol = "│",
+        options = {
+          border = "both",
+          try_as_border = true,
+        },
+      }
+    end,
+    init = function()
+      -- vim.api.nvim_create_autocmd("FileType", {
+      --   pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+      --   callback = function()
+      --     vim.b.miniindentscope_disable = true
+      --   end,
+      -- })
+    end,
+    config = function(_, opts)
+      require("mini.indentscope").setup(opts)
     end,
   },
 }
