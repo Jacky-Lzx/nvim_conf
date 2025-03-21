@@ -109,13 +109,13 @@ return {
     "kevinhwang91/nvim-hlslens",
     -- stylua: ignore
     keys = {
-      { "n", "nzz<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Next match", noremap = true, silent = true },
-      { "N", "Nzz<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Previous match", noremap = true, silent = true },
-      { "*", "*<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Next match", noremap = true, silent = true },
-      { "#", "#<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Previous match", noremap = true, silent = true },
-      { "g*", "g*<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Next match", noremap = true, silent = true },
-      { "g#", "g#<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Previous match", noremap = true, silent = true },
-      { "//", "<Cmd>noh<CR>", mode = "n", desc = "Clear highlight", noremap = true, silent = true },
+      { "n",  "nzz<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Next match",      noremap = true, silent = true },
+      { "N",  "Nzz<Cmd>lua require('hlslens').start()<CR>", mode = "n", desc = "Previous match",  noremap = true, silent = true },
+      { "*",  "*<Cmd>lua require('hlslens').start()<CR>",   mode = "n", desc = "Next match",      noremap = true, silent = true },
+      { "#",  "#<Cmd>lua require('hlslens').start()<CR>",   mode = "n", desc = "Previous match",  noremap = true, silent = true },
+      { "g*", "g*<Cmd>lua require('hlslens').start()<CR>",  mode = "n", desc = "Next match",      noremap = true, silent = true },
+      { "g#", "g#<Cmd>lua require('hlslens').start()<CR>",  mode = "n", desc = "Previous match",  noremap = true, silent = true },
+      { "//", "<Cmd>noh<CR>",                               mode = "n", desc = "Clear highlight", noremap = true, silent = true },
 
       { "/" },
       { "?" },
