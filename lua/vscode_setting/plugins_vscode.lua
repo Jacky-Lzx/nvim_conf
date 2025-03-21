@@ -76,10 +76,14 @@ require("lazy").setup({
     },
   },
   {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    "echasnovski/mini.surround",
+    version = "*",
     event = "BufReadPost",
-    opts = {},
+    config = true,
+    keys = {
+      -- Disable the vanilla `s` keybinding
+      { "s", "<NOP>", mode = { "n", "x", "o" } },
+    },
   },
   {
     "numToStr/Comment.nvim",
