@@ -17,10 +17,38 @@ local autosnippet = ls.extend_decorator.apply(s, { snippetType = "autosnippet" }
 
 local conds = require("templates.snippets.tex.utils.conditions")
 local cond_line_begin = require("luasnip.extras.conditions.expand").line_begin
+local cond_has_selected_text = require("luasnip.extras.conditions.expand").has_selected_text
+
+local get_visual_or_insert = function(_, parent)
+  if #parent.snippet.env.SELECT_RAW == 1 then
+    return sn(nil, t(vim.trim(parent.snippet.env.SELECT_RAW[1])))
+  elseif #parent.snippet.env.SELECT_RAW > 1 then
+    return sn(nil, t(parent.snippet.env.SELECT_RAW))
+  else
+    return sn(nil, i(1))
+  end
+end
 
 return {
   -- stylua: ignore
+  autosnippet(
+    { trig = "mk", name = "inline_math_select", desc = "(Select) In-line math block", },
+    fmta([[ \( <> \)]], { d(1, get_visual_or_insert), }),
+    { condition = cond_has_selected_text, priority = 2000, }
+  ),
+  -- stylua: ignore
   autosnippet({ trig = "mk", name = "inline_math", desc = "In-line math block" }, fmta([[ \( <> \) <>]], { i(1), i(0) })),
+
+  -- stylua: ignore
+  autosnippet( { trig = "dm", name = "inline_math_select", desc = "(Select) In-line math block" },
+    fmta([[
+        \[
+          <>
+        \]
+      ]], { d(1, get_visual_or_insert) }
+    ),
+    { condition = cond_line_begin * cond_has_selected_text, priority = 2000 }
+  ),
   -- stylua: ignore
   autosnippet({ trig = "dm", name = "inline_math", desc = "In-line math block"},
     fmta( [[

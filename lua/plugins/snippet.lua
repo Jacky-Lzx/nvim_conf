@@ -42,6 +42,7 @@ return {
             },
           },
         },
+        store_selection_keys = "`",
         enable_autosnippets = true,
       }
     end,
@@ -51,6 +52,12 @@ return {
       require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my_snippets/snippets" } }) -- Load snippets from my-snippets folder
       -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my_snippets/friendly-snippets" } })
       require("luasnip.loaders.from_lua").lazy_load({ paths = { "./lua/templates/snippets" } })
+
+      local auto_expand = require("luasnip").expand_auto
+      require("luasnip").expand_auto = function(...)
+        vim.o.undolevels = vim.o.undolevels
+        auto_expand(...)
+      end
 
       -- local ls = require("luasnip")
       -- ls.filetype_extend("systemverilog", { "verilog" })
