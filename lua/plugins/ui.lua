@@ -185,50 +185,26 @@ return {
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
         },
+        -- stylua: ignore
         sections = {
-          lualine_a = { "mode" },
-          lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { "filename", { "copilot", show_colors = true } },
-          lualine_x = { "lsp_status" },
+          lualine_a = { "mode"                                           },
+          lualine_b = { "branch", "diff", "diagnostics"                  },
+          lualine_c = { "filename", { "copilot", show_colors = true }    },
+          lualine_x = { "lsp_status"                                     },
           lualine_y = { "encoding", "fileformat", "filetype", "progress" },
-          lualine_z = { "location" },
+          lualine_z = { "location"                                       },
         },
+        -- stylua: ignore
         winbar = {
           lualine_b = {
-            {
-              function()
-                return " "
-              end,
-              draw_enpty = true,
-            },
-            {
-              function()
-                return navic.get_location()
-              end,
-              -- cond = function()
-              --   return navic.is_available()
-              -- end,
-            },
+            { function() return " "                  end, draw_enpty = true, },
+            { function() return navic.get_location() end,                    },
           },
         },
+        -- stylua: ignore
         inactive_winbar = {
-          lualine_b = {
-            function()
-              return " "
-            end,
-            draw_enpty = true,
-          },
-        },
-        -- inactive_winbar = {
-        --   {
-        --     function()
-        --       return navic.get_location()
-        --     end,
-        --     cond = function()
-        --       return navic.is_available()
-        --     end,
-        --   },
-        -- },
+          -- Always show winbar
+          lualine_b = { function() return " " end, draw_enpty = true, }, },
       }
     end,
   },
@@ -379,20 +355,20 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      { "<leader>fb", "<cmd>Telescope buffers<cr>",                  desc = "Buffers" },
-      { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",          desc = "Lsp definitions" },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>",               desc = "Find files" },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>",                desc = "Live grep" },
-      { "<leader>fh", "<cmd>Telescope help_tags<cr>",                desc = "Help tags" },
-      { "<leader>fk", "<cmd>Telescope keymaps<cr>",                  desc = "Keymaps" },
-      { "<leader>fq", "<cmd>Telescope quickfix<cr>",                 desc = "Quick fix" },
-      { "<leader>fr", "<cmd>Telescope registers<cr>",                desc = "Registers" },
-      -- { "<leader>fc", "<cmd>Telescope colorscheme<cr>",           desc = "Colorscheme" },
-      { "<leader>fc", "<cmd>Telescope highlights<cr>",               desc = "Highlights" },
-      { "<leader>fm", "<cmd>Telescope noice<cr>",                    desc = "Noice message history" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>",                  desc = "Buffers"                },
+      { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",          desc = "Lsp definitions"        },
+      { "<leader>ff", "<cmd>Telescope find_files<cr>",               desc = "Find files"             },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>",                desc = "Live grep"              },
+      { "<leader>fh", "<cmd>Telescope help_tags<cr>",                desc = "Help tags"              },
+      { "<leader>fk", "<cmd>Telescope keymaps<cr>",                  desc = "Keymaps"                },
+      { "<leader>fq", "<cmd>Telescope quickfix<cr>",                 desc = "Quick fix"              },
+      { "<leader>fr", "<cmd>Telescope registers<cr>",                desc = "Registers"              },
+      -- { "<leader>fc", "<cmd>Telescope colorscheme<cr>",           desc = "Colorscheme"            },
+      { "<leader>fc", "<cmd>Telescope highlights<cr>",               desc = "Highlights"             },
+      { "<leader>fm", "<cmd>Telescope noice<cr>",                    desc = "Noice message history"  },
       { "<leader>fn", "<cmd>Telescope notify<cr>",                   desc = "Notify message history" },
-      { "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>",     desc = "Document symbols" },
-      -- { "<leader>fs", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace symbols" },
+      { "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>",     desc = "Document symbols"       },
+      -- { "<leader>fs", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace symbols"      },
     },
     config = function(_, opts)
       require("telescope").setup(opts)
