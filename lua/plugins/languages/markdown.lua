@@ -78,16 +78,23 @@ M.plugins = {
       { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
     },
   },
-  {
-    "3rd/image.nvim",
-    ft = { "markdown" },
-    opts = {
-      processor = "magick_cli",
-      window_overlap_clear_enabled = true,
-      editor_only_render_when_focused = false, -- auto show/hide images when the editor gains/looses focus
-      tmux_show_only_in_active_window = true, -- auto show/hide images in the correct Tmux window (needs visual-activity off)
-    },
-  },
+  -- {
+  --   "adelarsq/image_preview.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("image_preview").setup()
+  --   end,
+  -- },
+  -- {
+  --   "3rd/image.nvim",
+  --   ft = { "markdown" },
+  --   opts = {
+  --     processor = "magick_cli",
+  --     window_overlap_clear_enabled = true,
+  --     editor_only_render_when_focused = true, -- auto show/hide images when the editor gains/looses focus
+  --     tmux_show_only_in_active_window = true, -- auto show/hide images in the correct Tmux window (needs visual-activity off)
+  --   },
+  -- },
 
   -- Obsidian Plugin
   -- {
