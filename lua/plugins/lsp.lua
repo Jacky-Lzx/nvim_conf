@@ -106,7 +106,7 @@ return {
 
           -- You can call `try_lint` with a linter name or a list of names to always
           -- run specific linters, independent of the `linters_by_ft` configuration
-          -- require("lint").try_lint("cspell")
+          -- require("lint").try_lint("codespell")
         end,
       })
     end,
@@ -196,6 +196,8 @@ return {
           -- "--header-insertion=never",
         },
       })
+
+      require("lspconfig").typos_lsp.setup({})
 
       -- require"lspconfig".efm.setup {
       --     init_options = {documentFormatting = true},

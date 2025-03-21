@@ -305,31 +305,39 @@ return {
       -- virtual_text = { enabled = true },
     },
   },
+
   {
-    "rachartier/tiny-code-action.nvim",
-    dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-telescope/telescope.nvim" },
-    },
+    "aznhe21/actions-preview.nvim",
     -- stylua: ignore
     keys = {
-      { "<leader>a", function() require("tiny-code-action").code_action() end, desc = "Code action", noremap = true, silent = true, },
+      { "<leader>a", function() require("actions-preview").code_actions() end, desc = "Code action", noremap = true, silent = true, },
     },
-    opts = {
-      --- The backend to use, currently only "vim", "delta" and "difftastic" are supported
-      backend = "delta",
-      backend_opts = {
-        delta = {
-          -- Header from delta can be quite large.
-          -- You can remove them by setting this to the number of lines to remove
-          header_lines_to_remove = 4,
-          args = {
-            "--config",
-            os.getenv("HOME") .. "/.config/nvim/configs/.gitconfig",
+    opts = function()
+      local hl = require("actions-preview.highlight")
+      return {
+        telescope = {
+          sorting_strategy = "ascending",
+          layout_strategy = "vertical",
+          layout_config = {
+            width = 0.8,
+            height = 0.8,
+            prompt_position = "top",
+            preview_cutoff = 20,
+            preview_height = function(_, _, max_lines)
+              return max_lines - 15
+            end,
           },
         },
-      },
-    },
+        -- priority list of external command to highlight diff
+        -- disabled by default, must be set by yourself
+        highlight_command = {
+          -- Highlight diff using delta: https://github.com/dandavison/delta
+          -- The argument is optional, in which case "delta" is assumed to be
+          -- specified.
+          hl.delta("delta --config " .. os.getenv("HOME") .. "/.config/nvim/configs/.gitconfig"),
+        },
+      }
+    end,
   },
 
   {
