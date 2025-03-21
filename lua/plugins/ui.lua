@@ -178,6 +178,10 @@ return {
 
       return {
         options = {
+          -- When set to true, left sections i.e. 'a','b' and 'c'
+          -- can't take over the entire statusline even
+          -- if neither of 'x', 'y' or 'z' are present.
+          always_divide_middle = false,
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
         },
@@ -190,17 +194,41 @@ return {
           lualine_z = { "location" },
         },
         winbar = {
-          lualine_a = {
+          lualine_b = {
+            {
+              function()
+                return " "
+              end,
+              draw_enpty = true,
+            },
             {
               function()
                 return navic.get_location()
               end,
-              cond = function()
-                return navic.is_available()
-              end,
+              -- cond = function()
+              --   return navic.is_available()
+              -- end,
             },
           },
         },
+        inactive_winbar = {
+          lualine_b = {
+            function()
+              return " "
+            end,
+            draw_enpty = true,
+          },
+        },
+        -- inactive_winbar = {
+        --   {
+        --     function()
+        --       return navic.get_location()
+        --     end,
+        --     cond = function()
+        --       return navic.is_available()
+        --     end,
+        --   },
+        -- },
       }
     end,
   },
