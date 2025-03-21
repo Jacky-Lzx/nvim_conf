@@ -197,7 +197,17 @@ return {
         },
       })
 
-      require("lspconfig").typos_lsp.setup({})
+      require("lspconfig").typos_lsp.setup({
+        init_options = {
+          -- Custom config. Used together with a config file found in the workspace or its parents,
+          -- taking precedence for settings declared in both.
+          -- Equivalent to the typos `--config` cli argument.
+          -- config = "~/code/typos-lsp/crates/typos-lsp/tests/typos.toml",
+          -- How typos are rendered in the editor, can be one of an Error, Warning, Info or Hint.
+          -- Defaults to error.
+          diagnosticSeverity = "Info",
+        },
+      })
 
       -- require"lspconfig".efm.setup {
       --     init_options = {documentFormatting = true},
@@ -218,8 +228,12 @@ return {
       -- vim.keymap.set('n', '<leader>gf', vim.lsp.buf.format(), {})
 
       -- vim.keymap.set("n", "<leader>E", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+      vim.keymap.set("n", "<A-j>", function()
+        vim.diagnostic.jump({ count = 1 })
+      end, { desc = "Go to next diagnostic" })
+      vim.keymap.set("n", "<A-k>", function()
+        vim.diagnostic.jump({ count = -1 })
+      end, { desc = "Go to previous diagnostic" })
       -- Use Trouble instead
       -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "List all diagnostics" })
 
@@ -277,7 +291,7 @@ return {
       })
 
       -- Setup keymaps
-      vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
+      -- vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
       -- vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
     end,
   },

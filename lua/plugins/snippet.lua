@@ -49,7 +49,7 @@ return {
     config = function(_, opts)
       require("luasnip").setup(opts)
 
-      require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my_snippets/snippets" } }) -- Load snippets from my-snippets folder
+      -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my_snippets/snippets" } }) -- Load snippets from my-snippets folder
       -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my_snippets/friendly-snippets" } })
       require("luasnip.loaders.from_lua").lazy_load({ paths = { "./lua/templates/snippets" } })
 
