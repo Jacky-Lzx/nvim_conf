@@ -120,13 +120,13 @@ return {
   { "wakatime/vim-wakatime", lazy = false },
 
   {
-    -- Highlight and search for todo comments like TODO, HACK, BUG in your code base.
     "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim", "folke/snacks.nvim" },
     event = "BufReadPost",
     -- stylua: ignore
     keys = {
-      { "<leader>td", "<cmd>TodoTelescope<cr>", desc = "List todo comments" },
+      { "<leader>td", function() require("snacks").picker.todo_comments() end, desc = "Todo", },
+      { "<leader>tD", function() require("snacks").picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end, desc = "Todo/Fix/Fixme", },
     },
     config = true,
   },
@@ -159,29 +159,24 @@ return {
   },
 
   {
-    "smoka7/hop.nvim",
-    lazy = true,
-    version = "*",
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {
+      modes = {
+        char = {
+          enabled = false,
+        },
+      },
+    },
     -- stylua: ignore
     keys = {
-      { "<leader>j", function() require("hop").hint_lines_skip_whitespace({ current_line_only = false }) end, mode = { "n", "v" }, desc = "Hop jump", },
-      { "<leader>k", function() require("hop").hint_lines_skip_whitespace({ current_line_only = false }) end, mode = { "n", "v" }, desc = "Hop jump", },
-    },
-    opts = {
-      keys = "etovxqpdygfblzhckisuran",
-    },
-  },
-  {
-    "ggandor/leap.nvim",
-    dependencies = { "tpope/vim-repeat" },
-    -- stylua: ignore
-    keys = {
-      { "<leader>s",  "<Plug>(leap-forward-to)",  mode = { "n", "x", "o" }, desc = "Leap jump forward" },
-      { "<leader>S",  "<Plug>(leap-backward-to)", mode = { "n", "x", "o" }, desc = "leap jump backward" },
-      -- { "<leader>gs", "<Plug>(leap-from-window)", mode = { "n", "x", "o" }, desc = "leap jump window" },
-    },
-    opts = {
-      equivalence_classes = { " \t\r\n", "([{", ")]}", "'\"`" },
+      { "<leader>f", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash", },
+      { "<leader>F", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter", },
+      -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "<leader>F", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search", },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search", },
+      { "<leader>j", function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, },
+      { "<leader>k", function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, },
     },
   },
 }

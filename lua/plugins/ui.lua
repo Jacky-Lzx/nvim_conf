@@ -65,17 +65,17 @@ return {
     opts = {},
   },
 
-  {
-    -- Distraction-free coding
-    "folke/zen-mode.nvim",
-    dependencies = { { "folke/twilight.nvim", opts = { context = 10 } } }, -- Dims inactive portions of the code you're editing.
-    cmd = "ZenMode",
-    opts = {
-      plugins = {
-        twilight = { enabled = true },
-      },
-    },
-  },
+  -- {
+  --   -- Distraction-free coding
+  --   "folke/zen-mode.nvim",
+  --   dependencies = { { "folke/twilight.nvim", opts = { context = 10 } } }, -- Dims inactive portions of the code you're editing.
+  --   cmd = "ZenMode",
+  --   opts = {
+  --     plugins = {
+  --       twilight = { enabled = true },
+  --     },
+  --   },
+  -- },
 
   -- Show colors in the text: e.g. "#b3e2a7"
   {
@@ -93,7 +93,7 @@ return {
     opts = {
       signcolumn = false,
       numhl = true,
-      -- wrod_diff = true,
+      -- word_diff = true,
       -- Toggle the line blame by `:Gitsigns toggle_current_line_blame`
       current_line_blame = true,
       attach_to_untracked = true,
@@ -167,15 +167,15 @@ return {
   -- Show where your cursor moves when jumping large distances
   -- use({ "edluffy/specs.nvim", config = require("plugin-settings.specs") })
 
-  {
-    -- Greeting page
-    "goolord/alpha-nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    event = "VimEnter",
-    config = function()
-      require("alpha").setup(require("alpha.themes.dashboard").config)
-    end,
-  },
+  -- {
+  --   -- Greeting page
+  --   "goolord/alpha-nvim",
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   event = "VimEnter",
+  --   config = function()
+  --     require("alpha").setup(require("alpha.themes.dashboard").config)
+  --   end,
+  -- },
 
   {
     "folke/which-key.nvim",
@@ -294,7 +294,7 @@ return {
       { "<M-9>", "<CMD>BufferGoto 9<CR>",       mode = {"n"}, desc = "Go to buffer 9"    },
       { "<M-h>", "<CMD>BufferPrevious<CR>",     mode = {"n"}, desc = "Previous buffer"   },
       { "<M-l>", "<CMD>BufferNext<CR>",         mode = {"n"}, desc = "Next buffer"       },
-      { "<M-w>", "<CMD>BufferClose<CR>",        mode = {"n"}, desc = "Close buffer"      },
+      -- { "<M-w>", "<CMD>BufferClose<CR>",        mode = {"n"}, desc = "Close buffer"      },
     },
   },
 
@@ -342,94 +342,94 @@ return {
     end,
   },
 
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope-ui-select.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    },
-    lazy = true,
-    cmd = "Telescope",
-    opts = function()
-      return {
-        defaults = {
-          -- Flex layout swaps between `horizontal` and `vertical` strategies based on the window width
-          layout_strategy = "flex",
-          layout_config = {
-            width = 0.9,
-            height = 0.9,
-            horizontal = {
-              preview_width = 0.55,
-            },
-            vertical = {
-              preview_height = 0.6,
-            },
-          },
-          -- laygout_config = {},
-          -- wrap_results = true,
-          -- prompt_prefix = " ",
-          -- selection_caret = " ",
-          -- stylua: ignore
-          mappings = {
-            i = {
-              ["<M-Down>"] = function(...) require("telescope.actions").cycle_history_next(...)                                              end,
-              ["<M-Up>"]   = function(...) require("telescope.actions").cycle_history_prev(...)                                              end,
-              ["<C-d>"]    = function(...) require("telescope.actions").preview_scrolling_down(...)                                          end,
-              ["<C-u>"]    = function(...) require("telescope.actions").preview_scrolling_up(...)                                            end,
-              ["<C-h>"]    = function(...) require("telescope.actions").preview_scrolling_left(...)                                          end,
-              ["<C-l>"]    = function(...) require("telescope.actions").preview_scrolling_right(...)                                         end,
-              ["<M-k>"]    = function(...) require("telescope.actions").move_selection_previous(...)                                         end,
-              ["<M-j>"]    = function(...) require("telescope.actions").move_selection_next(...)                                             end,
-              ["<M-d>"]    = function(...) require("telescope.actions").results_scrolling_down(...) require("telescope.actions").center(...) end,
-              ["<M-u>"]    = function(...) require("telescope.actions").results_scrolling_up(...) require("telescope.actions").center(...)   end,
-              ["<M-h>"]    = function(...) require("telescope.actions").results_scrolling_left(...)                                          end,
-              ["<M-l>"]    = function(...) require("telescope.actions").results_scrolling_right(...)                                         end,
-            },
-            n = {
-              ["q"]        = function(...) require("telescope.actions").close(...)                                                           end,
-            },
-          },
-        },
-        extensions = {
-          ["fzf"] = {
-            -- fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case", the default case_mode is "smart_case"
-          },
-          ["ui-select"] = {
-            require("telescope.themes").get_cursor(),
-          },
-        },
-      }
-    end,
-    -- stylua: ignore
-    keys = {
-      { "<leader>fb", "<cmd>Telescope buffers<cr>",                  desc = "Buffers"                },
-      { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",          desc = "Lsp definitions"        },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>",               desc = "Find files"             },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>",                desc = "Live grep"              },
-      { "<leader>fh", "<cmd>Telescope help_tags<cr>",                desc = "Help tags"              },
-      { "<leader>fk", "<cmd>Telescope keymaps<cr>",                  desc = "Keymaps"                },
-      { "<leader>fq", "<cmd>Telescope quickfix<cr>",                 desc = "Quick fix"              },
-      { "<leader>fr", "<cmd>Telescope registers<cr>",                desc = "Registers"              },
-      -- { "<leader>fc", "<cmd>Telescope colorscheme<cr>",           desc = "Colorscheme"            },
-      { "<leader>fc", "<cmd>Telescope highlights<cr>",               desc = "Highlights"             },
-      { "<leader>fm", "<cmd>Telescope noice<cr>",                    desc = "Noice message history"  },
-      { "<leader>fn", "<cmd>Telescope notify<cr>",                   desc = "Notify message history" },
-      { "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>",     desc = "Document symbols"       },
-      -- { "<leader>fs", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace symbols"      },
-    },
-    config = function(_, opts)
-      require("telescope").setup(opts)
-
-      require("telescope").load_extension("fzf")
-      require("telescope").load_extension("ui-select")
-      require("telescope").load_extension("noice")
-      require("telescope").load_extension("notify")
-    end,
-  },
+  -- {
+  --   "nvim-telescope/telescope.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-telescope/telescope-ui-select.nvim",
+  --     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  --   },
+  --   lazy = true,
+  --   cmd = "Telescope",
+  --   opts = function()
+  --     return {
+  --       defaults = {
+  --         -- Flex layout swaps between `horizontal` and `vertical` strategies based on the window width
+  --         layout_strategy = "flex",
+  --         layout_config = {
+  --           width = 0.9,
+  --           height = 0.9,
+  --           horizontal = {
+  --             preview_width = 0.55,
+  --           },
+  --           vertical = {
+  --             preview_height = 0.6,
+  --           },
+  --         },
+  --         -- laygout_config = {},
+  --         -- wrap_results = true,
+  --         -- prompt_prefix = " ",
+  --         -- selection_caret = " ",
+  --         -- stylua: ignore
+  --         mappings = {
+  --           i = {
+  --             ["<M-Down>"] = function(...) require("telescope.actions").cycle_history_next(...)                                              end,
+  --             ["<M-Up>"]   = function(...) require("telescope.actions").cycle_history_prev(...)                                              end,
+  --             ["<C-d>"]    = function(...) require("telescope.actions").preview_scrolling_down(...)                                          end,
+  --             ["<C-u>"]    = function(...) require("telescope.actions").preview_scrolling_up(...)                                            end,
+  --             ["<C-h>"]    = function(...) require("telescope.actions").preview_scrolling_left(...)                                          end,
+  --             ["<C-l>"]    = function(...) require("telescope.actions").preview_scrolling_right(...)                                         end,
+  --             ["<M-k>"]    = function(...) require("telescope.actions").move_selection_previous(...)                                         end,
+  --             ["<M-j>"]    = function(...) require("telescope.actions").move_selection_next(...)                                             end,
+  --             ["<M-d>"]    = function(...) require("telescope.actions").results_scrolling_down(...) require("telescope.actions").center(...) end,
+  --             ["<M-u>"]    = function(...) require("telescope.actions").results_scrolling_up(...) require("telescope.actions").center(...)   end,
+  --             ["<M-h>"]    = function(...) require("telescope.actions").results_scrolling_left(...)                                          end,
+  --             ["<M-l>"]    = function(...) require("telescope.actions").results_scrolling_right(...)                                         end,
+  --           },
+  --           n = {
+  --             ["q"]        = function(...) require("telescope.actions").close(...)                                                           end,
+  --           },
+  --         },
+  --       },
+  --       extensions = {
+  --         ["fzf"] = {
+  --           -- fuzzy = true, -- false will only do exact matching
+  --           override_generic_sorter = true, -- override the generic sorter
+  --           override_file_sorter = true, -- override the file sorter
+  --           case_mode = "smart_case", -- or "ignore_case" or "respect_case", the default case_mode is "smart_case"
+  --         },
+  --         ["ui-select"] = {
+  --           require("telescope.themes").get_cursor(),
+  --         },
+  --       },
+  --     }
+  --   end,
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<leader>fb", "<cmd>Telescope buffers<cr>",                  desc = "Buffers"                },
+  --     { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",          desc = "Lsp definitions"        },
+  --     { "<leader>ff", "<cmd>Telescope find_files<cr>",               desc = "Find files"             },
+  --     { "<leader>fg", "<cmd>Telescope live_grep<cr>",                desc = "Live grep"              },
+  --     { "<leader>fh", "<cmd>Telescope help_tags<cr>",                desc = "Help tags"              },
+  --     { "<leader>fk", "<cmd>Telescope keymaps<cr>",                  desc = "Keymaps"                },
+  --     { "<leader>fq", "<cmd>Telescope quickfix<cr>",                 desc = "Quick fix"              },
+  --     -- { "<leader>fr", "<cmd>Telescope registers<cr>",                desc = "Registers"              },
+  --     -- { "<leader>fc", "<cmd>Telescope colorscheme<cr>",           desc = "Colorscheme"            },
+  --     { "<leader>fc", "<cmd>Telescope highlights<cr>",               desc = "Highlights"             },
+  --     { "<leader>fm", "<cmd>Telescope noice<cr>",                    desc = "Noice message history"  },
+  --     { "<leader>fn", "<cmd>Telescope notify<cr>",                   desc = "Notify message history" },
+  --     { "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>",     desc = "Document symbols"       },
+  --     -- { "<leader>fs", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace symbols"      },
+  --   },
+  --   config = function(_, opts)
+  --     require("telescope").setup(opts)
+  --
+  --     require("telescope").load_extension("fzf")
+  --     require("telescope").load_extension("ui-select")
+  --     require("telescope").load_extension("noice")
+  --     require("telescope").load_extension("notify")
+  --   end,
+  -- },
 
   {
     "folke/noice.nvim",
@@ -444,8 +444,8 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { "<leader>nl", function() require("noice").cmd("last")    end, desc = "noice last message" },
-      { "<leader>nh", function() require("noice").cmd("history") end, desc = "noice history"      },
+      -- { "<leader>nl", function() require("noice").cmd("last")    end, desc = "noice last message" },
+      -- { "<leader>nh", function() require("noice").cmd("history") end, desc = "noice history"      },
     },
     opts = {
       notify = {
@@ -509,39 +509,39 @@ return {
     },
   },
 
-  {
-    -- A fancy, configurable, notification manager for NeoVim
-    "rcarriga/nvim-notify",
-    opts = {
-      -- render = "compact",
-      -- stages = "fade",
-      fps = 60,
-      timeout = 3000,
-      max_height = function()
-        return math.floor(vim.o.lines * 0.5)
-      end,
-      max_width = function()
-        return math.floor(vim.o.columns * 0.5)
-      end,
-    },
-    config = function(_, opts)
-      local notify = require("notify")
-      vim.notify = notify
-      print = function(...)
-        local print_safe_args = {}
-        local args = { ... }
-        for i = 1, #args do
-          table.insert(print_safe_args, tostring(args[i]))
-        end
-        notify(table.concat(print_safe_args, "\n"), vim.log.levels.INFO, {
-          title = "Print results",
-          icon = "󰐪",
-        })
-      end
-
-      notify.setup(opts)
-    end,
-  },
+  -- {
+  --   -- A fancy, configurable, notification manager for NeoVim
+  --   "rcarriga/nvim-notify",
+  --   opts = {
+  --     -- render = "compact",
+  --     -- stages = "fade",
+  --     fps = 60,
+  --     timeout = 3000,
+  --     max_height = function()
+  --       return math.floor(vim.o.lines * 0.5)
+  --     end,
+  --     max_width = function()
+  --       return math.floor(vim.o.columns * 0.5)
+  --     end,
+  --   },
+  --   config = function(_, opts)
+  --     local notify = require("notify")
+  --     vim.notify = notify
+  --     print = function(...)
+  --       local print_safe_args = {}
+  --       local args = { ... }
+  --       for i = 1, #args do
+  --         table.insert(print_safe_args, tostring(args[i]))
+  --       end
+  --       notify(table.concat(print_safe_args, "\n"), vim.log.levels.INFO, {
+  --         title = "Print results",
+  --         icon = "󰐪",
+  --       })
+  --     end
+  --
+  --     notify.setup(opts)
+  --   end,
+  -- },
 
   {
     "echasnovski/mini.indentscope",
