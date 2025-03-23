@@ -190,11 +190,14 @@ return {
       },
       -- stylua: ignore
       spec = {
-        { "<leader>cc", group = "CodeCompanion", icon = "" },
-        { "<leader>d",  group = "Dap",           icon = "" },
-        { "<leader>f",  group = "Telescope"                 },
-        { "<leader>n",  group = "Noice"                     },
-        { "<leader>w",  group = "Workspace"                 },
+        { "<leader>cc", group = "[CodeCompanion]", icon = "" },
+        { "<leader>d",  group = "[Dap]",           icon = "" },
+        { "<leader>f",  group = "[Telescope]"                 },
+        { "<leader>n",  group = "[Noice]"                     },
+        { "<leader>w",  group = "Workspace"                   },
+        { "<leader>s",  group = "[Snacks]"                    },
+        { "<leader>u",  group = "[Snacks] toggle"             },
+        { "<leader>g",  group = "[Trouble] / git"             },
       },
       -- expand all nodes wighout a description
       expand = function(node)

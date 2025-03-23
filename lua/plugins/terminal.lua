@@ -4,9 +4,9 @@ return {
     dependencies = { "folke/snacks.nvim", lazy = true },
     -- stylua: ignore
     keys = {
-      { "<leader>e",  "<cmd>Yazi<cr>",        desc = "Open yazi at the current file", mode = { "n", "v" }},
-      { "<leader>cw", "<cmd>Yazi cwd<cr>",    desc = "Open yazi in nvim's working directory"             },
-      { "<c-up>",     "<cmd>Yazi toggle<cr>", desc = "Resume the last yazi session"                      },
+      { "<leader>e",  "<CMD>Yazi<CR>",        desc = "[Yazi] open at the current file", mode = { "n", "v" }},
+      { "<leader>cw", "<CMD>Yazi cwd<CR>",    desc = "[Yazi] open in working directory"             },
+      { "<c-up>",     "<CMD>Yazi toggle<CR>", desc = "[Yazi] Resume the last session"                      },
     },
     ---@type YaziConfig | {}
     opts = {
@@ -28,8 +28,8 @@ return {
     "numToStr/FTerm.nvim",
     -- stylua: ignore
     keys = {
-      { "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>',            mode = "n", desc = "Toggle float terminal" },
-      { "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', mode = "t", desc = "Toggle float terminal" },
+      -- { "<A-i>", '<CMD>lua require("FTerm").toggle()<CR>',            mode = "n", desc = "Toggle float terminal" },
+      -- { "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', mode = "t", desc = "Toggle float terminal" },
       { "<C-g>",                                                      mode = "n", desc = "Toggle Lazygit" },
     },
     opts = {
