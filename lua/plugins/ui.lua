@@ -303,7 +303,7 @@ return {
     event = "LspAttach",
     opts = {
       autocmd = { enabled = true },
-      -- virtual_text = { enabled = true },
+      virtual_text = { enabled = true },
     },
   },
 
@@ -317,17 +317,25 @@ return {
     opts = function()
       local hl = require("actions-preview.highlight")
       return {
-        telescope = {
-          sorting_strategy = "ascending",
-          layout_strategy = "vertical",
-          layout_config = {
-            width = 0.8,
-            height = 0.8,
-            prompt_position = "top",
-            preview_cutoff = 20,
-            preview_height = function(_, _, max_lines)
-              return max_lines - 15
-            end,
+        backend = { "snacks", "telescope" },
+
+        snacks = {
+          layout = {
+            reverse = false,
+            layout = {
+              backdrop = false,
+              width = 0.5,
+              min_width = 80,
+              height = 0.4,
+              min_height = 3,
+              box = "vertical",
+              border = "rounded",
+              title = "{title}",
+              title_pos = "center",
+              { win = "input", height = 1, border = "bottom" },
+              { win = "list", height = 5, border = "none" },
+              { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+            },
           },
         },
         -- priority list of external command to highlight diff
