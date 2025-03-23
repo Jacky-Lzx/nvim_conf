@@ -27,18 +27,18 @@ return {
     cmd = "Trouble",
     -- stylua: ignore
     keys = {
-      vim.keymap.set("n", "<A-j>", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Go to next diagnostic" })
-      vim.keymap.set("n", "<A-k>", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Go to previous diagnostic" })
-      { "<leader>gd", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "[Trouble] toggle buffer diagnostics" },
-      { "<leader>gs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "[Trouble] toggle symbols " },
-      { "<leader>gl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "[Trouble] toggle LSP definitions/references/...", },
-      { "<leader>gL", "<cmd>Trouble loclist toggle<cr>",                            desc = "[Trouble] Location List" },
-      { "<leader>gq", "<cmd>Trouble qflist toggle<cr>",                             desc = "[Trouble] Quickfix List" },
+      { "<A-j>", function() vim.diagnostic.jump({ count = 1 }) end,  mode = {"n"},   desc = "Go to next diagnostic"},
+      { "<A-k>", function() vim.diagnostic.jump({ count = -1 }) end, mode = {"n"},   desc = "Go to previous diagnostic"},
+      { "<leader>gd", "<cmd>Trouble diagnostics toggle<cr>",                         desc = "[Trouble] toggle buffer diagnostics" },
+      { "<leader>gs", "<cmd>Trouble symbols toggle focus=false<cr>",                 desc = "[Trouble] toggle symbols " },
+      { "<leader>gl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",  desc = "[Trouble] toggle LSP definitions/references/...", },
+      { "<leader>gL", "<cmd>Trouble loclist toggle<cr>",                             desc = "[Trouble] Location List" },
+      { "<leader>gq", "<cmd>Trouble qflist toggle<cr>",                              desc = "[Trouble] Quickfix List" },
 
-      { "grr", "<CMD>Trouble lsp_references focus=true<CR>",       mode = { "n" },              desc = "[Trouble] LSP references" },
-      { "gD", "<CMD>Trouble lsp_declarations focus=true<CR>",     mode = { "n" },              desc = "[Trouble] LSP declarations" },
-      { "gd", "<CMD>Trouble lsp_type_definitions focus=true<CR>", mode = { "n" },              desc = "[Trouble] LSP type definitions" },
-      { "gri", "<CMD>Trouble lsp_implementations focus=true<CR>",  mode = { "n" },              desc = "[Trouble] LSP implementations" },
+      { "grr", "<CMD>Trouble lsp_references focus=true<CR>",         mode = { "n" }, desc = "[Trouble] LSP references" },
+      { "gD", "<CMD>Trouble lsp_declarations focus=true<CR>",        mode = { "n" }, desc = "[Trouble] LSP declarations" },
+      { "gd", "<CMD>Trouble lsp_type_definitions focus=true<CR>",    mode = { "n" }, desc = "[Trouble] LSP type definitions" },
+      { "gri", "<CMD>Trouble lsp_implementations focus=true<CR>",    mode = { "n" }, desc = "[Trouble] LSP implementations" },
     },
     config = function(_, opts)
       require("trouble").setup(opts)
@@ -239,7 +239,6 @@ return {
           diagnosticSeverity = "Info",
         },
       })
-
 
       -- Use LspAttach autocommand to only map the following keys
       -- after the language server attaches to the current buffer
