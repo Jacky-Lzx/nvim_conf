@@ -56,16 +56,16 @@ elseif colorscheme == "catppuccin" then
         custom_highlights = function(colors)
           -- stylua: ignore
           return {
-            -- Comment =    { fg = colors.flamingo                   },
-            -- TabLineSel = { bg = colors.pink                       },
-            -- CmpBorder =  { fg = colors.surface2                   },
-            -- Pmenu =      { bg = colors.none                       },
-            LineNr =        { fg = colors.surface2                   },
-            -- Search =     { bg = colors.flamingo                   },
-            Visual =        { bg = colors.overlay0                   },
-            Search =        { bg = colors.lavender, fg = colors.base },
-            IncSearch =     { bg = colors.flamingo, fg = colors.base },
-            CurSearch =     { bg = colors.flamingo, fg = colors.base },
+            -- Comment =    { fg = colors.flamingo },
+            -- TabLineSel = { bg = colors.pink     },
+            -- CmpBorder =  { fg = colors.surface2 },
+            -- Pmenu =      { bg = colors.none     },
+            LineNr =        { fg = colors.surface2 },
+            -- Search =     { bg = colors.flamingo },
+            Visual =        { bg = colors.overlay0 },
+            Search =        { bg = colors.surface2 },
+            IncSearch =     { bg = colors.flamingo },
+            CurSearch =     { bg = colors.flamingo },
           }
         end,
       },

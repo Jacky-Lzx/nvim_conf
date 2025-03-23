@@ -56,7 +56,18 @@ return {
         ["<A-/>"] = { function(cmp) if cmp.is_menu_visible() then return cmp.hide() else return cmp.show() end end, "fallback", },
 
         -- show with a list of providers
-        ["<C-space>"] = { function(cmp) cmp.show({ providers = { "snippets" } }) end, },
+        ["<C-space>"] = {
+          --- Disable copilot suggestions
+          function(cmp)
+            cmp.show({
+              providers = (function()
+                local success, node = pcall(vim.treesitter.get_node)
+                if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type())
+                then return { "buffer" } else return { "lazydev", "lsp", "path", "snippets" } end
+              end)(),
+            })
+          end,
+        },
       },
 
       appearance = {
@@ -78,13 +89,29 @@ return {
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         -- "buffer" source is used to complete words
-        default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer", "spell" },
-        -- default = { "lazydev", "copilot", "lsp", "path", "snippets", "spell" },
+        -- default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer", "spell" },
+        -- default = { "lazydev", "copilot", "lsp", "path", "snippets" },
+        default = function()
+          local success, node = pcall(vim.treesitter.get_node)
+          if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
+            return { "buffer" }
+          else
+            return { "lazydev", "copilot", "lsp", "path", "snippets", "buffer" }
+          end
+        end,
         per_filetype = {
           codecompanion = { "codecompanion" },
         },
 
         providers = {
+          path = {
+            score_offset = 95,
+            opts = {
+              get_cwd = function(_)
+                return vim.fn.getcwd()
+              end,
+            },
+          },
           buffer = {
             score_offset = 20,
           },
@@ -102,7 +129,8 @@ return {
                 return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
               end, items)
             end,
-            score_offset = 80,
+            score_offset = 60,
+            fallbacks = { "buffer" },
           },
           copilot = {
             name = "copilot",
@@ -144,6 +172,7 @@ return {
             should_show_items = function(ctx)
               return ctx.trigger.initial_kind ~= "trigger_character"
             end,
+            fallbacks = { "buffer" },
           },
           cmdline = {
             min_keyword_length = 2,
@@ -157,6 +186,12 @@ return {
 
       fuzzy = {
         implementation = "prefer_rust_with_warning",
+        sorts = {
+          "exact",
+          -- defaults
+          "score",
+          "sort_text",
+        },
       },
 
       completion = {
@@ -261,15 +296,7 @@ return {
           -- stylua: ignore
           ["<Tab>"] = { function(cmp) return cmp.accept() end, "fallback", },
           -- stylua: ignore
-          ["<CR>"] = {
-            function(cmp)
-              if vim.fn.getcmdtype() == ":" then
-                return cmp.accept_and_enter()
-              end
-              return false
-            end,
-            "fallback",
-          },
+          ["<CR>"] = { function(cmp) if vim.fn.getcmdtype() == ":" then return cmp.accept_and_enter() end return false end, "fallback", },
           -- stylua: ignore
           ["<A-/>"] = { function(cmp) if cmp.is_menu_visible() then return cmp.hide() else return cmp.show() end end, "fallback", },
         },

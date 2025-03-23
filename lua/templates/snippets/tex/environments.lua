@@ -88,7 +88,7 @@ return {
       ]],{
         c(1, { t("H"), t("htbp") }),
         i(2, "0.6"),
-        t("Figures/"),
+        t("./Figures/"),
         i(3),
         i(4),
         f(function(args, _, _)
