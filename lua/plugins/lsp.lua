@@ -9,18 +9,78 @@ end
 return {
   {
     "folke/trouble.nvim",
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    opts = {
+      focus = false,
+      preview = {
+        type = "float",
+        relative = "editor",
+        border = "rounded",
+        title = "Preview",
+        title_pos = "center",
+        ---`row` and `col` values relative to the editor
+        position = { 0.3, 0. },
+        size = { width = 0.6, height = 0.5 },
+        zindex = 200,
+      },
+    }, -- for default options, refer to the configuration section for custom setup.
+    event = "LspAttach",
     cmd = "Trouble",
     -- stylua: ignore
     keys = {
-      { "<leader>q", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)", },
-      { "<leader>tq", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)", },
-      { "<leader>ts", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)", },
-      { "<leader>tl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references / ... (Trouble)", },
-      { "<leader>tL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)", },
-      { "<leader>tQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)", },
+      vim.keymap.set("n", "<A-j>", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Go to next diagnostic" })
+      vim.keymap.set("n", "<A-k>", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Go to previous diagnostic" })
+      { "<leader>gd", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "[Trouble] toggle buffer diagnostics" },
+      { "<leader>gs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "[Trouble] toggle symbols " },
+      { "<leader>gl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "[Trouble] toggle LSP definitions/references/...", },
+      { "<leader>gL", "<cmd>Trouble loclist toggle<cr>",                            desc = "[Trouble] Location List" },
+      { "<leader>gq", "<cmd>Trouble qflist toggle<cr>",                             desc = "[Trouble] Quickfix List" },
+
+      { "grr", "<CMD>Trouble lsp_references focus=true<CR>",       mode = { "n" },              desc = "[Trouble] LSP references" },
+      { "gD", "<CMD>Trouble lsp_declarations focus=true<CR>",     mode = { "n" },              desc = "[Trouble] LSP declarations" },
+      { "gd", "<CMD>Trouble lsp_type_definitions focus=true<CR>", mode = { "n" },              desc = "[Trouble] LSP type definitions" },
+      { "gri", "<CMD>Trouble lsp_implementations focus=true<CR>",  mode = { "n" },              desc = "[Trouble] LSP implementations" },
     },
+    config = function(_, opts)
+      require("trouble").setup(opts)
+      local symbols = require("trouble").statusline({
+        mode = "lsp_document_symbols",
+        groups = {},
+        title = false,
+        filter = { range = true },
+        format = "{kind_icon}{symbol.name:Normal}",
+        -- The following line is needed to fix the background color
+        -- Set it to the lualine section you want to use
+        -- hl_group = "lualine_b_normal",
+      })
+
+      -- Insert status into lualine
+      opts = require("lualine").get_config()
+      table.insert(opts.winbar.lualine_b, 1, {
+        symbols.get,
+        cond = symbols.has,
+      })
+      require("lualine").setup(opts)
+
+      -- Open telescope results in trouble
+      -- local actions = require("telescope.actions")
+      local open_with_trouble = require("trouble.sources.telescope").open
+
+      -- Use this to add more results without clearing the trouble list
+      -- local add_to_trouble = require("trouble.sources.telescope").add
+
+      local telescope = require("telescope")
+
+      telescope.setup({
+        defaults = {
+          mappings = {
+            i = { ["<c-t>"] = open_with_trouble },
+            n = { ["<c-t>"] = open_with_trouble },
+          },
+        },
+      })
+    end,
   },
+
   {
     "ray-x/lsp_signature.nvim",
     event = "InsertEnter",
@@ -112,35 +172,6 @@ return {
     end,
   },
 
-  -- {
-  --   "jose-elias-alvarez/null-ls.nvim",
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   dependencies = { "mason.nvim" },
-  --   opts = function()
-  --     local nls = require("null-ls")
-  --     return {
-  --       root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-  --       sources = {
-  --         nls.builtins.formatting.fish_indent,
-  --         nls.builtins.diagnostics.fish,
-  --         nls.builtins.formatting.stylua,
-  --         nls.builtins.formatting.shfmt,
-  --         -- nls.builtins.formatting.verible_verilog_format,
-  --         -- nls.builtins.diagnostics.flake8,
-  --       },
-  --     }
-  --   end,
-  -- },
-
-  -- Useful status updates for LSP
-  {
-    "SmiteshP/nvim-navic",
-    lazy = true,
-    opts = {
-      highlight = true,
-    },
-  },
-
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
@@ -209,33 +240,6 @@ return {
         },
       })
 
-      -- require"lspconfig".efm.setup {
-      --     init_options = {documentFormatting = true},
-      --     filetypes = {"lua"},
-      --     settings = {
-      --         rootMarkers = {".git/"},
-      --         languages = {
-      --             lua = {
-      --                 {
-      --                     formatCommand = "lua-format -i --no-keep-simple-function-one-line --no-break-after-operator --column-limit=150 --break-after-table-lb",
-      --                     formatStdin = true
-      --                 }
-      --             }
-      --         }
-      --     }
-      -- }
-
-      -- vim.keymap.set('n', '<leader>gf', vim.lsp.buf.format(), {})
-
-      -- vim.keymap.set("n", "<leader>E", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
-      vim.keymap.set("n", "<A-j>", function()
-        vim.diagnostic.jump({ count = 1 })
-      end, { desc = "Go to next diagnostic" })
-      vim.keymap.set("n", "<A-k>", function()
-        vim.diagnostic.jump({ count = -1 })
-      end, { desc = "Go to previous diagnostic" })
-      -- Use Trouble instead
-      -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "List all diagnostics" })
 
       -- Use LspAttach autocommand to only map the following keys
       -- after the language server attaches to the current buffer
@@ -245,54 +249,26 @@ return {
           -- Buffer local mappings.
           -- See `:help vim.lsp.*` for documentation on any of the below functions
           -- local opts_local = { buffer = ev.buf }
-          local opts_local = {}
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts_local)
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts_local)
-          -- vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts_local)
+          -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+          -- vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+          -- -- vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+          -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
           -- vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-          vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts_local)
-          vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts_local)
+          vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "[LSP] Add workspace folder" })
+          vim.keymap.set(
+            "n",
+            "<leader>wr",
+            vim.lsp.buf.remove_workspace_folder,
+            { desc = "[LSP] Remove workspace folder" }
+          )
           vim.keymap.set("n", "<leader>wl", function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, opts_local)
-          vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts_local)
-          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "Rename" })
-          -- vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { buffer = ev.buf, desc = "Code actions" })
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts_local)
-          -- vim.keymap.set("n", "<leader>f", function()
-          -- 	vim.lsp.buf.format({ async = true })
-          -- end, opts)
+          end, { desc = "[LSP] List workspace folders" })
+          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "[LSP] Rename" })
+          -- vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts_local)
+          -- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts_local)
         end,
       })
-    end,
-  },
-  {
-    "lewis6991/hover.nvim",
-    event = "BufRead",
-    config = function()
-      require("hover").setup({
-        init = function()
-          -- Require providers
-          require("hover.providers.lsp")
-          -- require('hover.providers.gh')
-          -- require('hover.providers.gh_user')
-          -- require('hover.providers.jira')
-          -- require('hover.providers.man')
-          -- require('hover.providers.dictionary')
-        end,
-        preview_opts = {
-          border = nil,
-        },
-        -- Whether the contents of a currently open hover window should be moved
-        -- to a :h preview-window when pressing the hover keymap.
-        preview_window = false,
-        title = true,
-      })
-
-      -- Setup keymaps
-      -- vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
-      -- vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
     end,
   },
 }

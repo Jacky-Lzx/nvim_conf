@@ -68,6 +68,9 @@ return {
             })
           end,
         },
+
+        ["<A-n>"] = { function(cmp) cmp.show({ providers = {"buffer"} }) end, },
+        ["<A-p>"] = { function(cmp) cmp.show({ providers = {"buffer"} }) end, },
       },
 
       appearance = {

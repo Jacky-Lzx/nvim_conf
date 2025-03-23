@@ -215,8 +215,6 @@ return {
     },
     event = "BufWinEnter",
     opts = function()
-      local navic = require("nvim-navic")
-
       return {
         options = {
           -- When set to true, left sections i.e. 'a','b' and 'c'
@@ -237,9 +235,12 @@ return {
         },
         -- stylua: ignore
         winbar = {
+          lualine_a = {
+            "filename"
+          },
           lualine_b = {
             { function() return " "                  end },
-            { function() return navic.get_location() end },
+            -- { function() return navic.get_location() end },
           },
         },
         -- stylua: ignore
@@ -311,6 +312,7 @@ return {
     -- stylua: ignore
     keys = {
       { "<leader>a", function() require("actions-preview").code_actions() end, desc = "Code action", noremap = true, silent = true, },
+      { "<leader>gra", function() require("actions-preview").code_actions() end, desc = "Code action", noremap = true, silent = true, },
     },
     opts = function()
       local hl = require("actions-preview.highlight")

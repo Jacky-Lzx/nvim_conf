@@ -30,7 +30,9 @@ return {
     "echasnovski/mini.operators",
     version = "*",
     event = "BufReadPost",
-    config = true,
+    opts = {
+      replace = { prefix = "cr" },
+    },
   },
 
   {
