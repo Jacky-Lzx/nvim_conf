@@ -43,6 +43,10 @@ return {
             builtin = false, -- use Neovim for previewing diffs (true) or use an external tool (false)
             cmd = { "delta" }, -- example to show a diff with delta
           },
+          git = {
+            builtin = false, -- use Neovim for previewing git output (true) or use git (false)
+            args = {}, -- additional arguments passed to the git command. Useful to set pager options usin `-c ...`
+          },
         },
         win = {
           input = {
@@ -164,8 +168,8 @@ return {
       { "<leader>un", function() require("snacks").notifier.hide() end, desc = "Dismiss All Notifications" },
       -- { "<c-/>",      function() require("snacks").terminal() end, desc = "Toggle Terminal" },
       -- { "<A-i>",      function() require("snacks").terminal() end, desc = "which_key_ignore" },
-      -- { "]]",         function() require("snacks").words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
-      -- { "[[",         function() require("snacks").words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+      { "]]",         function() require("snacks").words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
+      { "[[",         function() require("snacks").words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
       { "<leader>si",         function() require("snacks").image.hover() end, desc = "Display Image", mode = { "n"  } },
     },
     init = function()
