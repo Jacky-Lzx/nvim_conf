@@ -43,7 +43,7 @@ elseif colorscheme == "catppuccin" then
           leap = true,
           cmp = true,
           noice = true,
-          notify = true,
+          -- notify = true,
           which_key = true,
           nvim_surround = true,
           barbar = true,
@@ -51,6 +51,10 @@ elseif colorscheme == "catppuccin" then
           mini = {
             enabled = true,
             indentscope_color = "blue", -- catppuccin color (eg. `lavender`) Default: text
+          },
+          snacks = {
+            enabled = false,
+            indent_scope_color = "lavender", -- catppuccin color (eg. `lavender`) Default: text
           },
         },
         custom_highlights = function(colors)
