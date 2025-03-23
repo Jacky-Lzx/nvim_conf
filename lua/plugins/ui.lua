@@ -551,40 +551,40 @@ return {
   --   end,
   -- },
 
-  {
-    "echasnovski/mini.indentscope",
-    version = "*",
-    event = { "BufReadPost" },
-    opts = function()
-      return {
-        -- Module mappings. Use `''` (empty string) to disable one.
-        mappings = {
-          -- Textobjects
-          object_scope = "ii",
-          object_scope_with_border = "ai",
-
-          -- Motions (jump to respective border line; if not present - body line)
-          goto_top = "[i",
-          goto_bottom = "]i",
-        },
-        -- symbol = "▏",
-        symbol = "│",
-        options = {
-          border = "both",
-          try_as_border = true,
-        },
-      }
-    end,
-    init = function()
-      -- vim.api.nvim_create_autocmd("FileType", {
-      --   pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-      --   callback = function()
-      --     vim.b.miniindentscope_disable = true
-      --   end,
-      -- })
-    end,
-    config = function(_, opts)
-      require("mini.indentscope").setup(opts)
-    end,
-  },
+  -- {
+  --   "echasnovski/mini.indentscope",
+  --   version = "*",
+  --   event = { "BufReadPost" },
+  --   opts = function()
+  --     return {
+  --       -- Module mappings. Use `''` (empty string) to disable one.
+  --       mappings = {
+  --         -- Textobjects
+  --         object_scope = "ii",
+  --         object_scope_with_border = "ai",
+  --
+  --         -- Motions (jump to respective border line; if not present - body line)
+  --         goto_top = "[i",
+  --         goto_bottom = "]i",
+  --       },
+  --       -- symbol = "▏",
+  --       symbol = "│",
+  --       options = {
+  --         border = "both",
+  --         try_as_border = true,
+  --       },
+  --     }
+  --   end,
+  --   init = function()
+  --     -- vim.api.nvim_create_autocmd("FileType", {
+  --     --   pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+  --     --   callback = function()
+  --     --     vim.b.miniindentscope_disable = true
+  --     --   end,
+  --     -- })
+  --   end,
+  --   config = function(_, opts)
+  --     require("mini.indentscope").setup(opts)
+  --   end,
+  -- },
 }
