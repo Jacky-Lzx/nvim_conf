@@ -9,6 +9,30 @@ end
 return {
   {
     "folke/trouble.nvim",
+    event = "LspAttach",
+    cmd = "Trouble",
+
+    ---Open snacks picker results in trouble
+    specs = {
+      "folke/snacks.nvim",
+      opts = function(_, opts)
+        return vim.tbl_deep_extend("force", opts or {}, {
+          picker = {
+            actions = require("trouble.sources.snacks").actions,
+            win = {
+              input = {
+                keys = {
+                  ["<c-t>"] = {
+                    "trouble_open",
+                    mode = { "n", "i" },
+                  },
+                },
+              },
+            },
+          },
+        })
+      end,
+    },
     opts = {
       focus = false,
       preview = {
@@ -22,9 +46,8 @@ return {
         size = { width = 0.6, height = 0.5 },
         zindex = 200,
       },
-    }, -- for default options, refer to the configuration section for custom setup.
-    event = "LspAttach",
-    cmd = "Trouble",
+    },
+
     -- stylua: ignore
     keys = {
       { "<A-j>", function() vim.diagnostic.jump({ count = 1 }) end,  mode = {"n"},   desc = "Go to next diagnostic"},
@@ -60,24 +83,6 @@ return {
         cond = symbols.has,
       })
       require("lualine").setup(opts)
-
-      -- Open telescope results in trouble
-      -- local actions = require("telescope.actions")
-      local open_with_trouble = require("trouble.sources.telescope").open
-
-      -- Use this to add more results without clearing the trouble list
-      -- local add_to_trouble = require("trouble.sources.telescope").add
-
-      local telescope = require("telescope")
-
-      telescope.setup({
-        defaults = {
-          mappings = {
-            i = { ["<c-t>"] = open_with_trouble },
-            n = { ["<c-t>"] = open_with_trouble },
-          },
-        },
-      })
     end,
   },
 
