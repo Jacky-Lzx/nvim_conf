@@ -165,7 +165,7 @@ return {
       -- LSP
       { "gd", function() require("snacks").picker.lsp_definitions() end, desc = "Goto Definition" },
       { "gD", function() require("snacks").picker.lsp_declarations() end, desc = "Goto Declaration" },
-      { "gr", function() require("snacks").picker.lsp_references() end, nowait = true, desc = "References" },
+      { "gr", function() require("snacks").picker.lsp_references() end, desc = "References" },
       { "gI", function() require("snacks").picker.lsp_implementations() end, desc = "Goto Implementation" },
       { "gy", function() require("snacks").picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
       { "<leader>ss", function() require("snacks").picker.lsp_symbols() end, desc = "LSP Symbols" },
@@ -217,6 +217,11 @@ return {
           Snacks.toggle.inlay_hints():map("<leader>uh")
           Snacks.toggle.indent():map("<leader>ug")
           Snacks.toggle.dim():map("<leader>uD")
+
+          vim.keymap.del("n", "grn")
+          vim.keymap.del("n", "gra")
+          vim.keymap.del("n", "grr")
+          vim.keymap.del("n", "gri")
         end,
       })
     end,
