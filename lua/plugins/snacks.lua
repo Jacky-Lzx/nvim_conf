@@ -27,11 +27,7 @@ return {
       explorer = { enabled = false },
       lazygit = {
         enabled = true,
-        configure = true,
-        -- theme_path = vim.fs.normalize("~/.config/lazygit/config.yml") .. "," .. vim.fs.normalize(
-        --   "~/.config/lazygit/config.yml"
-        -- ),
-        -- theme_path = vim.fs.normalize("~/.config/lazygit/config.yml"),
+        configure = false,
       },
       terminal = {
         enabled = true,
@@ -178,7 +174,7 @@ return {
       { "<M-w>", function() require("snacks").bufdelete() end, desc = "Delete Buffer" },
       { "<leader>sR", function() require("snacks").rename.rename_file() end, desc = "Rename File" },
       -- { "<leader>gB", function() require("snacks").gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
-      { "<leader>gg", function() require("snacks").lazygit() end, desc = "Lazygit" },
+      { "<C-g>", function() require("snacks").lazygit() end, desc = "Lazygit" },
       { "<leader>un", function() require("snacks").notifier.hide() end, desc = "Dismiss All Notifications" },
       { "<A-i>",      function() require("snacks").terminal() end, desc = "Toggle terminal", mode = {"n", "t"} },
       { "]]",         function() require("snacks").words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },

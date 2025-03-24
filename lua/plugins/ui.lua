@@ -309,6 +309,11 @@ return {
       virtual_text = { enabled = true },
     },
   },
+  -- {
+  --   "VidocqH/lsp-lens.nvim",
+  --   event = "LspAttach",
+  --   opts = {},
+  -- },
 
   {
     "aznhe21/actions-preview.nvim",
