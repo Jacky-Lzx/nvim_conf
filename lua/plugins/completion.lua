@@ -8,6 +8,8 @@ return {
       "fang2hou/blink-copilot",
       -- Spell source based on Neovim's `spellsuggest`.
       "ribru17/blink-cmp-spell",
+      ---Use treesitter to highlight the label text for the given list of sources.
+      "xzbdmw/colorful-menu.nvim",
     },
 
     event = { "InsertEnter", "CmdlineEnter" },
@@ -207,6 +209,29 @@ return {
           draw = {
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
             components = {
+              label = {
+                text = function(ctx)
+                  ---Print copilot suggestions in a different way
+                  if ctx.source_name == "copilot" then
+                    local last_match_index = ctx.label_matched_indices[#ctx.label_matched_indices]
+                    if last_match_index then
+                      local label_len = #ctx.label
+                      if last_match_index == label_len then
+                        return ctx.label
+                      end
+                      return ctx.label:sub(last_match_index + 2)
+                    end
+                    return ctx.label
+                  end
+                  return require("colorful-menu").blink_components_text(ctx)
+                end,
+                highlight = function(ctx)
+                  if ctx.source_name == "copilot" then
+                    return "Comment"
+                  end
+                  return require("colorful-menu").blink_components_highlight(ctx)
+                end,
+              },
               kind_icon = {
                 ellipsis = false,
                 text = function(ctx)
@@ -277,6 +302,25 @@ return {
           show_with_menu = true,
           -- Show the ghost text when the menu is closed
           show_without_menu = true,
+        },
+      },
+      signature = {
+        enabled = false,
+        window = {
+          min_width = 1,
+          max_width = 100,
+          max_height = 10,
+          border = "single", -- Defaults to `vim.o.winborder` on nvim 0.11+ or 'padded' when not defined/<=0.10
+          winblend = 0,
+          winhighlight = "Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder",
+          scrollbar = false, -- Note that the gutter will be disabled when border ~= 'none'
+          -- Which directions to show the window,
+          -- falling back to the next direction when there's not enough space,
+          -- or another window is in the way
+          direction_priority = { "n" },
+          -- Disable if you run into performance issues
+          treesitter_highlighting = true,
+          show_documentation = true,
         },
       },
       cmdline = {

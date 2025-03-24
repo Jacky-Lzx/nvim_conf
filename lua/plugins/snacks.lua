@@ -97,7 +97,7 @@ return {
         },
       },
       scroll = { enabled = false },
-      words = { enabled = true },
+      words = { enabled = false },
       toggle = { enabled = true },
       styles = {
         terminal = {

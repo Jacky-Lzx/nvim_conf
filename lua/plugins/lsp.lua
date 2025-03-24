@@ -86,25 +86,25 @@ return {
     end,
   },
 
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "InsertEnter",
-    opts = {
-      bind = true,
-      handler_opts = {
-        border = "rounded",
-      },
-    },
-    -- stylua: ignore
-    keys = {
-      { "gK", function() vim.lsp.buf.signature_help()  end, mode = { "n" }, desc = "toggle signature", noremap = true, silent = true },
-      -- No use
-      -- { "<C-i>", function() require("lsp_signature").toggle_float_win() end, mode = { "i" }, desc = "toggle signature", noremap = true, silent = true },
-    },
-    config = function(_, opts)
-      require("lsp_signature").setup(opts)
-    end,
-  },
+  -- {
+  --   "ray-x/lsp_signature.nvim",
+  --   event = "InsertEnter",
+  --   opts = {
+  --     bind = true,
+  --     handler_opts = {
+  --       border = "rounded",
+  --     },
+  --   },
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "gk", function() vim.lsp.buf.signature_help()  end, mode = { "n" }, desc = "toggle signature", noremap = true, silent = true },
+  --     -- No use
+  --     -- { "<C-i>", function() require("lsp_signature").toggle_float_win() end, mode = { "i" }, desc = "toggle signature", noremap = true, silent = true },
+  --   },
+  --   config = function(_, opts)
+  --     require("lsp_signature").setup(opts)
+  --   end,
+  -- },
   -- cmdline tools and lsp servers
   {
 
@@ -257,7 +257,7 @@ return {
           -- vim.keymap.set("n", "gd", vim.lsp.buf.definition)
           -- -- vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
           -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
-          -- vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+          vim.keymap.set("n", "gk", vim.lsp.buf.signature_help, { desc = "[LSP] Signature help" })
           vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "[LSP] Add workspace folder" })
           vim.keymap.set(
             "n",
