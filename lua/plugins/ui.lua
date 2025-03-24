@@ -183,10 +183,11 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       ---@type false | "classic" | "modern" | "helix"
-      preset = "modern",
+      preset = "helix",
       win = {
-        no_overlap = false,
+        -- no_overlap = true,
         title = false,
+        width = 0.5,
       },
       -- stylua: ignore
       spec = {
