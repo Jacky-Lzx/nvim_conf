@@ -306,7 +306,7 @@ return {
     event = "LspAttach",
     opts = {
       autocmd = { enabled = true },
-      virtual_text = { enabled = true },
+      -- virtual_text = { enabled = true },
     },
   },
   -- {

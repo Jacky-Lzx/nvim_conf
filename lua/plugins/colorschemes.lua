@@ -66,7 +66,7 @@ elseif colorscheme == "catppuccin" then
             -- Pmenu =      { bg = colors.none     },
             LineNr =        { fg = colors.surface2 },
             -- Search =     { bg = colors.flamingo },
-            Visual =        { bg = colors.surface2 },
+            Visual =        { bg = colors.overlay0 },
             Search =        { bg = colors.surface2 },
             IncSearch =     { bg = colors.flamingo },
             CurSearch =     { bg = colors.flamingo },

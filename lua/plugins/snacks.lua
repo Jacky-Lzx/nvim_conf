@@ -15,7 +15,11 @@ return {
         style = "notification",
       },
 
-      statuscolumn = { enabled = true },
+      statuscolumn = {
+        enabled = true,
+        left = { "sign", "mark" }, -- priority of signs on the left (high to low)
+        right = { "fold", "git" }, -- priority of signs on the right (high to low) },
+      },
 
       -- Show images in the file
       image = {
