@@ -97,6 +97,7 @@ return {
       toggle = { enabled = true },
       styles = {
         terminal = {
+          relative = "editor",
           border = "rounded",
           position = "float",
           backdrop = 60,

@@ -18,7 +18,7 @@ return {
         title = "Preview",
         title_pos = "center",
         ---`row` and `col` values relative to the editor
-        position = { 0.3, 0. },
+        position = { 0.3, 0.3 },
         size = { width = 0.6, height = 0.5 },
         zindex = 200,
       },
