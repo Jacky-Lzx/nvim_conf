@@ -1,4 +1,4 @@
-local utils = require("utils")
+local utils = require("utils.utils")
 
 local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 for type, icon in pairs(signs) do

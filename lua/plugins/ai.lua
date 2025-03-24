@@ -5,6 +5,7 @@ return {
       "nvim-lua/plenary.nvim",
       -- "nvim-treesitter/nvim-treesitter",
       "echasnovski/mini.diff",
+      "j-hui/fidget.nvim",
     },
     event = "VeryLazy",
 
@@ -50,6 +51,9 @@ return {
         language = "English", -- "English"|"Chinese"
       },
     },
+    init = function()
+      require("utils.codecompanion_fidget_spinner"):init()
+    end,
   },
 
   {
