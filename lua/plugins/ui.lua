@@ -243,8 +243,7 @@ return {
             "filename"
           },
           lualine_b = {
-            { function() return " "                  end },
-            -- { function() return navic.get_location() end },
+            { function() return " " end, color = 'Comment'},
           },
         },
         -- stylua: ignore
