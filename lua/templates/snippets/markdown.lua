@@ -6,6 +6,6 @@ local i = ls.insert_node
 return {
   -- stylua: ignore
   s({ trig = "figure", desc = "Image" }, {
-    t("!["), i(1, "content"), t({ "](./Figures_markdown/" }), i(0), t(")")
+    t("!["), i(0, "content"), t({ "](./Figures_markdown/" }), i(1), t(")")
   }),
 }

@@ -25,6 +25,12 @@ return {
           end
         end,
       },
+      indent = {
+        enabale = true,
+        disable = {
+          "markdown", -- indentation at bullet points is worse
+        },
+      },
     },
     config = function(_, opts)
       local configs = require("nvim-treesitter.configs")

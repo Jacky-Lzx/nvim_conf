@@ -1,5 +1,8 @@
 local M = {}
 
+-- Set the markdown file use the tabindent values set in the config instead of recommended
+vim.g.markdown_recommended_style = 0
+
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
     require("lspconfig").marksman.setup({
