@@ -186,10 +186,13 @@ return {
       { "[[",         function() require("snacks").words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
       { "<leader>si",         function() require("snacks").image.hover() end, desc = "Display Image", mode = { "n"  } },
     },
-    -- config = function(_, opts)
-    --   require("snacks").setup(opts)
-    --
-    -- end,
+
+    config = function(_, opts)
+      require("snacks").setup(opts)
+
+      vim.api.nvim_set_hl(0, "SnacksPickerListCursorLine", { bg = "#313244" })
+    end,
+
     init = function()
       vim.api.nvim_create_autocmd("User", {
         pattern = "VeryLazy",

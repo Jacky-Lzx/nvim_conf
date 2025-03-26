@@ -70,7 +70,7 @@ elseif colorscheme == "catppuccin" then
             Search =        { bg = colors.surface2 },
             IncSearch =     { bg = colors.flamingo },
             CurSearch =     { bg = colors.flamingo },
-            CursorLine =    { bg = colors.falmingo }
+            -- CursorLine =    { bg = colors.falmingo }
           }
         end,
       },
