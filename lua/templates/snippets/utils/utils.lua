@@ -11,6 +11,10 @@ local M = {}
 --   user_args -- user_args from opts.user_args
 -- )
 
+M.get_insert_with_content = function(args)
+  return sn(nil, i(1, M.same(args)))
+end
+
 M.get_visual_or_insert = function(_, parent, _, user_args)
   local ret = ""
   if user_args then
@@ -30,6 +34,24 @@ M.get_insert_with_formulated_path_text = function(args)
   -- Change '_' to ' '
   text = text:gsub("_", " ")
   return sn(nil, i(1, text))
+end
+
+M.same = function(args)
+  local ret = args[1][1]
+  return ret
+end
+
+M.ext = function(args)
+  local content = args[1][1]
+  local arr = vim.split(content, ".", { plain = true })
+  return arr[#arr] or content
+end
+
+M.fun_i_node = function(func)
+  -- return sn(nil, i(1, func(args)))
+  return function(args)
+    return sn(nil, i(1, func(args)))
+  end
 end
 
 return M

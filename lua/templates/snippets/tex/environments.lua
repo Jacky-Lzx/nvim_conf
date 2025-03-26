@@ -44,7 +44,7 @@ return {
   ),
 
   s(
-    { trig = "item", name = "item", desc = "A signle item" },
+    { trig = "item", name = "item", desc = "A single item" },
     { t("\\item ") },
     { condition = conds.in_bullets, show_condition = conds.in_bullets }
   ),

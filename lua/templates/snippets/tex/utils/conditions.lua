@@ -6,8 +6,11 @@ local cond_obj = require("luasnip.extras.conditions")
 
 local M = {}
 
+--- NOTE: useful command `:InspectTree` for treesitter debugging
+
 local MATH_ENV = {
   "inline_formula",
+  "displayed_equation",
   "math_environment",
 }
 local NOT_MATH_ENV = {
