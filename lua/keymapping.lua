@@ -36,7 +36,8 @@ vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 
 vim.keymap.set("i", "<M-m>", function()
   local ls = require("luasnip")
-  if not ls.in_snippet() then
+  local notify = require("snacks.notify")
+  if not ls.get_active_snip() and not ls.in_snippet() then
     ls.unlink_current()
   end
 end, { desc = "test" })

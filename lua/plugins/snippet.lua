@@ -87,7 +87,7 @@ return {
       vim.api.nvim_create_autocmd(opts.region_check_events, {
         callback = function()
           local ls = require("luasnip")
-          if not ls.in_snippet() then
+          if ls.get_active_snip() and not ls.in_snippet() then
             ls.unlink_current()
           end
         end,
