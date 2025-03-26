@@ -35,10 +35,8 @@ vim.keymap.set("i", "<M-m>", "\\(  \\)<esc>hhi")
 vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 
 vim.keymap.set("i", "<M-m>", function()
-  local success, node = pcall(vim.treesitter.get_node)
-  if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
-    print("`Comment`")
-  else
-    print("Not `comment`")
+  local ls = require("luasnip")
+  if not ls.in_snippet() then
+    ls.unlink_current()
   end
 end, { desc = "test" })

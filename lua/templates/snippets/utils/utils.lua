@@ -1,0 +1,35 @@
+local ls = require("luasnip")
+local sn = ls.snippet_node
+local i = ls.insert_node
+
+local M = {}
+
+-- FunctionNode:
+-- local function fn(
+--   args,     -- text from i(2) in this example i.e. { { "456" } }
+--   parent,   -- parent snippet or parent node
+--   user_args -- user_args from opts.user_args
+-- )
+
+M.get_visual_or_insert = function(_, parent, _, user_args)
+  local ret = ""
+  if user_args then
+    ret = user_args
+  end
+  if #parent.snippet.env.SELECT_RAW > 0 then
+    return sn(nil, i(1, parent.snippet.env.SELECT_RAW))
+  else
+    return sn(nil, i(1, ret))
+  end
+end
+
+M.get_insert_with_formulated_path_text = function(args)
+  local text = args[1][1]
+  -- Remove file extension
+  text = text:gsub("%.[^.]*$", "")
+  -- Change '_' to ' '
+  text = text:gsub("_", " ")
+  return sn(nil, i(1, text))
+end
+
+return M

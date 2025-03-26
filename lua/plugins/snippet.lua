@@ -1,7 +1,6 @@
 return {
   {
     "L3MON4D3/LuaSnip",
-    lazy = true,
     event = "InsertEnter",
     -- follow latest release.
     -- version = "v<CurrentMajor>.*",
@@ -21,26 +20,30 @@ return {
       local types = require("luasnip.util.types")
       return {
         update_events = { "TextChanged", "TextChangedI" },
-        history = true,
+        link_children = true,
+        link_roots = true,
+        exit_roots = true,
         ---Events on which to leave the current snippet-root if the cursor is outside its' "region".
         ---Disabled by default, `'CursorMoved',` `'CursorHold'` or `'InsertEnter'` seem reasonable.
-        region_check_events = { "CursorMoved" },
+        region_check_events = { "CursorMoved", "CursorHold", "InsertEnter" },
         delete_check_events = "TextChanged",
         ---Whether snippet-roots should exit at reaching at their last node, `$0`.
         ---This setting is only valid for root snippets, not child snippets.
         ---This setting may avoid unexpected behavior by disallowing to jump earlier (finished) snippets.
         ---Check Basics-Snippet-Insertion for more information on snippet-roots.
-        exit_roots = true,
         ext_opts = {
           [types.choiceNode] = {
             active = {
               virt_text = { { "", "BlinkCmpKindEnum" } },
+              virt_text_pos = "inline",
             },
             snippet_passive = {
               virt_text = { { "", "BlinkCmpLabel" } },
+              virt_text_pos = "inline",
             },
             passive = {
               virt_text = { { "", "BlinkCmpLabel" } },
+              virt_text_pos = "inline",
             },
           },
           [types.insertNode] = {
@@ -80,6 +83,15 @@ return {
       -- ls.filetype_extend("systemverilog", { "verilog" })
 
       vim.api.nvim_create_user_command("SnippetList", require("luasnip.extras.snippet_list").open, {})
+
+      vim.api.nvim_create_autocmd(opts.region_check_events, {
+        callback = function()
+          local ls = require("luasnip")
+          if not ls.in_snippet() then
+            ls.unlink_current()
+          end
+        end,
+      })
     end,
   },
 }
