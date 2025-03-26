@@ -125,8 +125,8 @@ return {
     event = "BufReadPost",
     -- stylua: ignore
     keys = {
-      { "<leader>td", function() require("snacks").picker.todo_comments() end, desc = "Todo", },
-      { "<leader>tD", function() require("snacks").picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end, desc = "Todo/Fix/Fixme", },
+      { "<leader>td", function() require("snacks").picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME", "BUG", "FIXIT", "HACK", "WARN", "ISSUE"  } }) end, desc = "Todo (without NOTE)", },
+      { "<leader>tD", function() require("snacks").picker.todo_comments() end, desc = "Todo (with NOTE)", },
     },
     config = true,
   },
