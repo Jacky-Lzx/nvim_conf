@@ -45,9 +45,11 @@ return {
         enabled = true,
         sources = {
           explorer = {
+            follow_file = false,
             layout = {
               reverse = false,
-              preview = "main",
+              -- preview = "main",
+              preview = true,
               layout = {
                 backdrop = false,
                 width = 30,
