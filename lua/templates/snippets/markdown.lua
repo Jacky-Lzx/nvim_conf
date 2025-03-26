@@ -8,6 +8,7 @@ local sn = ls.snippet_node
 local autosnippet = ls.extend_decorator.apply(s, { snippetType = "autosnippet" })
 
 local utils = require("templates.snippets.utils.utils")
+local conds = require("templates.snippets.utils.conditions")
 
 local function generate_table(_, snip)
   local rows = tonumber(snip.captures[1])
@@ -66,7 +67,7 @@ return {
   }),
 
   -- stylua: ignore
-  autosnippet({ trig = "|(%d+)x(%d+)|", regTrig = true}, {
-    d(1, generate_table, {}),
-  }),
+  autosnippet({trig = "|(%d+)x(%d+)|", desc = "Table generation", regTrig = true, hidden = true},
+    {d(1, generate_table, {})}
+  ),
 }
