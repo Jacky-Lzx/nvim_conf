@@ -28,7 +28,7 @@ return {
         math = { latex = { font_size = "small" } },
       },
 
-      explorer = { enabled = false },
+      explorer = { enabled = true },
       lazygit = {
         enabled = true,
         configure = false,
@@ -43,6 +43,67 @@ return {
       input = { enabled = true },
       picker = {
         enabled = true,
+        sources = {
+          explorer = {
+            layout = {
+              reverse = false,
+              preview = "main",
+              layout = {
+                backdrop = false,
+                width = 30,
+                min_width = 40,
+                height = 0,
+                position = "left",
+                border = "none",
+                box = "vertical",
+                {
+                  win = "input",
+                  height = 1,
+                  border = "rounded",
+                  title = "{title} {live} {flags}",
+                  title_pos = "center",
+                },
+                { win = "list", border = "none" },
+                { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+              },
+            },
+            win = {
+              list = {
+                keys = {
+                  ["<BS>"] = "explorer_up",
+                  ["o"] = "confirm",
+                  ["l"] = "confirm",
+                  ["h"] = "explorer_close", -- close directory
+                  ["a"] = "explorer_add",
+                  ["d"] = "explorer_del",
+                  ["r"] = "explorer_rename",
+                  ["c"] = "explorer_copy",
+                  ["m"] = "explorer_move",
+                  ["O"] = "explorer_open", -- open with system application
+                  ["P"] = "toggle_preview",
+                  ["y"] = { "explorer_yank", mode = { "n", "x" } },
+                  ["p"] = "explorer_paste",
+                  ["u"] = "explorer_update",
+                  ["<c-c>"] = "tcd",
+                  ["<leader>/"] = "picker_grep",
+                  ["<c-t>"] = "terminal",
+                  ["."] = "explorer_focus",
+                  ["I"] = "toggle_ignored",
+                  ["H"] = "toggle_hidden",
+                  ["Z"] = "explorer_close_all",
+                  ["]g"] = "explorer_git_next",
+                  ["[g"] = "explorer_git_prev",
+                  ["]d"] = "explorer_diagnostic_next",
+                  ["[d"] = "explorer_diagnostic_prev",
+                  ["]w"] = "explorer_warn_next",
+                  ["[w"] = "explorer_warn_prev",
+                  ["]e"] = "explorer_error_next",
+                  ["[e"] = "explorer_error_prev",
+                },
+              },
+            },
+          },
+        },
         previewers = {
           diff = {
             builtin = false, -- use Neovim for previewing diffs (true) or use an external tool (false)
@@ -50,7 +111,7 @@ return {
           },
           git = {
             builtin = false, -- use Neovim for previewing git output (true) or use git (false)
-            args = {}, -- additional arguments passed to the git command. Useful to set pager options usin `-c ...`
+            args = {}, -- additional arguments passed to the git command. Useful to set pager options using `-c ...`
           },
         },
         win = {
@@ -119,7 +180,7 @@ return {
       { "<leader><space>", function() require("snacks").picker.smart() end, desc = "Smart Find Files" },
       { "<leader>,", function() require("snacks").picker.buffers() end, desc = "Buffers" },
       { "<leader>sn", function() require("snacks").picker.notifications() end, desc = "Notification History" },
-      -- { "<leader>e", function() require("snacks").explorer() end, desc = "File Explorer" },
+      { "<leader>e", function() require("snacks").explorer.reveal() end, desc = "File Explorer" },
       -- find
       { "<leader>sb", function() require("snacks").picker.buffers() end, desc = "Buffers" },
       -- { "<leader>sc", function() require("snacks").picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },

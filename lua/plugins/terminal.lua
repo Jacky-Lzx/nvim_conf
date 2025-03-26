@@ -4,7 +4,7 @@ return {
     dependencies = { "folke/snacks.nvim", lazy = true },
     -- stylua: ignore
     keys = {
-      { "<leader>e",  "<CMD>Yazi<CR>",        desc = "[Yazi] open at the current file", mode = { "n", "v" }},
+      { "<leader>E",  "<CMD>Yazi<CR>",        desc = "[Yazi] open at the current file", mode = { "n", "v" }},
       { "<leader>cw", "<CMD>Yazi cwd<CR>",    desc = "[Yazi] open in working directory"             },
       { "<c-up>",     "<CMD>Yazi toggle<CR>", desc = "[Yazi] Resume the last session"                      },
     },
