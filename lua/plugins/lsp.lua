@@ -186,7 +186,7 @@ return {
       -- { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
       "williamboman/mason-lspconfig.nvim",
       -- "hrsh7th/cmp-nvim-lsp",
-      "SmiteshP/nvim-navic",
+      -- "SmiteshP/nvim-navic",
       -- Show lsp status on the bottom-left
       -- Have no idea why it still works when not installed
       -- "j-hui/fidget.nvim",
@@ -210,11 +210,6 @@ return {
       })
 
       local extra = {
-        on_attach = function(client, bufnr)
-          if client.server_capabilities.documentSymbolProvider then
-            require("nvim-navic").attach(client, bufnr)
-          end
-        end,
         capabilities = require("blink.cmp").get_lsp_capabilities(),
       }
 
@@ -224,9 +219,6 @@ return {
 
       -- require("lspconfig").ltex.setup({})
       require("lspconfig").clangd.setup({
-        on_attach = function(client, bufnr)
-          navic.attach(client, bufnr)
-        end,
         cmd = {
           "clangd",
           -- "--header-insertion=never",

@@ -44,7 +44,6 @@
   "nvim-lightbulb": { "branch": "master", "commit": "f7f61c47af5bf701b1f4af127bc565ab6491acbf" },
   "nvim-lint": { "branch": "master", "commit": "93b8040115c9114dac1047311763bef275e752dc" },
   "nvim-lspconfig": { "branch": "master", "commit": "401e50fae626c4707af12114b5ddb7bb9f4236a4" },
-  "nvim-navic": { "branch": "master", "commit": "8649f694d3e76ee10c19255dece6411c29206a54" },
   "nvim-nio": { "branch": "master", "commit": "21f5324bfac14e22ba26553caf69ec76ae8a7662" },
   "nvim-notify": { "branch": "master", "commit": "22f29093eae7785773ee9d543f8750348b1a195c" },
   "nvim-scrollbar": { "branch": "main", "commit": "6994eb9f73d5fdc36ee2c8717940e8c853e51a49" },
