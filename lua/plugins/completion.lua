@@ -1,3 +1,13 @@
+local function findLast(haystack, needle)
+  --Set the third arg to false to allow pattern matching
+  local found = haystack:reverse():find(needle:reverse(), nil, true)
+  if found then
+    return haystack:len() - needle:len() - found + 2
+  else
+    return found
+  end
+end
+
 return {
   {
     "saghen/blink.cmp",
@@ -219,7 +229,9 @@ return {
                       if last_match_index == label_len then
                         return ctx.label
                       end
-                      return ctx.label:sub(last_match_index + 2)
+                      -- Find the last index of the space
+                      local last_space_index = findLast(ctx.label:sub(1, last_match_index + 2), " ")
+                      return ctx.label:sub(last_space_index + 1)
                     end
                     return ctx.label
                   end
