@@ -32,11 +32,11 @@ return {
   -- stylua: ignore
   s({trig = "lfun", desc = "Local function" },
     fmta([[
-      local function(<>)
+      local function <>(<>)
         <>
       end
       ]],
-      { i(1), i(0) }
+      { i(1), i(2), i(0) }
     )
   ),
   -- stylua: ignore

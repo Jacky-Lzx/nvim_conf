@@ -54,6 +54,26 @@ local function generate_table(_, snip)
   return sn(nil, table)
 end
 
+local function generate_list(_, snip, _, user_arg)
+  local num = tonumber(snip.captures[1])
+  local table = {}
+  for index = 1, num do
+    if user_arg == "1" then
+      table[#table + 1] = t(tostring(index) .. ". ")
+    else
+      table[#table + 1] = t("- ")
+    end
+
+    table[#table + 1] = i(index, tostring(index))
+
+    if index ~= num then
+      table[#table + 1] = t({ "", "" })
+    end
+  end
+
+  return sn(nil, table)
+end
+
 return {
   -- stylua: ignore
   s({ trig = "figure", desc = "Image" }, {
@@ -69,5 +89,15 @@ return {
   -- stylua: ignore
   autosnippet({trig = "|(%d+)x(%d+)|", desc = "Table generation", regTrig = true, hidden = true},
     {d(1, generate_table, {})}
+  ),
+
+  -- stylua: ignore
+  autosnippet({trig = "item(%d+)%s", desc = "Itemize generation", regTrig = true, hidden = true},
+    {d(1, generate_list, {}, {user_args = { "-" }})}
+  ),
+
+  autosnippet(
+    { trig = "enum(%d+)%s", desc = "Enumerate generation", regTrig = true, hidden = true },
+    { d(1, generate_list, {}, { user_args = { "1" } }) }
   ),
 }
