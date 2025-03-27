@@ -231,7 +231,11 @@ return {
                       end
                       -- Find the last index of the space
                       local last_space_index = findLast(ctx.label:sub(1, last_match_index + 2), " ")
-                      return ctx.label:sub(last_space_index + 1)
+                      if last_space_index then
+                        return ctx.label:sub(last_space_index + 1)
+                      else
+                        return ctx.label
+                      end
                     end
                     return ctx.label
                   end
