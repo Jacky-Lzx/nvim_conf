@@ -35,9 +35,6 @@ vim.keymap.set("i", "<M-m>", "\\(  \\)<esc>hhi")
 vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 
 vim.keymap.set("i", "<M-m>", function()
-  local ls = require("luasnip")
-  local notify = require("snacks.notify")
-  if not ls.get_active_snip() and not ls.in_snippet() then
-    ls.unlink_current()
-  end
+  local conditions = require("templates.snippets.tex.utils.conditions")
+  require("snacks.notify").info(tostring(conditions.in_beamer()))
 end, { desc = "test" })

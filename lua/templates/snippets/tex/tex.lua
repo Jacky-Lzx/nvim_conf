@@ -4,6 +4,8 @@ local t = ls.text_node
 local i = ls.insert_node
 local fmta = require("luasnip.extras.fmt").fmta
 
+local temple = require("templates.snippets.utils.utils")
+
 return {
   -- s({ trig = "figure", desc = "Image" }, {
   --   t("!["), i(1, "content"), t({ "](./Figures_markdown/" }), i(0), t(")")

@@ -20,6 +20,7 @@ return {
       local types = require("luasnip.util.types")
       return {
         update_events = { "TextChanged", "TextChangedI" },
+        -- update_events = { "TextChanged" },
         link_children = true,
         link_roots = true,
         exit_roots = true,
@@ -35,29 +36,26 @@ return {
           [types.choiceNode] = {
             active = {
               virt_text = { { "", "BlinkCmpKindEnum" } },
-              virt_text_pos = "inline",
             },
             snippet_passive = {
               virt_text = { { "", "BlinkCmpLabel" } },
-              virt_text_pos = "inline",
             },
             passive = {
               virt_text = { { "", "BlinkCmpLabel" } },
-              virt_text_pos = "inline",
             },
           },
           [types.insertNode] = {
             active = {
               virt_text = { { "󰗧", "BlinkCmpKindText" } },
-              virt_text_pos = "inline",
+              -- virt_text_pos = "inline",
             },
             snippet_passive = {
               virt_text = { { "󰗧", "BlinkCmpLabel" } },
-              virt_text_pos = "inline",
+              -- virt_text_pos = "inline",
             },
             passive = {
               virt_text = { { "󰗧", "BlinkCmpLabel" } },
-              virt_text_pos = "inline",
+              -- virt_text_pos = "inline",
             },
           },
         },
