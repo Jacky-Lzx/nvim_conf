@@ -8,7 +8,6 @@ M.plugins = {
   --   "mingo99/verilog-autoinst.nvim",
   --   file_type = { "verilog", "systemverilog" },
   --   cmd = "AutoInst",
-  --   -- stylua: ignore
   --   keys = {
   --     { "<leader>fv", "<cmd>AutoInst<cr>", desc = "Automatic instantiation for verilog" }
   --   },
@@ -51,7 +50,37 @@ function M.setup(setting_name, extra)
       "+1800-2017ext+sv",
     }
 
-    return { "verilator" }
+    -- local pattern = "([%w_%.]+): (%d+): (%w?): (.*)\n"
+    -- local pattern = "([^:]+):(%d+): (%w +): (.*)"
+    local pattern = "(.-):(%d+): ([%w ]+): (.*)"
+
+    local groups = { "file", "lnum", "severity", "message" }
+
+    local severities = {
+      ["error"] = vim.diagnostic.severity.ERROR,
+      ["warning"] = vim.diagnostic.severity.WARN,
+      ["     "] = vim.diagnostic.severity.INFO,
+      ["       "] = vim.diagnostic.severity.INFO,
+    }
+
+    require("lint").linters.iverilog = {
+      name = "iverilog",
+      cmd = "iverilog",
+      stdin = false, -- or false if it doesn't support content input via stdin. In that case the filename is automatically added to the arguments.
+      append_fname = true, -- Automatically append the file name to `args` if `stdin = false` (default: true)
+      args = {
+        "-g2012",
+        "-y",
+        ".",
+      }, -- list of arguments. Can contain functions with zero arguments that will be evaluated once the linter is used.
+      stream = "both", -- ('stdout' | 'stderr' | 'both') configure the stream to which the linter outputs the linting result.
+      ignore_exitcode = true, -- set this to true if the linter exits with a code != 0 and that's considered normal.
+      env = nil, -- custom environment table to use with the external process. Note that this replaces the *entire* environment, it is not additive.
+      parser = require("lint.parser").from_pattern(pattern, groups, severities, { ["source"] = "iverilog" }),
+    }
+
+    return { "iverilog" }
+    -- return { "verilator" }
   end
 
   require("notify")("Unknown setting for language `verilog`: " .. setting_name)
