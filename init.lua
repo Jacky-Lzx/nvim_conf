@@ -35,7 +35,16 @@ vim.wo.cursorline = true
 
 vim.opt.clipboard = ""
 
-vim.g.python3_host_prog = "/opt/homebrew/anaconda3/envs/neovim/bin/python3"
+local python_path = ""
+local uname = vim.uv.os_uname()
+if uname.sysname == "Linux" then
+  python_path = "/home/lzx/.pyenv/versions/3.10.0/envs/neovim3"
+elseif uname.sysname == "Darwin" then
+  python_path = "/opt/homebrew/anaconda3/envs/neovim/bin/python3"
+  -- elseif uname.sysname == "Windows_NT" then
+end
+
+vim.g.python3_host_prog = python_path
 
 -- vim.opt.formatoptions:remove { "r", "o" }
 vim.cmd([[ autocmd FileType * set formatoptions-=ro ]])

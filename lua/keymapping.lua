@@ -35,6 +35,19 @@ vim.keymap.set("i", "<M-m>", "\\(  \\)<esc>hhi")
 vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
 
 vim.keymap.set("i", "<M-m>", function()
-  local conditions = require("templates.snippets.tex.utils.conditions")
-  require("snacks.notify").info(tostring(conditions.in_beamer()))
+  -- local conditions = require("templates.snippets.tex.utils.conditions")
+  -- require("snacks.notify").info(tostring(conditions.in_beamer()))
+  -- 获取系统信息
+  local uname = vim.uv.os_uname()
+
+  -- 判断系统类型
+  if uname.sysname == "Linux" then
+    print("当前系统是 Linux")
+  elseif uname.sysname == "Darwin" then
+    print("当前系统是 macOS")
+  elseif uname.sysname == "Windows_NT" then
+    print("当前系统是 Windows")
+  else
+    print("未知系统类型: " .. uname.sysname)
+  end
 end, { desc = "test" })
