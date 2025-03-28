@@ -8,7 +8,8 @@ local sn = ls.snippet_node
 local autosnippet = ls.extend_decorator.apply(s, { snippetType = "autosnippet" })
 
 local utils = require("templates.snippets.utils.utils")
-local conds = require("templates.snippets.utils.conditions")
+-- local conds = require("templates.snippets.utils.conditions")
+local cond_line_begin = require("luasnip.extras.conditions.expand").line_begin
 
 local function generate_table(_, snip)
   local rows = tonumber(snip.captures[1])
@@ -87,17 +88,18 @@ return {
   }),
 
   -- stylua: ignore
-  autosnippet({trig = "|(%d+)x(%d+)|", desc = "Table generation", regTrig = true, hidden = true},
-    {d(1, generate_table, {})}
+  autosnippet({trig = "table(%d+)x(%d+)%s", desc = "Table generation", regTrig = true, hidden = true},
+    {d(1, generate_table, {})}, {condition = cond_line_begin}
   ),
 
   -- stylua: ignore
   autosnippet({trig = "item(%d+)%s", desc = "Itemize generation", regTrig = true, hidden = true},
-    {d(1, generate_list, {}, {user_args = { "-" }})}
+    {d(1, generate_list, {}, {user_args = {"-"}})}, {condition = cond_line_begin}
   ),
 
+  -- stylua: ignore
   autosnippet(
-    { trig = "enum(%d+)%s", desc = "Enumerate generation", regTrig = true, hidden = true },
-    { d(1, generate_list, {}, { user_args = { "1" } }) }
+    {trig = "enum(%d+)%s", desc = "Enumerate generation", regTrig = true, hidden = true},
+    {d(1, generate_list, {}, {user_args = {"1"}})}, {condition = cond_line_begin}
   ),
 }
