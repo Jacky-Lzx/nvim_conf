@@ -8,6 +8,14 @@ function M.setup(setting_name, extra)
 
       settings = {
         texlab = {
+          -- build = {
+          --   executable = "latexmk",
+          --   args = {
+          --     "%f",
+          --   },
+          --   onSave = true,
+          --   forwardSearchAfter = false,
+          -- },
           build = {
             executable = "tectonic",
             args = {
@@ -30,7 +38,7 @@ function M.setup(setting_name, extra)
           chktex = {
             onOpenAndSave = true,
             onEdit = false,
-            addtionalArgs = {
+            additionalArgs = {
               "-wall",
               "-q",
               "-n1",
