@@ -281,7 +281,7 @@ return {
         },
       },
     },
-    event = { "BufAdd", "FileReadPre" },
+    event = { "VeryLazy" },
     -- stylua: ignore
     keys = {
       { "<M-<>", "<CMD>BufferMovePrevious<CR>", mode = {"n"}, desc = "Move buffer left"  },
