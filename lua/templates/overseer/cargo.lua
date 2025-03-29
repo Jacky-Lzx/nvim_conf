@@ -46,7 +46,7 @@ local function get_workspace_root(cwd, cb)
   local jid = vim.fn.jobstart({ "cargo", "metadata", "--no-deps", "--format-version", "1" }, {
     cwd = cwd,
     stdout_buffered = true,
-    on_stdout = function(j, output)
+    on_stdout = function(_, output)
       local ok, data = pcall(json.decode, table.concat(output, ""))
       if ok then
         if data.workspace_root then
@@ -106,12 +106,11 @@ return {
         { args = { "clippy" } },
         { args = { "fmt" } },
       }
-      local roots =
-        { {
-          postfix = "",
-          cwd = cargo_dir,
-          priority = 55,
-        } }
+      local roots = { {
+        postfix = "",
+        cwd = cargo_dir,
+        priority = 55,
+      } }
       if workspace_root ~= cargo_dir then
         roots[1].relative_file_root = workspace_root
         table.insert(roots, { postfix = " (workspace)", cwd = workspace_root })
@@ -120,15 +119,11 @@ return {
         for _, command in ipairs(commands) do
           table.insert(
             ret,
-            overseer.wrap_template(
-              tmpl,
-              {
-                name = string.format("cargo %s%s", table.concat(command.args, " "), root.postfix),
-                tags = command.tags,
-                priority = root.priority,
-              },
-              { args = command.args, cwd = root.cwd, relative_file_root = root.relative_file_root }
-            )
+            overseer.wrap_template(tmpl, {
+              name = string.format("cargo %s%s", table.concat(command.args, " "), root.postfix),
+              tags = command.tags,
+              priority = root.priority,
+            }, { args = command.args, cwd = root.cwd, relative_file_root = root.relative_file_root })
           )
         end
         table.insert(

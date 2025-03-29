@@ -1,16 +1,8 @@
 return {
   "cargo",
-  "just",
   "make",
-  "npm",
   -- "shell",
-  "tox",
   "vscode",
-  "mage",
-  "mix",
-  "deno",
-  "rake",
   "task",
-  "composer",
   "cargo-make",
 }
