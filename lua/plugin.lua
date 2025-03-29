@@ -61,7 +61,7 @@ local opts = {
   performance = {
     rtp = {
       disabled_plugins = {
-        "matchparen",
+        -- "matchparen",
         "gzip",
         "netrwPlugin",
         "tarPlugin",
