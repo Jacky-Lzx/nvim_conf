@@ -2,14 +2,13 @@ return {
   {
     "L3MON4D3/LuaSnip",
     event = "InsertEnter",
-    -- follow latest release.
-    -- version = "v<CurrentMajor>.*",
-    version = "v2.*",
+    -- version = "v2.*",
+    version = "*",
     -- install jsregexp (optional!:).
     build = "make install_jsregexp",
-    cmd = "SnippetList",
     -- stylua: ignore
     keys = {
+      -- { "<A-n>" , function() require('luasnip').expand() end,                         mode = { "i", "s" }, silent = true, desc = "luasnip expand" },
       { "<A-l>" , function() require('luasnip').jump(1) end,                         mode = { "i", "s" }, silent = true, desc = "luasnip jump 1" },
       { "<A-h>" , function() require('luasnip').jump(-1) end,                        mode = { "i", "s" }, silent = true, desc = "luasnip jump -1" },
       { "<A-j>" , function() local ls = require('luasnip'); if ls.choice_active() then ls.change_choice(1) end end,                mode = { "i", "s" }, silent = true, desc = "luasnip jump 1" },
@@ -61,6 +60,7 @@ return {
         },
         ---Mapping for populating `TM_SELECTED_TEXT` and related variables (not set by default).
         cut_selection_keys = "`",
+        store_selection_keys = "`",
         enable_autosnippets = true,
       }
     end,
@@ -80,7 +80,8 @@ return {
       -- local ls = require("luasnip")
       -- ls.filetype_extend("systemverilog", { "verilog" })
 
-      vim.api.nvim_create_user_command("SnippetList", require("luasnip.extras.snippet_list").open, {})
+      vim.api.nvim_create_user_command("LuaSnipList", require("luasnip.extras.snippet_list").open, {})
+      vim.api.nvim_create_user_command("LuaSnipEdit", require("luasnip.loaders").edit_snippet_files, {})
 
       vim.api.nvim_create_autocmd(opts.region_check_events, {
         callback = function()

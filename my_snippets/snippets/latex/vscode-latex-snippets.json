@@ -19,10 +19,6 @@
     "prefix": "xor",
     "body": "\\oplus "
   },
-  "operatorname": {
-    "prefix": "ope",
-    "body": "\\operatorname{$1} "
-  },
   "question": {
     "prefix": [
       "problem",
@@ -73,16 +69,6 @@
   "Math": {
     "prefix": "PP",
     "body": "\\mathbb{P}"
-  },
-  "big-bracket": {
-    "prefix": "big-bracket",
-    "body": [
-      "\\left\\{",
-      "\t\\begin{array}{ll}",
-      "\t\t$0",
-      "\t\\end{array}",
-      "\\right."
-    ]
   },
   "color-RGB": {
     "prefix": "color-RGB",
@@ -238,22 +224,6 @@
       "$0"
     ]
   },
-  "enumerate": {
-    "prefix": "enumerate",
-    "body": [
-      "\\begin{enumerate}[label = {${1:\\arabic*.}}]",
-      "\t\\item $0",
-      "\\end{enumerate}"
-    ]
-  },
-  "itemize": {
-    "prefix": "itemize",
-    "body": [
-      "\\begin{itemize}[leftmargin = 0.5cm]",
-      "\t\\item $0",
-      "\\end{itemize}"
-    ]
-  },
   "verbatim": {
     "prefix": [
       "command",
@@ -274,42 +244,12 @@
       "\\verb|${1:$TM_SELECTED_TEXT}|$0"
     ]
   },
-  "In-line math blocks": {
-    "prefix": "mk",
-    "body": [
-      "\\( ${1:$TM_SELECTED_TEXT} \\)$0"
-    ]
-  },
-  "Multi-line math blocks": {
-    "prefix": "dm",
-    "body": [
-      "\\[",
-      "\t${1:$TM_SELECTED_TEXT}",
-      ".\\] $0"
-    ]
-  },
   "array": {
     "prefix": "array",
     "body": [
       "\\begin{array}{${1:ll}}",
       "\t$0",
       "\\end{array}"
-    ]
-  },
-  "aligned equation": {
-    "prefix": "aligned",
-    "body": [
-      "\\begin{aligned}",
-      "\t$0",
-      "\\end{aligned}"
-    ]
-  },
-  "equation": {
-    "prefix": "equation",
-    "body": [
-      "\\begin{equation*}",
-      "\t$0",
-      "\\end{equation*}"
     ]
   },
   "\\mathrm": {

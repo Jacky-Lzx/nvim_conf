@@ -30,42 +30,54 @@ local get_visual_or_insert = function(_, parent)
 end
 
 return {
-  -- stylua: ignore
   autosnippet(
-    { trig = "mk", name = "inline_math_select", desc = "(Select) In-line math block", },
-    fmta([[ \( <> \)]], { d(1, get_visual_or_insert), }),
-    { condition = cond_has_selected_text, priority = 2000, }
+    { trig = "mk", name = "inline_math_select", desc = "(Select) In-line math block" },
+    fmta([[ \( <> \)]], { d(1, get_visual_or_insert) }),
+    { condition = cond_has_selected_text, priority = 2000 }
   ),
-  -- stylua: ignore
-  autosnippet({ trig = "mk", name = "inline_math", desc = "In-line math block" }, fmta([[ \( <> \) <>]], { i(1), i(0) })),
+  autosnippet(
+    { trig = "mk", name = "inline_math", desc = "In-line math block" },
+    fmta([[ \( <> \) <>]], { i(1), i(0) })
+  ),
 
-  -- stylua: ignore
-  autosnippet( { trig = "dm", name = "inline_math_select", desc = "(Select) In-line math block" },
-    fmta([[
+  autosnippet(
+    { trig = "dm", name = "inline_math_select", desc = "(Select) In-line math block" },
+    fmta(
+      [[
         \[
           <>
         \]
-      ]], { d(1, get_visual_or_insert) }
+      ]],
+      { d(1, get_visual_or_insert) }
     ),
     { condition = cond_line_begin * cond_has_selected_text, priority = 2000 }
   ),
-  -- stylua: ignore
-  autosnippet({ trig = "dm", name = "inline_math", desc = "In-line math block"},
-    fmta( [[
+  autosnippet(
+    { trig = "dm", name = "inline_math", desc = "In-line math block" },
+    fmta(
+      [[
       \[
         <>
       \]
-    ]], {i(0)}),
-    {condition = cond_line_begin}
+    ]],
+      { i(0) }
+    ),
+    { condition = cond_line_begin }
   ),
 
-  -- stylua: ignore
-  s({ trig = "align", name = "align environment", dscr = "Align environment\n  Insert align in text and aligned in math environment" },
-    fmta([[
+  s(
+    {
+      trig = "align",
+      name = "align environment",
+      dscr = "Align environment\n  Insert align in text and aligned in math environment",
+    },
+    fmta(
+      [[
         \begin{align<>}
           <>
         \end{align<>}
-      ]], {
+      ]],
+      {
         m(nil, conds.in_math, "ed"),
         i(0),
         m(nil, conds.in_math, "ed"),
@@ -73,14 +85,17 @@ return {
     )
   ),
 
-  -- stylua: ignore
   -- TODO: If not use "*", add \label automatically
-  s({ trig = "equation", name = "equation environment", dscr = "Equation environment" },
-    fmta([[
+  s(
+    { trig = "equation", name = "equation environment", dscr = "Equation environment" },
+    fmta(
+      [[
         \begin{equation<>}
           <>
         \end{equation<>}
-    ]], {c(1, {t(""), t("*")}), i(0), rep(1)})
+    ]],
+      { c(1, { t(""), t("*") }), i(0), rep(1) }
+    )
   ),
 
   -- fractions
@@ -118,4 +133,76 @@ return {
   --   { d(1, generate_fraction) },
   --   { condition = cond.in_math, show_condition = cond.in_math }
   -- ),
+
+  s(
+    { trig = "ope", desc = "operatorname" },
+    fmta([[\operatorname{<>} ]], { i(1) }),
+    { show_condition = conds.in_math }
+  ),
+
+  s(
+    { trig = "big-bracket", desc = "Big bracket" },
+    fmta(
+      [[
+      \left\{
+        \begin{array}{ll}
+          <> & <> \\
+          <> & <> \\
+        \end{array}
+      \right.
+    ]],
+      { i(1), i(2), i(3), i(4) }
+    ),
+    { show_condition = conds.in_math }
+  ),
+
+  --   "\\mathrm": {
+  --   "prefix": [
+  --     "mrm",
+  --     "mathrm"
+  --   ],
+  --   "body": "\\mathrm{${1:d}} $0"
+  -- },
+  -- "\\mathbb": {
+  --   "prefix": [
+  --     "mbb",
+  --     "mathbb"
+  --   ],
+  --   "body": "\\mathbb{$1} $0"
+  -- },
+  -- "\\mathcal": {
+  --   "prefix": [
+  --     "mcal",
+  --     "mathcal"
+  --   ],
+  --   "body": "\\mathcal{$1} $0"
+  -- },
+  -- "\\mathscr": {
+  --   "prefix": [
+  --     "mscr",
+  --     "mathscr"
+  --   ],
+  --   "body": "\\mathscr{$1} $0"
+  -- },
+
+  autosnippet(
+    { trig = "rm", desc = "(Select) Math rm" },
+    fmta(
+      [[
+      \mathrm{<>}
+    ]],
+      { d(1, get_visual_or_insert) }
+    ),
+    { condition = cond_has_selected_text, priority = 2000 }
+  ),
+  autosnippet(
+    { trig = "rm", desc = "Math rm" },
+    fmta(
+      [[
+      \mathrm{<>} <>
+    ]],
+      { i(1), i(0) }
+    ),
+    { condition = conds.in_math }
+  ),
 }
