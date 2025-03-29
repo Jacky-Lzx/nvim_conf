@@ -233,7 +233,7 @@ return {
           lualine_a = { "mode"                                           },
           lualine_b = { "branch", "diff", "diagnostics"                  },
           lualine_c = { "filename", { "copilot", show_colors = true }    },
-          lualine_x = { "lsp_status"                                     },
+          lualine_x = {                                                  },
           lualine_y = { "encoding", "fileformat", "filetype", "progress" },
           lualine_z = { "location"                                       },
         },
@@ -245,6 +245,9 @@ return {
           lualine_b = {
             { function() return " " end, color = 'Comment'},
           },
+          lualine_x = {
+            -- "lsp_status"
+          }
         },
         -- stylua: ignore
         inactive_winbar = {
