@@ -112,11 +112,11 @@ return {
     "numToStr/Comment.nvim",
     -- stylua: ignore
     keys = {
-      { "<leader>/", function() require("Comment.api").toggle.linewise.current() end,                 mode = "n", desc = "Comment current line", },
-      { "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>", mode = "v", desc = "Comment current line", },
+      { "<leader>/", function() require("Comment.api").toggle.linewise.current() end,            mode = "n", desc = "[Comment] Comment current line", },
+      { "<leader>/", function() require('Comment.api').toggle.linewise(vim.fn.visualmode()) end, mode = "v", desc = "[Comment] Comment current line", },
       -- control + / keymappings
-      { "<C-_>",     function() require("Comment.api").toggle.linewise.current() end,                 mode = "n", desc = "Comment current line", },
-      { "<C-_>",     "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>", mode = "v", desc = "Comment current line", },
+      { "<C-_>",     function() require("Comment.api").toggle.linewise.current() end,            mode = "n", desc = "[Comment] Comment current line", },
+      { "<C-_>",     function() require('Comment.api').toggle.linewise(vim.fn.visualmode()) end, mode = "v", desc = "[Comment] Comment current line", },
     },
     config = function()
       require("Comment").setup()
@@ -131,8 +131,10 @@ return {
     event = "BufReadPost",
     -- stylua: ignore
     keys = {
-      { "<leader>td", function() require("snacks").picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME", "BUG", "FIXIT", "HACK", "WARN", "ISSUE"  } }) end, desc = "Todo (without NOTE)", },
-      { "<leader>tD", function() require("snacks").picker.todo_comments() end, desc = "Todo (with NOTE)", },
+      ---@diagnostic disable-next-line: undefined-field
+      { "<leader>td", function() require("snacks").picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME", "BUG", "FIXIT", "HACK", "WARN", "ISSUE"  } }) end, desc = "[TODO] Todo (without NOTE)", },
+      ---@diagnostic disable-next-line: undefined-field
+      { "<leader>tD", function() require("snacks").picker.todo_comments() end, desc = "[TODO] Todo (with NOTE)", },
     },
     config = true,
   },
@@ -176,13 +178,13 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { "<leader>f", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "[Flash]", },
-      { "<leader>F", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "[Flash] Treesitter", },
-      -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      { "<leader>F", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "[Flash] Treesitter Search", },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "[Flash] Toggle Search", },
-      { "<leader>j", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, desc = "[Flash] line jump"},
-      { "<leader>k", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, desc = "[Flash] line jump"},
+      { "<leader>f", mode = { "n", "x", "o" }, function() require("flash").jump() end,                                                                                               desc = "[Flash] Jump"              },
+      { "<leader>F", mode = { "n", "x", "o" }, function() require("flash").treesitter() end,                                                                                         desc = "[Flash] Treesitter"        },
+      -- { "r",      mode = "o",               function() require("flash").remote() end,                                                                                             desc = "Remote Flash"              },
+      { "<leader>F", mode = { "o", "x" },      function() require("flash").treesitter_search() end,                                                                                  desc = "[Flash] Treesitter Search" },
+      { "<c-s>",     mode = { "c" },           function() require("flash").toggle() end,                                                                                             desc = "[Flash] Toggle Search"     },
+      { "<leader>j", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, desc = "[Flash] Line jump"         },
+      { "<leader>k", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, desc = "[Flash] Line jump"         },
     },
   },
 }

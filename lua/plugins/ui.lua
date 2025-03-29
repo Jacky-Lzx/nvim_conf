@@ -207,7 +207,7 @@ return {
     },
     keys = {
       -- stylua: ignore
-      { "<leader>?", function() require("which-key").show({ global = false }) end, desc = "Buffer Local Keymaps (which-key)", },
+      { "<leader>?", function() require("which-key").show({ global = false }) end, desc = "[Which-key] Buffer Local Keymaps", },
     },
   },
 
@@ -284,19 +284,19 @@ return {
     event = { "VeryLazy" },
     -- stylua: ignore
     keys = {
-      { "<M-<>", "<CMD>BufferMovePrevious<CR>", mode = {"n"}, desc = "Move buffer left"  },
-      { "<M->>", "<CMD>BufferMoveNext<CR>",     mode = {"n"}, desc = "Move buffer right" },
-      { "<M-1>", "<CMD>BufferGoto 1<CR>",       mode = {"n"}, desc = "Go to buffer 1"    },
-      { "<M-2>", "<CMD>BufferGoto 2<CR>",       mode = {"n"}, desc = "Go to buffer 2"    },
-      { "<M-3>", "<CMD>BufferGoto 3<CR>",       mode = {"n"}, desc = "Go to buffer 3"    },
-      { "<M-4>", "<CMD>BufferGoto 4<CR>",       mode = {"n"}, desc = "Go to buffer 4"    },
-      { "<M-5>", "<CMD>BufferGoto 5<CR>",       mode = {"n"}, desc = "Go to buffer 5"    },
-      { "<M-6>", "<CMD>BufferGoto 6<CR>",       mode = {"n"}, desc = "Go to buffer 6"    },
-      { "<M-7>", "<CMD>BufferGoto 7<CR>",       mode = {"n"}, desc = "Go to buffer 7"    },
-      { "<M-8>", "<CMD>BufferGoto 8<CR>",       mode = {"n"}, desc = "Go to buffer 8"    },
-      { "<M-9>", "<CMD>BufferGoto 9<CR>",       mode = {"n"}, desc = "Go to buffer 9"    },
-      { "<M-h>", "<CMD>BufferPrevious<CR>",     mode = {"n"}, desc = "Previous buffer"   },
-      { "<M-l>", "<CMD>BufferNext<CR>",         mode = {"n"}, desc = "Next buffer"       },
+      { "<M-<>", "<CMD>BufferMovePrevious<CR>", mode = {"n"}, desc = "[Buffer] Move buffer left"  },
+      { "<M->>", "<CMD>BufferMoveNext<CR>",     mode = {"n"}, desc = "[Buffer] Move buffer right" },
+      { "<M-1>", "<CMD>BufferGoto 1<CR>",       mode = {"n"}, desc = "[Buffer] Go to buffer 1"    },
+      { "<M-2>", "<CMD>BufferGoto 2<CR>",       mode = {"n"}, desc = "[Buffer] Go to buffer 2"    },
+      { "<M-3>", "<CMD>BufferGoto 3<CR>",       mode = {"n"}, desc = "[Buffer] Go to buffer 3"    },
+      { "<M-4>", "<CMD>BufferGoto 4<CR>",       mode = {"n"}, desc = "[Buffer] Go to buffer 4"    },
+      { "<M-5>", "<CMD>BufferGoto 5<CR>",       mode = {"n"}, desc = "[Buffer] Go to buffer 5"    },
+      { "<M-6>", "<CMD>BufferGoto 6<CR>",       mode = {"n"}, desc = "[Buffer] Go to buffer 6"    },
+      { "<M-7>", "<CMD>BufferGoto 7<CR>",       mode = {"n"}, desc = "[Buffer] Go to buffer 7"    },
+      { "<M-8>", "<CMD>BufferGoto 8<CR>",       mode = {"n"}, desc = "[Buffer] Go to buffer 8"    },
+      { "<M-9>", "<CMD>BufferGoto 9<CR>",       mode = {"n"}, desc = "[Buffer] Go to buffer 9"    },
+      { "<M-h>", "<CMD>BufferPrevious<CR>",     mode = {"n"}, desc = "[Buffer] Previous buffer"   },
+      { "<M-l>", "<CMD>BufferNext<CR>",         mode = {"n"}, desc = "[Buffer] Next buffer"       },
       -- { "<M-w>", "<CMD>BufferClose<CR>",        mode = {"n"}, desc = "Close buffer"      },
     },
   },
@@ -319,8 +319,8 @@ return {
     "aznhe21/actions-preview.nvim",
     -- stylua: ignore
     keys = {
-      { "<leader>a", function() require("actions-preview").code_actions() end, desc = "Code action", noremap = true, silent = true, },
-      { "<leader>gra", function() require("actions-preview").code_actions() end, desc = "Code action", noremap = true, silent = true, },
+      { "<leader>a",   function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", noremap = true, silent = true, },
+      { "<leader>gra", function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", noremap = true, silent = true, },
     },
     opts = function()
       local hl = require("actions-preview.highlight")
