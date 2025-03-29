@@ -9,7 +9,6 @@ return {
       quickfile = { enabled = true },
       dashboard = { enabled = true },
       -- Keymaps: ii and ai for textobject, [i and ]i for jump
-      scope = { enabled = true },
       notifier = {
         enabled = true,
         style = "notification",
@@ -38,7 +37,19 @@ return {
         keys = {},
       },
       scratch = { enabled = false },
-      indent = { enabled = false },
+      indent = {
+        indent = {
+          enabled = false,
+          priority = 100,
+        },
+        scope = {
+          enabled = false,
+          underline = true,
+        },
+        animate = {
+          enabled = false,
+        },
+      },
 
       input = { enabled = true },
       picker = {

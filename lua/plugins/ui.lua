@@ -27,7 +27,10 @@ return {
     },
     main = "ibl",
     event = "BufReadPost",
-    config = function()
+    opts = {
+      scope = {},
+    },
+    config = function(_, opts)
       local highlight = {
         "RainbowYellow",
         "RainbowGreen",
@@ -52,7 +55,8 @@ return {
       end)
 
       vim.g.rainbow_delimiters = { highlight = highlight }
-      require("ibl").setup({ scope = { highlight = highlight } })
+      opts.scope.highlight = highlight
+      require("ibl").setup(opts)
 
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
