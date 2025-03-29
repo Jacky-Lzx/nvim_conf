@@ -35,10 +35,16 @@ return {
     },
   },
 
+  -- {
+  --   "echasnovski/mini.pairs",
+  --   version = "*",
+  --   event = { "InsertEnter" },
+  --   config = true,
+  -- },
+
   {
-    "echasnovski/mini.pairs",
-    version = "*",
-    event = { "InsertEnter" },
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
     config = true,
   },
 
