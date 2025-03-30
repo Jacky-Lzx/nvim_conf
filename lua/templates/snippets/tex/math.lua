@@ -78,9 +78,9 @@ return {
         \end{align<>}
       ]],
       {
-        m(nil, conds.in_math, "ed"),
+        m(nil, conds.fn.in_math, "ed"),
         i(0),
-        m(nil, conds.in_math, "ed"),
+        m(nil, conds.fn.in_math, "ed"),
       }
     )
   ),
@@ -107,7 +107,7 @@ return {
     ]],
       { i(1), i(2), i(0) }
     ),
-    { condition = conds.in_math, show_condition = conds.in_math }
+    { condition = conds.obj.in_math, show_condition = conds.obj.in_math }
   ),
 
   -- TODO: auto fraction
@@ -137,7 +137,7 @@ return {
   s(
     { trig = "ope", desc = "operatorname" },
     fmta([[\operatorname{<>} ]], { i(1) }),
-    { show_condition = conds.in_math }
+    { show_condition = conds.obj.in_math }
   ),
 
   s(
@@ -153,7 +153,7 @@ return {
     ]],
       { i(1), i(2), i(3), i(4) }
     ),
-    { show_condition = conds.in_math }
+    { show_condition = conds.obj.in_math }
   ),
 
   --   "\\mathrm": {
@@ -203,6 +203,6 @@ return {
     ]],
       { i(1), i(0) }
     ),
-    { condition = conds.in_math }
+    { condition = conds.obj.in_math }
   ),
 }

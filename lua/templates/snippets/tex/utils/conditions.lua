@@ -6,7 +6,10 @@ local cond_obj = require("luasnip.extras.conditions")
 
 local has_treesitter, _ = pcall(require, "vim.treesitter")
 
-local M = {}
+local M = {
+  fn = {},
+  obj = {},
+}
 
 --- NOTE: useful commands
 --- Visualize treesitter: `<CMD>InspectTree<CR>`
@@ -21,7 +24,7 @@ local MATH_ENV = {
 }
 
 -- math / not math zones
-function M.in_math()
+local function in_math()
   local node = vim.treesitter.get_node()
   while node do
     if not MATH_ENV[node:type()] then
@@ -34,9 +37,10 @@ function M.in_math()
   end
   return false
 end
+M.fn.in_math = in_math
 
 -- comment detection
-function M.in_comment()
+local function in_comment()
   if not has_treesitter then
     return nil
   end
@@ -50,9 +54,10 @@ function M.in_comment()
   end
   return false
 end
+M.fn.in_comment = in_comment
 
 -- document class
-function M.in_beamer()
+local function in_beamer()
   if not has_treesitter then
     return nil
   end
@@ -78,6 +83,7 @@ function M.in_beamer()
   end
   return false
 end
+M.fn.in_beamer = in_beamer
 
 -- general env function
 local function in_env(name)
@@ -105,29 +111,41 @@ local function in_env(name)
   end
   return false
 end
+M.fn.in_env = in_env
 
-M.in_env = cond_obj.make_condition(in_env)
-
-function M.in_preamble()
-  return not M.in_env("document")
+local function in_preamble()
+  return not in_env("document")
 end
+M.fn.in_preamble = in_preamble
 
-function M.in_text()
-  return M.env("document") and not M.in_math()
+local function in_text()
+  return in_env("document") and not in_math()
 end
+M.fn.in_text = in_text
 
-function M.in_tikz()
-  return M.env("tikzpicture")
+local function in_tikz()
+  return in_env("tikzpicture")
 end
+M.fn.in_tikz = in_tikz
 
 local function in_bullets()
   return in_env("itemize") or in_env("enumerate")
 end
+M.fn.in_bullets = in_bullets
 
-M.in_bullets = cond_obj.make_condition(in_bullets)
+local function in_align()
+  return in_env("align") or in_env("align*") or in_env("aligned")
+end
+M.fn.in_align = in_align
 
-function M.in_align()
-  return M.env("align") or M.env("align*") or M.env("aligned")
+local function in_figure()
+  return in_env("figure") or in_env("figure*")
+end
+M.fn.in_figure = in_figure
+
+-- traverse all key-value pairs in M.fn
+for k, v in pairs(M.fn) do
+  M.obj[k] = cond_obj.make_condition(v)
 end
 
 return M

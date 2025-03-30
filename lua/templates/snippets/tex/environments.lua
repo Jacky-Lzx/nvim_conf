@@ -46,12 +46,12 @@ return {
   s(
     { trig = "item", name = "item", desc = "A single item" },
     { t("\\item ") },
-    { condition = conds.in_bullets, show_condition = conds.in_bullets }
+    { condition = conds.obj.in_bullets, show_condition = conds.obj.in_bullets }
   ),
   -- autosnippet(
   --   { trig = "--", hidden = true },
   --   { t("\\item ") },
-  --   { condition = conds.in_bullets * cond_line_begin, show_condition = conds.in_bullets * cond_line_begin }
+  --   { condition = conds.obj.in_bullets * cond_line_begin, show_condition = conds.obj.in_bullets * cond_line_begin }
   --   -- { condition = cond_line_begin, show_condition = cond_line_begin }
   -- ),
 
@@ -118,5 +118,73 @@ return {
         i(4),
       }
     )
+  ),
+
+  s(
+    { trig = "subfigure", desc = "Subfigure" },
+    fmta(
+      [[
+        \begin{figure}[H]
+          \centering
+          \begin{subfigure}[b]{0.45\linewidth}
+            \centering
+            \includegraphics[width=0.9\linewidth]{<><>}
+            \caption{<>}
+            \label{subfig:<>}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\linewidth}
+            \centering
+            \includegraphics[width=0.9\linewidth]{<><>}
+            \caption{<>}
+            \label{subfig:<>}
+          \end{subfigure}
+          \caption{<>}
+          \label{fig:<>}
+        \end{figure}
+      ]],
+      {
+        t("./Figures/"),
+        i(1),
+        i(2),
+        f(function(args, _, _)
+          -- Remove extension str
+          return args[1][1]:gsub("%.[^.]*$", "")
+        end, { 1 }),
+        t("./Figures/"),
+        i(3),
+        i(4),
+        f(function(args, _, _)
+          -- Remove extension str
+          return args[1][1]:gsub("%.[^.]*$", "")
+        end, { 3 }),
+        i(5),
+        i(6),
+      }
+    ),
+    { condition = -conds.obj.in_figure, show_condition = -conds.obj.in_figure }
+  ),
+
+  s(
+    { trig = "subfigure", desc = "Subfigure (simple)" },
+    fmta(
+      [[
+        \begin{subfigure}[b]{0.45\linewidth}
+          \centering
+          \includegraphics[width=0.9\linewidth]{<><>}
+          \caption{<>}
+          \label{subfig:<>}
+        \end{subfigure}
+      ]],
+      {
+        t("./Figures/"),
+        i(1),
+        i(2),
+        f(function(args, _, _)
+          -- Remove extension str
+          return args[1][1]:gsub("%.[^.]*$", "")
+        end, { 1 }),
+      }
+    ),
+    { condition = conds.obj.in_figure, show_condition = conds.obj.in_figure }
   ),
 }

@@ -18,7 +18,7 @@ return {
     opts = function()
       local types = require("luasnip.util.types")
       return {
-        update_events = { "TextChanged", "TextChangedI" },
+        -- update_events = { "TextChanged", "TextChangedI" },
         -- update_events = { "TextChanged" },
         link_children = true,
         link_roots = true,
