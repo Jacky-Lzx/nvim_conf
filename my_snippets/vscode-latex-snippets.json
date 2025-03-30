@@ -11,28 +11,9 @@
     "prefix": "ww",
     "body": "\\omega_0 "
   },
-  "fourier-transform": {
-    "prefix": "fourier",
-    "body": "\\frac{1}{\\sqrt{2\\pi}} \\int_{\\RR} \\e^{-i x \\xi} $1 \\d x "
-  },
   "xor": {
     "prefix": "xor",
     "body": "\\oplus "
-  },
-  "question": {
-    "prefix": [
-      "problem",
-      "question"
-    ],
-    "body": [
-      "%----------------------------------------------------------------------------------------",
-      "%\tQUESTION $1",
-      "%----------------------------------------------------------------------------------------",
-      "\\begin{question}[]{}",
-      "\t\\begin{answer}",
-      "\t\\end{answer}",
-      "\\end{question}"
-    ]
   },
   "answer": {
     "prefix": "answer",
