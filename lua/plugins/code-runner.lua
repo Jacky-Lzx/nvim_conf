@@ -2,10 +2,13 @@ return {
   {
     "stevearc/overseer.nvim",
     dependencies = {
-      -- "nvim-telescope/telescope.nvim",
-      "stevearc/dressing.nvim",
       "rcarriga/nvim-notify",
-      "nvim-lualine/lualine.nvim",
+    },
+    keys = {
+      { "<F5>", "<CMD>OverseerRun<CR>", desc = "[Overseer] Run" },
+      { "<leader>or", "<CMD>OverseerRun<CR>", desc = "[Overseer] Run" },
+      -- typos: ignore
+      { "<leader>ot", "<CMD>OverseerToggle<CR>", desc = "[Overseer] Toggle" },
     },
     cmd = "OverseerRun",
     opts = {
