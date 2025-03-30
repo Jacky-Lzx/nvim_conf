@@ -1,6 +1,7 @@
 local utils = require("utils.utils")
 
-local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+-- local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+local signs = { Error = "", Warn = "", Hint = "󰌶", Info = "" }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -171,6 +172,7 @@ return {
 
           -- You can call `try_lint` with a linter name or a list of names to always
           -- run specific linters, independent of the `linters_by_ft` configuration
+
           -- require("lint").try_lint("codespell")
         end,
       })
@@ -206,7 +208,8 @@ return {
       vim.diagnostic.config(opts.diagnostics)
 
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls" },
+        ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls", "pyright" },
+        automatic_installation = true,
       })
 
       local extra = {
@@ -249,7 +252,7 @@ return {
           -- vim.keymap.set("n", "gd", vim.lsp.buf.definition)
           -- -- vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
           -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
-          vim.keymap.set("n", "gk", vim.lsp.buf.signature_help, { desc = "[LSP] Signature help" })
+          vim.keymap.set("n", "<leader>gk", vim.lsp.buf.signature_help, { desc = "[LSP] Signature help" })
           vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "[LSP] Add workspace folder" })
           vim.keymap.set(
             "n",
