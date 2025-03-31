@@ -75,4 +75,4 @@ local opts = {
 
 require("lazy").setup(opts)
 
-vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Open Lazy.nvim" })
+vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "[Lazy] Open Lazy.nvim" })
