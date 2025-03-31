@@ -2,7 +2,7 @@ return {
   {
     "stevearc/overseer.nvim",
     dependencies = {
-      "rcarriga/nvim-notify",
+      -- "rcarriga/nvim-notify",
     },
     keys = {
       { "<F5>", "<CMD>OverseerRun<CR>", desc = "[Overseer] Run" },

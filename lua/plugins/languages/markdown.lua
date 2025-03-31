@@ -78,7 +78,7 @@ M.plugins = {
     },
     keys = {
       -- suggested keymap
-      { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+      { "<leader>p", "<CMD>PasteImage<CR>", desc = "[Img-Clip] Paste image from system clipboard" },
     },
   },
 

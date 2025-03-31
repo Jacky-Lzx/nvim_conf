@@ -37,25 +37,54 @@ elseif colorscheme == "catppuccin" then
         transparent_background = true,
         -- flavour = "mocha"
         integrations = {
-          alpha = true,
-          gitsigns = true,
-          hop = true,
-          leap = true,
-          cmp = true,
-          noice = true,
-          -- notify = true,
-          which_key = true,
-          nvim_surround = true,
           barbar = true,
-          nvimtree = true,
-          mini = {
+          blink_cmp = true,
+          fidget = true,
+          flash = true,
+          gitsigns = true,
+          markdown = true,
+          mason = true,
+          noice = true,
+          copilot_vim = true,
+          dap = true,
+          dap_ui = true,
+          native_lsp = {
             enabled = true,
-            indentscope_color = "blue", -- catppuccin color (eg. `lavender`) Default: text
+            virtual_text = {
+              errors = { "italic" },
+              hints = { "italic" },
+              warnings = { "italic" },
+              information = { "italic" },
+              ok = { "italic" },
+            },
+            underlines = {
+              errors = { "underline" },
+              hints = { "underline" },
+              warnings = { "underline" },
+              information = { "underline" },
+              ok = { "underline" },
+            },
+            inlay_hints = {
+              background = true,
+            },
           },
-          snacks = {
+          nvim_surround = true,
+          treesitter = true,
+          treesitter_context = true,
+          overseer = true,
+          rainbow_delimiters = false,
+          indent_blankline = {
             enabled = false,
+            scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+            colored_indent_levels = false,
+          },
+          render_markdown = true,
+          snacks = {
+            enabled = true,
             indent_scope_color = "lavender", -- catppuccin color (eg. `lavender`) Default: text
           },
+          lsp_trouble = true,
+          which_key = true,
         },
         custom_highlights = function(colors)
           -- stylua: ignore
