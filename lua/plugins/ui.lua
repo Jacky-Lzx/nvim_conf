@@ -222,8 +222,6 @@ return {
         -- separator = { left = "", right = "" },
       }
 
-      local mocha = require("catppuccin.palettes").get_palette("mocha")
-
       local copilot = {
         "copilot",
         show_colors = true,
