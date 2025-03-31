@@ -171,7 +171,7 @@ return {
       -- stylua: ignore
       spec = {
         { "<leader>cc", group = "<CodeCompanion>", icon = "" },
-        { "<leader>d",  group = "<Dap>",           icon = "" },
+        { "<leader>D",  group = "<Dap>",           icon = "" },
         { "<leader>n",  group = "<Noice>"                     },
         { "<leader>w",  group = "<Workspace>"                   },
         { "<leader>s",  group = "<Snacks>"                    },

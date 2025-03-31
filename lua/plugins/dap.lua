@@ -5,7 +5,7 @@ return {
     lazy = true,
     -- stylua: ignore
     keys = {
-      { "<leader>du", function() require("dapui").toggle({reset = true}) end, desc = "Toggle dapui", },
+      { "<leader>Du", function() require("dapui").toggle({reset = true}) end, desc = "[DAP ui] Toggle dapui", },
     },
     config = function()
       require("dapui").setup()
@@ -20,19 +20,21 @@ return {
     -- stylua: ignore
     keys = {
       {"<leader>d"},
-      {"<F5>", function() require("dap").continue() end, mode = "n", desc = "Continue"},
-      {"<F6>", function() require("dap").step_over() end, mode = "n", desc = "Step over"},
-      {"<F7>", function() require("dap").step_into() end, mode = "n", desc = "Step into"},
-      {"<F8>", function() require("dap").step_out() end, mode = "n", desc = "Step out"},
-      {"<Leader>b", function() require("dap").toggle_breakpoint() end, mode = "n", desc = "[Dap] Toggle breakpoint"},
-      {"<Leader>B", function() require("dap").set_breakpoint() end, mode = "n", desc = "[Dap] Set breakpoint"},
-      -- {"<Leader>lp", function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, mode = "n", desc = "Set breakpoint"},
-      {"<Leader>dr", function() require("dap").repl.open() end, mode = "n", desc = "Repl open"},
-      {"<Leader>dl", function() require("dap").run_last() end, mode = "n", desc = "Run last"},
-      {"<Leader>dd", function() require("dap.ui.widgets").hover() end, mode = { "n", "v" }, desc = "Widgets hover"},
-      {"<Leader>dp", function() require("dap.ui.widgets").preview() end, mode = { "n", "v" }, desc = "Widgets preview"},
-      {"<Leader>df", function() local widgets = require("dap.ui.widgets") widgets.centered_float(widgets.frames) end, mode = {"n"}, desc = "Float frames"},
-      {"<Leader>ds", function() local widgets = require("dap.ui.widgets") widgets.centered_float(widgets.scopes) end, mode = {"n"}, desc = "Float scopes"},
+      -- Shift+F5
+      {"<F17>",      function() require("dap").continue() end,                                                        mode = "n",          desc = "[DAP] Continue"},
+      {"<F6>",       function() require("dap").step_over() end,                                                       mode = "n",          desc = "[DAP] Step over"},
+      {"<F7>",       function() require("dap").step_into() end,                                                       mode = "n",          desc = "[DAP] Step into"},
+      {"<F8>",       function() require("dap").step_out() end,                                                        mode = "n",          desc = "[DAP] Step out"},
+      {"<Leader>b",  function() require("dap").toggle_breakpoint() end,                                               mode = "n",          desc = "[DAP] Toggle breakpoint"},
+      {"<Leader>B",  function() require("dap").set_breakpoint() end,                                                  mode = "n",          desc = "[DAP] Set breakpoint"},
+      -- Remove the <leader>D binding in "x" mode
+      {"<Leader>D" , mode = "x"},
+      {"<Leader>Dr", function() require("dap").repl.open() end,                                                       mode = "n",          desc = "[DAP] Repl open"},
+      {"<Leader>Dl", function() require("dap").run_last() end,                                                        mode = "n",          desc = "[DAP] Run last"},
+      {"<Leader>Dd", function() require("dap.ui.widgets").hover() end,                                                mode = { "n", "v" }, desc = "[DAP] Widgets hover"},
+      {"<Leader>Dp", function() require("dap.ui.widgets").preview() end,                                              mode = { "n", "v" }, desc = "[DAP] Widgets preview"},
+      {"<Leader>Df", function() local widgets = require("dap.ui.widgets") widgets.centered_float(widgets.frames) end, mode = {"n"},        desc = "[DAP] Float frames"},
+      {"<Leader>Ds", function() local widgets = require("dap.ui.widgets") widgets.centered_float(widgets.scopes) end, mode = {"n"},        desc = "[DAP] Float scopes"},
     },
 
     config = function()
@@ -147,7 +149,7 @@ return {
             -- elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
             --   return cwd .. "/.venv/bin/python"
             -- else
-            return "/opt/homebrew/anaconda3/envs/math/bin/python"
+            -- return "/opt/homebrew/anaconda3/envs/math/bin/python"
             -- end
           end,
         },
@@ -168,7 +170,7 @@ return {
         },
         rejected = {
           text = "",
-          texthl = "DapBreakpint",
+          texthl = "DapBreakpoint",
           linehl = "DapBreakpoint",
           numhl = "DapBreakpoint",
         },
@@ -185,13 +187,11 @@ return {
           numhl = "DapStopped",
         },
       }
-      -- vim.fn.sign_define("DapBreakpoint", { text = "󰻀", texthl = "", linehl = "", numhl = "" })
       vim.fn.sign_define("DapBreakpoint", dap_breakpoint.breakpoint)
       vim.fn.sign_define("DapBreakpointCondition", dap_breakpoint.condition)
       vim.fn.sign_define("DapBreakpointRejected", dap_breakpoint.rejected)
       vim.fn.sign_define("DapLogPoint", dap_breakpoint.logpoint)
       vim.fn.sign_define("DapStopped", dap_breakpoint.stopped)
-      -- dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
     end,
   },
 }

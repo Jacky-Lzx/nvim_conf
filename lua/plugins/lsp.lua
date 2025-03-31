@@ -202,6 +202,9 @@ return {
         update_in_insert = false,
         virtual_text = { spacing = 4, prefix = "●" },
         severity_sort = true,
+        float = {
+          border = "rounded",
+        },
       },
     },
     config = function(_, opts)
@@ -252,6 +255,10 @@ return {
           -- vim.keymap.set("n", "gd", vim.lsp.buf.definition)
           -- -- vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
           -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
+          vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, {
+            buffer = ev.buf,
+            desc = "[LSP] Show diagnostic",
+          })
           vim.keymap.set("n", "<leader>gk", vim.lsp.buf.signature_help, { desc = "[LSP] Signature help" })
           vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "[LSP] Add workspace folder" })
           vim.keymap.set(
