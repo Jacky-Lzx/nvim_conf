@@ -222,6 +222,25 @@ return {
         -- separator = { left = "", right = "" },
       }
 
+      local mocha = require("catppuccin.palettes").get_palette("mocha")
+
+      local copilot = {
+        "copilot",
+        show_colors = true,
+        symbols = {
+          status = {
+            hl = {
+              enabled = mocha.green,
+              sleep = mocha.overlay0,
+              disabled = mocha.surface0,
+              warning = mocha.peach,
+              unknown = mocha.red,
+            },
+          },
+          spinner_color = mocha.mauve,
+        },
+      }
+
       return {
         options = {
           -- When set to true, left sections i.e. 'a','b' and 'c'
@@ -234,7 +253,7 @@ return {
         sections = {
           lualine_a = { mode },
           lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { "filename", { "copilot", show_colors = true } },
+          lualine_c = { "filename", copilot },
           lualine_x = {
             macro_recording,
           },
