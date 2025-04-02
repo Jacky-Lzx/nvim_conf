@@ -216,6 +216,7 @@ return {
 
         menu = {
           border = "rounded",
+          max_height = 20,
           draw = {
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
             components = {
