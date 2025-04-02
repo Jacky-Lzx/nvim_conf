@@ -339,6 +339,7 @@ return {
     -- stylua: ignore
     keys = {
       { "<leader>a",   function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", noremap = true, silent = true, },
+      { "<A-a>",   function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", mode = "i", noremap = true, silent = true, },
       { "<leader>gra", function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", noremap = true, silent = true, },
     },
     opts = function()

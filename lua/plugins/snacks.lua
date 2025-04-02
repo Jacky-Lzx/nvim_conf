@@ -288,6 +288,7 @@ return {
             :map("<leader>uc")
           Snacks.toggle.treesitter():map("<leader>uT")
           Snacks.toggle.inlay_hints():map("<leader>uh")
+          Snacks.toggle.inlay_hints():map("<leader>h")
           Snacks.toggle.indent():map("<leader>ug")
           Snacks.toggle.dim():map("<leader>uD")
 
