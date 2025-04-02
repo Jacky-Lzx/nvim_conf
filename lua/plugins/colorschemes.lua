@@ -97,8 +97,8 @@ elseif colorscheme == "catppuccin" then
             -- Search                   = { bg = colors.flamingo },
             Visual                      = { bg = colors.overlay0 },
             Search                      = { bg = colors.surface2 },
-            IncSearch                   = { bg = colors.flamingo },
-            CurSearch                   = { bg = colors.flamingo },
+            IncSearch                   = { bg = colors.lavender },
+            CurSearch                   = { bg = colors.lavender },
             -- CursorLine               = { bg = colors.falmingo }
             LspSignatureActiveParameter = { bg = colors.overlay0 },
             MatchParen                  = { bg = colors.lavender, fg = colors.base, bold = true},

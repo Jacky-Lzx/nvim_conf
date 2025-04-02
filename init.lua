@@ -16,7 +16,7 @@ vim.opt.scrolloff = 15
 vim.opt.sidescrolloff = 10
 vim.opt.startofline = false
 
-vim.o.signcolumn = "yes"
+vim.o.signcolumn = "yes:2"
 
 -- vim.opt_local.conceallevel = 2
 vim.opt.conceallevel = 2
