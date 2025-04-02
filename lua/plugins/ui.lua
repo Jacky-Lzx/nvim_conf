@@ -175,7 +175,7 @@ return {
         { "<leader>n",  group = "<Noice>"                     },
         { "<leader>w",  group = "<Workspace>"                   },
         { "<leader>s",  group = "<Snacks>"                    },
-        { "<leader>u",  group = "<Snacks> Toggle"             },
+        { "<leader>t",  group = "<Snacks> Toggle"             },
         { "<leader>g",  group = "<Trouble> / git"             },
       },
       -- expand all nodes wighout a description

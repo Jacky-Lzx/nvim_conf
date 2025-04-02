@@ -143,18 +143,38 @@ return {
   {
     "stevearc/conform.nvim",
     event = "BufWritePre",
-    opts = {
-      format_on_save = {
-        -- These options will be passed to conform.format()
-        timeout_ms = 500,
-        lsp_format = "fallback",
+    keys = {
+      {
+        "<leader>tf",
+        function()
+          if vim.g.disable_autoformat then
+            vim.g.disable_autoformat = false
+            require("snacks.notify").info("Enable format-on-save")
+          else
+            vim.g.disable_autoformat = true
+            require("snacks.notify").info("Disable format-on-save")
+          end
+        end,
+        mode = "n",
+        desc = "Toggle format-on-save",
       },
+    },
+    opts = {
+      format_on_save = function(_)
+        -- Disable with a global or buffer-local variable
+        if vim.g.disable_autoformat then
+          return
+        end
+        return { timeout_ms = 500, lsp_format = "fallback" }
+      end,
     },
     config = function(_, opts)
       opts["formatters_by_ft"] = utils.language_setup(G.language.formatter)
       opts["formatters_by_ft"].javascript = { "prettierd", "prettier", stop_after_first = true }
 
       require("conform").setup(opts)
+
+      vim.g.disable_autoformat = false
     end,
   },
 

@@ -5,7 +5,8 @@ return {
       -- "rcarriga/nvim-notify",
     },
     keys = {
-      { "<F5>", "<CMD>OverseerRun<CR>", desc = "[Overseer] Run" },
+      -- Shift+F5
+      { "<F17>", "<CMD>OverseerRun<CR>", desc = "[Overseer] Run" },
       { "<leader>or", "<CMD>OverseerRun<CR>", desc = "[Overseer] Run" },
       -- typos: ignore
       { "<leader>ot", "<CMD>OverseerToggle<CR>", desc = "[Overseer] Toggle" },

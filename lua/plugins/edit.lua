@@ -171,9 +171,9 @@ return {
     -- stylua: ignore
     keys = {
       ---@diagnostic disable-next-line: undefined-field
-      { "<leader>td", function() require("snacks").picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME", "BUG", "FIXIT", "HACK", "WARN", "ISSUE"  } }) end, desc = "[TODO] Todo (without NOTE)", },
+      { "<leader>st", function() require("snacks").picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME", "BUG", "FIXIT", "HACK", "WARN", "ISSUE"  } }) end, desc = "[TODO] Todo (without NOTE)", },
       ---@diagnostic disable-next-line: undefined-field
-      { "<leader>tD", function() require("snacks").picker.todo_comments() end, desc = "[TODO] Todo (with NOTE)", },
+      { "<leader>sT", function() require("snacks").picker.todo_comments() end, desc = "[TODO] Todo (with NOTE)", },
     },
     config = true,
   },
