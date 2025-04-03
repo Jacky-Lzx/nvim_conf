@@ -22,21 +22,14 @@ function M.setup(setting_name, extra)
       on_attach = extra.on_attach,
       capabilities = extra.capabilities,
 
-      -- filetypes = { "verilog", "systemverilog", "v" },
+      cmd = { "verible-verilog-ls", "--rules_config_search" },
+
       root_dir = function(fname)
         -- return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
         return vim.fs.dirname(fname)
       end,
     })
 
-    -- require("lspconfig").svls.setup({
-    --   root_dir = function(fname)
-    --     -- return require("lspconfig.util").find_git_ancestor(fname)
-    --     return vim.fs.dirname(fname)
-    --   end,
-    --   cmd = { "svls" },
-    --   filetypes = { "verilog", "systemverilog" },
-    -- })
     return
   end
 
@@ -54,8 +47,6 @@ function M.setup(setting_name, extra)
       "+1800-2017ext+sv",
     }
 
-    -- local pattern = "([%w_%.]+): (%d+): (%w?): (.*)\n"
-    -- local pattern = "([^:]+):(%d+): (%w +): (.*)"
     local pattern = "(.-):(%d+): ([%w ]+): (.*)"
 
     local groups = { "file", "lnum", "severity", "message" }
