@@ -144,7 +144,6 @@ return {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     opts = {
-      formatters_by_ft = utils.language_setup(G.language.formatter),
       format_on_save = {
         -- These options will be passed to conform.format()
         timeout_ms = 500,
@@ -152,6 +151,7 @@ return {
       },
     },
     config = function(_, opts)
+      opts["formatters_by_ft"] = utils.language_setup(G.language.formatter)
       opts["formatters_by_ft"].javascript = { "prettierd", "prettier", stop_after_first = true }
 
       require("conform").setup(opts)
