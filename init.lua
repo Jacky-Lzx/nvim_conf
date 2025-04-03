@@ -38,7 +38,7 @@ vim.opt.clipboard = ""
 local python_path = ""
 local uname = vim.uv.os_uname()
 if uname.sysname == "Linux" then
-  python_path = "/home/lzx/.pyenv/versions/3.10.0/envs/neovim3"
+  python_path = "/home/lzx/.pyenv/versions/3.10.0/envs/neovim3/bin/python3"
 elseif uname.sysname == "Darwin" then
   python_path = "/opt/homebrew/anaconda3/envs/neovim/bin/python3"
   -- elseif uname.sysname == "Windows_NT" then
