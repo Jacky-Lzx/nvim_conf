@@ -32,8 +32,6 @@ require("lazy").setup({
       integrations = {
         -- alpha = true,
         -- gitsigns = true,
-        hop = true,
-        leap = true,
         noice = true,
         -- notify = true,
         -- which_key = true,
@@ -44,10 +42,6 @@ require("lazy").setup({
         --   enabled = true,
         --   indentscope_color = "blue", -- catppuccin color (eg. `lavender`) Default: text
         -- },
-        -- snacks = {
-        --   enabled = false,
-        --   indent_scope_color = "lavender", -- catppuccin color (eg. `lavender`) Default: text
-        -- },
       },
     },
     config = function(_, opts)
@@ -57,26 +51,24 @@ require("lazy").setup({
     end,
   },
   {
-    "smoka7/hop.nvim",
-    lazy = true,
-    version = "*",
-    -- stylua: ignore
-    keys = {
-      { "<leader>j", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "Hop jump", },
-      { "<leader>k", function() require("hop").hint_lines({ current_line_only = false }) end, mode = { "n", "v" }, desc = "Hop jump", },
-    },
+    "folke/flash.nvim",
+    event = "VeryLazy",
     opts = {
-      keys = "etovxqpdygfblzhckisuran",
+      modes = {
+        char = {
+          enabled = false,
+        },
+      },
     },
-  },
-  {
-    "ggandor/leap.nvim",
-    dependencies = { "tpope/vim-repeat" },
     -- stylua: ignore
     keys = {
-      { "<leader>s",  "<Plug>(leap-forward-to)",  mode = { "n", "x", "o" }, desc = "Leap jump forward" },
-      { "<leader>S",  "<Plug>(leap-backward-to)", mode = { "n", "x", "o" }, desc = "Leap jump backward" },
-    -- { "<leader>gs", "<Plug>(leap-from-window)", mode = { "n", "x", "o" }, desc = "Leap jump window" },
+      { "<leader>f", mode = { "n", "x", "o" }, function() require("flash").jump() end,                                                                                               desc = "[Flash] Jump"              },
+      { "<leader>F", mode = { "n", "x", "o" }, function() require("flash").treesitter() end,                                                                                         desc = "[Flash] Treesitter"        },
+      -- { "r",      mode = "o",               function() require("flash").remote() end,                                                                                             desc = "Remote Flash"              },
+      { "<leader>F", mode = { "o", "x" },      function() require("flash").treesitter_search() end,                                                                                  desc = "[Flash] Treesitter Search" },
+      { "<c-s>",     mode = { "c" },           function() require("flash").toggle() end,                                                                                             desc = "[Flash] Toggle Search"     },
+      { "<leader>j", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, desc = "[Flash] Line jump"         },
+      { "<leader>k", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, desc = "[Flash] Line jump"         },
     },
   },
   {

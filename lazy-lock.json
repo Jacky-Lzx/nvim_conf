@@ -7,7 +7,7 @@
   "blink-copilot": { "branch": "main", "commit": "71102fe2fa1616353f8cb315bb8b85db0812a218" },
   "blink.cmp": { "branch": "main", "commit": "49f211fe5d729df53df4c042d7c3464cf47d199e" },
   "catppuccin": { "branch": "main", "commit": "5b5e3aef9ad7af84f463d17b5479f06b87d5c429" },
-  "codecompanion.nvim": { "branch": "main", "commit": "7ffbc5a8f7ba349cea0c3f20bac6c404d4130a4a" },
+  "codecompanion.nvim": { "branch": "main", "commit": "9f6ba9c0858179fe250412ad2f4d1f0d1bd31eb0" },
   "colorful-menu.nvim": { "branch": "master", "commit": "f80feb8a6706f965321aff24d0ed3849f02a7f77" },
   "conform.nvim": { "branch": "master", "commit": "b1a75324ddf96b7bb84963a297b1ed334db087c0" },
   "copilot-lualine": { "branch": "main", "commit": "a36398674fa88ba6a90cc4a57a27e411c1c27735" },
@@ -63,5 +63,5 @@
   "vim-startuptime": { "branch": "master", "commit": "b6f0d93f6b8cf6eee0b4c94450198ba2d6a05ff6" },
   "vim-wakatime": { "branch": "master", "commit": "e46d7c4f98ee0f40782008dd60cb2a79c377fb1d" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
-  "yazi.nvim": { "branch": "main", "commit": "78027c46eec296cd058b0ce917ee6f7c8938d659" }
+  "yazi.nvim": { "branch": "main", "commit": "da2357b27799cd111f5564c23e16b290ef176e5a" }
 }
