@@ -38,12 +38,16 @@ M.plugins = {
     -- end,
     ft = { "markdown" },
   },
+
   {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown", "codecompanion" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons", -- if you prefer nvim-web-devicons
+    },
+    keys = {
+      { "<leader>tr", "<CMD>RenderMarkdown toggle<CR>", desc = "Toggle markdown render" },
     },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
@@ -66,6 +70,25 @@ M.plugins = {
       require("render-markdown").setup(opts)
     end,
   },
+
+  -- {
+  --   "OXY2DEV/markview.nvim",
+  --   -- Do not lazy load this plugin as it is already lazy-loaded.
+  --   -- Lazy-loading will cause more time for the previews to load when starting Neovim.
+  --   lazy = false,
+  --
+  --   opts = {
+  --     preview = {
+  --       modes = { "n", "no", "c", "i" },
+  --     },
+  --   },
+  --
+  --   -- For blink.cmp's completion
+  --   -- source
+  --   -- dependencies = {
+  --   --     "saghen/blink.cmp"
+  --   -- },
+  -- },
 
   {
     "HakonHarnes/img-clip.nvim",
