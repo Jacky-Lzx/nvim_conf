@@ -213,7 +213,7 @@ return {
       -- search
       { '<leader>s"',    function() require("snacks").picker.registers() end,          desc = "[Snacks] Registers" },
       { '<leader>s/',    function() require("snacks").picker.search_history() end,     desc = "[Snacks] Search History" },
-      { "<leader>sa",    function() require("snacks").picker.autocmds() end,           desc = "[Snacks] Autocmds" },
+      { "<leader>sA",    function() require("snacks").picker.autocmds() end,           desc = "[Snacks] Autocmds" },
       -- { "<leader>sb", function() require("snacks").picker.lines() end,              desc = "[Snacks] Buffer Lines" },
       { "<leader>s:",    function() require("snacks").picker.command_history() end,    desc = "[Snacks] Command History" },
       { "<leader>sc",    function() require("snacks").picker.commands() end,           desc = "[Snacks] Commands" },
