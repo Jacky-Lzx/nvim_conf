@@ -7,7 +7,6 @@ return {
       "echasnovski/mini.diff",
       "j-hui/fidget.nvim",
     },
-    event = "VeryLazy",
 
     -- stylua: ignore
     keys = {

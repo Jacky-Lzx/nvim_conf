@@ -2,6 +2,7 @@ return {
   {
     "jake-stewart/multicursor.nvim",
     branch = "1.0",
+    event = "BufReadPost",
     config = function()
       local mc = require("multicursor-nvim")
       mc.setup()
@@ -207,7 +208,7 @@ return {
 
   {
     "folke/flash.nvim",
-    event = "VeryLazy",
+    event = "BufReadPost",
     opts = {
       modes = {
         char = {
