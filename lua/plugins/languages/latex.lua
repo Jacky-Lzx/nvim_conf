@@ -2,6 +2,8 @@ local M = {}
 
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
+    vim.g.tex_flavor = "latex"
+
     require("lspconfig").texlab.setup({
       on_attach = extra.on_attach,
       capabilities = extra.capabilities,

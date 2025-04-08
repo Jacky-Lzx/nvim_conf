@@ -181,7 +181,7 @@ return {
 
   {
     "ibhagwan/smartyank.nvim",
-    event = { "BufReadPost" },
+    event = { "BufWinEnter" },
     opts = {
       highlight = {
         enabled = true, -- highlight yanked text
