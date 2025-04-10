@@ -5,32 +5,32 @@ function M.setup(setting_name, extra)
     vim.g.tex_flavor = "latex"
 
     require("lspconfig").texlab.setup({
-      on_attach = extra.on_attach,
+      -- on_attach = extra.on_attach,
       capabilities = extra.capabilities,
 
       settings = {
         texlab = {
-          -- build = {
-          --   executable = "latexmk",
-          --   args = {
-          --     "%f",
-          --   },
-          --   onSave = true,
-          --   forwardSearchAfter = false,
-          -- },
           build = {
-            executable = "tectonic",
+            executable = "latexmk",
             args = {
-              "-X",
-              "compile",
               "%f",
-              "--synctex",
-              "--keep-logs",
-              "--keep-intermediates",
             },
             onSave = true,
             forwardSearchAfter = false,
           },
+          -- build = {
+          --   executable = "tectonic",
+          --   args = {
+          --     "-X",
+          --     "compile",
+          --     "%f",
+          --     "--synctex",
+          --     "--keep-logs",
+          --     "--keep-intermediates",
+          --   },
+          --   onSave = true,
+          --   forwardSearchAfter = false,
+          -- },
           -- Use Skim for preview and forward search
           -- The inverse search is configured in "f2fora/nvim-texlabconfig"
           forwardSearch = {

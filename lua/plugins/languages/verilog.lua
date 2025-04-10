@@ -19,7 +19,7 @@ M.plugins = {
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
     require("lspconfig").verible.setup({
-      on_attach = extra.on_attach,
+      -- on_attach = extra.on_attach,
       capabilities = extra.capabilities,
 
       cmd = { "verible-verilog-ls", "--rules_config_search" },

@@ -6,25 +6,24 @@ M.plugins = {}
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
     require("lspconfig").pyright.setup({
-      on_attach = extra.on_attach,
       capabilities = extra.capabilities,
     })
-    return
 
-    -- require("lspconfig").pyright.setup({
-    --   on_attach = require("lsp").common_on_attach,
+    -- require("lspconfig").pylsp.setup({
+    --   -- on_attach = extra.on_attach,
+    --   capabilities = extra.capabilities,
     --   settings = {
-    --     python = {
-    --       analysis = {
-    --         autoSearchPaths = true,
-    --         useLibraryCodeForTypes = true,
+    --     pylsp = {
+    --       plugins = {
+    --         pycodestyle = {
+    --           enabled = false,
+    --         },
     --       },
     --     },
     --   },
     -- })
 
-    -- require("lspconfig").pylsp.setup({})
-    -- require("lspconfig").python_lsp_server.setup({})
+    return
   end
 
   if setting_name == G.language.formatter then

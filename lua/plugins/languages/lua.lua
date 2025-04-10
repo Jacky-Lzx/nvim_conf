@@ -3,7 +3,7 @@ local M = {}
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
     require("lspconfig").lua_ls.setup({
-      on_attach = extra.on_attach,
+      -- on_attach = extra.on_attach,
       capabilities = extra.capabilities,
       settings = {
         Lua = {},

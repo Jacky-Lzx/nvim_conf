@@ -4,7 +4,7 @@ function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
     local capabilities = require("blink.cmp").get_lsp_capabilities()
     require("lspconfig").rust_analyzer.setup({
-      on_attach = extra.on_attach,
+      -- on_attach = extra.on_attach,
       capabilities = extra.capabilities,
 
       settings = {
