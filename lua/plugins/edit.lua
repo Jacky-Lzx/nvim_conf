@@ -1,4 +1,14 @@
 return {
+
+  -- Change input method automatically
+  {
+    "keaising/im-select.nvim",
+    lazy = false,
+    config = function()
+      require("im_select").setup({})
+    end,
+  },
+
   {
     "jake-stewart/multicursor.nvim",
     branch = "1.0",
