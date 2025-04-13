@@ -4,7 +4,8 @@
 
 local cond_obj = require("luasnip.extras.conditions")
 
-local has_treesitter, _ = pcall(require, "vim.treesitter")
+local has_treesitter, ts = pcall(require, "vim.treesitter")
+local _, query = pcall(require, "vim.treesitter.query")
 
 local M = {
   fn = {},
@@ -27,10 +28,11 @@ local MATH_ENV = {
 local function in_math()
   local node = vim.treesitter.get_node()
   while node do
-    if not MATH_ENV[node:type()] then
+    local result = MATH_ENV[node:type()]
+    if result ~= nil and not result then
       return false
     end
-    if MATH_ENV[node:type()] then
+    if result then
       return true
     end
     node = node:parent()

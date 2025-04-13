@@ -35,10 +35,7 @@ return {
     fmta([[ \( <> \)]], { d(1, get_visual_or_insert) }),
     { condition = cond_has_selected_text, priority = 2000 }
   ),
-  autosnippet(
-    { trig = "mk", name = "inline_math", desc = "In-line math block" },
-    fmta([[ \( <> \) <>]], { i(1), i(0) })
-  ),
+  autosnippet({ trig = "mk", name = "inline_math", desc = "In-line math block" }, fmta([[\( <> \)<>]], { i(1), i(0) })),
 
   autosnippet(
     { trig = "dm", name = "inline_math_select", desc = "(Select) In-line math block" },
@@ -56,9 +53,9 @@ return {
     { trig = "dm", name = "inline_math", desc = "In-line math block" },
     fmta(
       [[
-      \[
-        <>
-      \]
+        \[
+          <>
+        \]
     ]],
       { i(0) }
     ),
@@ -204,5 +201,16 @@ return {
       { i(1), i(0) }
     ),
     { condition = conds.obj.in_math }
+  ),
+
+  autosnippet(
+    { trig = "^^", name = "superscript", desc = "Superscript" },
+    fmta([[^{<>}<>]], { i(1), i(0) }),
+    { condition = conds.obj.in_math, show_condition = conds.obj.in_math }
+  ),
+  autosnippet(
+    { trig = "__", name = "subscript", desc = "Subscript" },
+    fmta([[_{<>}<>]], { i(1), i(0) }),
+    { condition = conds.obj.in_math, show_condition = conds.obj.in_math }
   ),
 }
