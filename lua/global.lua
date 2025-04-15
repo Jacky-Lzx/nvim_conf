@@ -22,6 +22,7 @@ Enabled_languages = {
   "markdown",
   "rust",
   "lua",
+  "bash",
 }
 
 ---@type string

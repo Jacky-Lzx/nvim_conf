@@ -49,18 +49,6 @@ vim.g.python3_host_prog = python_path
 -- vim.opt.formatoptions:remove { "r", "o" }
 vim.cmd([[ autocmd FileType * set formatoptions-=ro ]])
 
--- make zsh files recognized as sh for bash-ls & treesitter
-vim.filetype.add({
-  extension = {
-    zsh = "sh",
-    sh = "sh", -- force sh-files with zsh-shebang to still get sh as filetype
-  },
-  filename = {
-    [".zshrc"] = "sh",
-    [".zshenv"] = "sh",
-  },
-})
-
 require("global")
 
 if vim.g.neovide then
