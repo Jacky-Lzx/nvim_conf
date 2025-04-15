@@ -47,7 +47,7 @@ M.plugins = {
       "nvim-tree/nvim-web-devicons", -- if you prefer nvim-web-devicons
     },
     keys = {
-      { "<leader>tr", "<CMD>RenderMarkdown toggle<CR>", desc = "Toggle markdown render" },
+      "<leader>tm",
     },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
@@ -68,6 +68,23 @@ M.plugins = {
     },
     config = function(_, opts)
       require("render-markdown").setup(opts)
+
+      require("snacks")
+        .toggle({
+          name = "Render Markdown",
+          get = function()
+            return require("render-markdown.state").enabled
+          end,
+          set = function(enabled)
+            local m = require("render-markdown")
+            if enabled then
+              m.enable()
+            else
+              m.disable()
+            end
+          end,
+        })
+        :map("<leader>tm")
     end,
   },
 
