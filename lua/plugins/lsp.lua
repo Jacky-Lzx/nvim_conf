@@ -171,6 +171,7 @@ return {
     config = function(_, opts)
       opts["formatters_by_ft"] = utils.language_setup(G.language.formatter)
       opts["formatters_by_ft"].javascript = { "prettierd", "prettier", stop_after_first = true }
+      opts["formatters_by_ft"].zsh = { "shfmt" }
 
       require("conform").setup(opts)
 
