@@ -253,6 +253,10 @@ return {
         },
       })
 
+      require("lspconfig").bashls.setup({
+        filetypes = { "sh", "zsh", "bash" },
+      })
+
       require("lspconfig").typos_lsp.setup({
         init_options = {
           -- Custom config. Used together with a config file found in the workspace or its parents,
