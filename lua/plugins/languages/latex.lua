@@ -57,7 +57,8 @@ function M.setup(setting_name, extra)
           bibtexFormatter = "texlab", -- @type "texlab" | "latexindent"; @default "texlab"
           latexFormatter = "latexindent", -- @type "texlab" | "latexindent"; @default "latexindent"
           latexindent = {
-            ["local"] = "~/.config/latexindent/lzx_settings.yaml", -- local is a reserved keyword
+            -- ["local"] = "~/.config/latexindent/lzx_settings.yaml", -- local is a reserved keyword
+            ["local"] = vim.env.HOME .. "/.config/latexindent/lzx_settings.yaml", -- local is a reserved keyword
             modifyLineBreaks = true, -- @default false
           },
         },
