@@ -2,7 +2,6 @@ local M = {}
 
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
-    local capabilities = require("blink.cmp").get_lsp_capabilities()
     require("lspconfig").rust_analyzer.setup({
       -- on_attach = extra.on_attach,
       capabilities = extra.capabilities,
@@ -29,6 +28,24 @@ function M.setup(setting_name, extra)
   require("notify")("Unknown setting for language `rust`: " .. setting_name)
 end
 
-M.plugins = {}
+M.plugins = {
+  {
+    "Saecki/crates.nvim",
+    event = { "BufRead Cargo.toml" },
+    opts = {
+      completion = {
+        crates = {
+          enabled = true,
+        },
+      },
+      lsp = {
+        enabled = true,
+        actions = true,
+        completion = true,
+        hover = true,
+      },
+    },
+  },
+}
 
 return M
