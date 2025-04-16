@@ -7,8 +7,12 @@ return {
     cond = function()
       return vim.uv.os_uname().sysname == "Darwin"
     end,
-    config = function()
-      require("im_select").setup({})
+    opts = {
+      -- Restore the default input method state when the following events are triggered
+      set_default_events = { "VimEnter", "InsertLeave", "CmdlineLeave" },
+    },
+    config = function(_, opts)
+      require("im_select").setup(opts)
     end,
   },
 
