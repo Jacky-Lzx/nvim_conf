@@ -59,4 +59,16 @@ return {
       \end{document}
     ]], {i(0)})
   ),
+
+  s({ trig = "par", desc = "Paragraph" }, { t("\\par ") }),
+
+  s(
+    { trig = "it", desc = "italic" },
+    fmta(
+      [[
+        \textit{<>}
+      ]],
+      { i(1) }
+    )
+  ),
 }
