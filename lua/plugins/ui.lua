@@ -172,7 +172,6 @@ return {
       spec = {
         { "<leader>cc", group = "<CodeCompanion>", icon = "" },
         { "<leader>D",  group = "<Dap>",           icon = "" },
-        { "<leader>n",  group = "<Noice>"                     },
         { "<leader>w",  group = "<Workspace>"                   },
         { "<leader>s",  group = "<Snacks>"                    },
         { "<leader>t",  group = "<Snacks> Toggle"             },
@@ -387,6 +386,10 @@ return {
     dependencies = {
       "MunifTanjim/nui.nvim",
     },
+    keys = {
+      { "<leader>sN", "<CMD>Noice pick<CR>", desc = "[Noice] Pick history messages" },
+      { "<leader>N", "<CMD>Noice<CR>", desc = "[Noice] Show history messages" },
+    },
     opts = {
       routes = {
         {
@@ -428,6 +431,9 @@ return {
           view = "notify",
           opts = {},
         },
+      },
+      notify = {
+        enabled = false,
       },
       -- you can enable a preset for easier configuration
       presets = {
