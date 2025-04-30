@@ -6,7 +6,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
 
-vim.opt.tabstop = 2
+-- vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
@@ -15,6 +15,9 @@ vim.opt.smartindent = true
 vim.opt.scrolloff = 15
 vim.opt.sidescrolloff = 10
 vim.opt.startofline = false
+
+vim.opt.list = true
+vim.opt.listchars = { tab = ">-" }
 
 vim.o.signcolumn = "yes:2"
 
@@ -29,7 +32,7 @@ vim.g.maplocalleader = " "
 
 vim.wo.wrap = false
 
-vim.bo.tabstop = 2
+-- vim.bo.tabstop = 2
 
 vim.wo.cursorline = true
 

@@ -110,13 +110,12 @@ return {
   {
 
     "williamboman/mason.nvim",
-    cmd = "Mason",
+    event = "VeryLazy",
     -- keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
     opts = {
       ensure_installed = {
         "stylua",
         "shfmt",
-        -- "flake8",
       },
     },
     ---@param opts MasonSettings | {ensure_installed: string[]}
