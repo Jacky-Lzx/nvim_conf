@@ -23,6 +23,7 @@ Enabled_languages = {
   "rust",
   "lua",
   "bash",
+  "java",
 }
 
 ---@type string
