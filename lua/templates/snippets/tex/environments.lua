@@ -34,8 +34,8 @@ return {
         \end{itemize}
       ]], {
         c(1, {
-          t("[leftmargin=0.5cm]"),
           i(1),
+          t("[leftmargin=0.5cm]"),
         }),
         i(0)
       }
@@ -81,13 +81,13 @@ return {
     fmta([[
         \begin{figure}[<>]
           \centering
-          \includegraphics[width=<>\linewidth]{<><>}
+          \includegraphics[width=0.<>\linewidth]{<><>}
           \caption{<>}%
           \label{fig:<>}
         \end{figure}
       ]],{
         c(1, { t("H"), t("htbp") }),
-        i(2, "0.6"),
+        i(2, "6"),
         t("./Figures/"),
         i(3),
         i(4),
