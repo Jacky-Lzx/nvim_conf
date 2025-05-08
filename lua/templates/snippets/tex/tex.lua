@@ -71,4 +71,13 @@ return {
       { i(1) }
     )
   ),
+  s(
+    { trig = "bf", desc = "bold" },
+    fmta(
+      [[
+        \textbf{<>}
+      ]],
+      { i(1) }
+    )
+  ),
 }
