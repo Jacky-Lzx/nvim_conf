@@ -223,23 +223,23 @@ return {
               label = {
                 text = function(ctx)
                   ---Print copilot suggestions in a different way
-                  if ctx.source_name == "copilot" then
-                    local last_match_index = ctx.label_matched_indices[#ctx.label_matched_indices]
-                    if last_match_index then
-                      local label_len = #ctx.label
-                      if last_match_index == label_len then
-                        return ctx.label
-                      end
-                      -- Find the last index of the space
-                      local last_space_index = findLast(ctx.label:sub(1, last_match_index + 2), " ")
-                      if last_space_index then
-                        return ctx.label:sub(last_space_index + 1)
-                      else
-                        return ctx.label
-                      end
-                    end
-                    return ctx.label
-                  end
+                  -- if ctx.source_name == "copilot" then
+                  --   local last_match_index = ctx.label_matched_indices[#ctx.label_matched_indices]
+                  --   if last_match_index then
+                  --     local label_len = #ctx.label
+                  --     if last_match_index == label_len then
+                  --       return ctx.label
+                  --     end
+                  --     -- Find the last index of the space
+                  --     local last_space_index = findLast(ctx.label:sub(1, last_match_index + 2), " ")
+                  --     if last_space_index then
+                  --       return ctx.label:sub(last_space_index + 1)
+                  --     else
+                  --       return ctx.label
+                  --     end
+                  --   end
+                  --   return ctx.label
+                  -- end
                   return require("colorful-menu").blink_components_text(ctx)
                 end,
                 highlight = function(ctx)
