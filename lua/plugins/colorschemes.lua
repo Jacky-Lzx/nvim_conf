@@ -72,12 +72,7 @@ elseif colorscheme == "catppuccin" then
           treesitter = true,
           treesitter_context = true,
           overseer = true,
-          rainbow_delimiters = false,
-          indent_blankline = {
-            enabled = false,
-            scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-            colored_indent_levels = false,
-          },
+          rainbow_delimiters = true,
           render_markdown = true,
           snacks = {
             enabled = true,
