@@ -76,7 +76,7 @@ elseif colorscheme == "catppuccin" then
           render_markdown = true,
           snacks = {
             enabled = true,
-            indent_scope_color = "lavender", -- catppuccin color (eg. `lavender`) Default: text
+            indent_scope_color = "flamingo", -- catppuccin color (eg. `lavender`) Default: text
           },
           lsp_trouble = true,
           which_key = true,
