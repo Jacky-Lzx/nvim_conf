@@ -26,7 +26,7 @@ return {
         ---Events on which to leave the current snippet-root if the cursor is outside its' "region".
         ---Disabled by default, `'CursorMoved',` `'CursorHold'` or `'InsertEnter'` seem reasonable.
         region_check_events = { "CursorMoved", "CursorHold", "InsertEnter" },
-        delete_check_events = "TextChanged",
+        delete_check_events = { "TextChanged" },
         ---Whether snippet-roots should exit at reaching at their last node, `$0`.
         ---This setting is only valid for root snippets, not child snippets.
         ---This setting may avoid unexpected behavior by disallowing to jump earlier (finished) snippets.
@@ -83,14 +83,14 @@ return {
       vim.api.nvim_create_user_command("LuaSnipList", require("luasnip.extras.snippet_list").open, {})
       vim.api.nvim_create_user_command("LuaSnipEdit", require("luasnip.loaders").edit_snippet_files, {})
 
-      vim.api.nvim_create_autocmd(opts.region_check_events, {
-        callback = function()
-          local ls = require("luasnip")
-          if ls.get_active_snip() and not ls.in_snippet() then
-            ls.unlink_current()
-          end
-        end,
-      })
+      -- vim.api.nvim_create_autocmd(opts.region_check_events, {
+      --   callback = function()
+      --     local ls = require("luasnip")
+      --     if ls.get_active_snip() and not ls.in_snippet() then
+      --       ls.unlink_current()
+      --     end
+      --   end,
+      -- })
     end,
   },
 }
