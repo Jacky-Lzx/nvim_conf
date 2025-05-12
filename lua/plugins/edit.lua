@@ -121,14 +121,14 @@ return {
     end,
   },
 
-  {
-    "echasnovski/mini.cursorword",
-    version = false,
-    event = "BufRead",
-    config = function()
-      require("mini.cursorword").setup()
-    end,
-  },
+  -- {
+  --   "echasnovski/mini.cursorword",
+  --   version = false,
+  --   event = "BufRead",
+  --   config = function()
+  --     require("mini.cursorword").setup()
+  --   end,
+  -- },
 
   -- {
   --   "kylechui/nvim-surround",
