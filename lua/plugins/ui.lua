@@ -118,12 +118,11 @@ return {
     },
     config = function(_, opts)
       -- require('hlslens').setup() is not required
-      require("scrollbar.handlers.search").setup(
-        opts -- hlslens config overrides
-      )
+      require("scrollbar.handlers.search").setup(opts)
       -- Set vim highlight group for HlSearchLens
       -- vim.cmd([[highlight link HlSearchLens CurSearch]])
       vim.api.nvim_set_hl(0, "HlSearchLens", { link = "CurSearch" })
+      vim.api.nvim_set_hl(0, "HlSearchLensNear", { fg = "#CBA6F7" })
     end,
   },
 
