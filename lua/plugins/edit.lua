@@ -229,21 +229,51 @@ return {
     "folke/flash.nvim",
     event = "BufReadPost",
     opts = {
+      label = {
+        rainbow = {
+          enabled = true,
+          shade = 1,
+        },
+      },
       modes = {
         char = {
           enabled = false,
         },
       },
     },
-    -- stylua: ignore
     keys = {
+      -- stylua: ignore
       { "<leader>f", mode = { "n", "x", "o" }, function() require("flash").jump() end,                                                                                               desc = "[Flash] Jump"              },
+      -- stylua: ignore
       { "<leader>F", mode = { "n", "x", "o" }, function() require("flash").treesitter() end,                                                                                         desc = "[Flash] Treesitter"        },
-      -- { "r",      mode = "o",               function() require("flash").remote() end,                                                                                             desc = "Remote Flash"              },
+      -- stylua: ignore
       { "<leader>F", mode = { "o", "x" },      function() require("flash").treesitter_search() end,                                                                                  desc = "[Flash] Treesitter Search" },
-      { "<c-s>",     mode = { "c" },           function() require("flash").toggle() end,                                                                                             desc = "[Flash] Toggle Search"     },
-      { "<leader>j", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, desc = "[Flash] Line jump"         },
-      { "<leader>k", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { mode = "search", max_length = 0 }, label = { after = { 0, 0 } }, pattern = "^", }) end, desc = "[Flash] Line jump"         },
+      -- stylua: ignore
+      { "<c-f>",     mode = { "c" },           function() require("flash").toggle() end,                                                                                             desc = "[Flash] Toggle Search"     },
+      {
+        "<leader>j",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump({
+            search = { mode = "search", max_length = 0 },
+            label = { after = { 0, 0 }, matches = false },
+            pattern = "^\\s*\\S\\?", -- match non-whitespace at start plus any character (ignores empty lines)
+          })
+        end,
+        desc = "[Flash] Line jump",
+      },
+      {
+        "<leader>k",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump({
+            search = { mode = "search", max_length = 0 },
+            label = { after = { 0, 0 }, matches = false },
+            pattern = "^\\s*\\S\\?", -- match non-whitespace at start plus any character (ignores empty lines)
+          })
+        end,
+        desc = "[Flash] Line jump",
+      },
     },
   },
 }
