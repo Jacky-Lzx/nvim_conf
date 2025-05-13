@@ -239,6 +239,7 @@ return {
         function()
           require("flash").jump({
             search = { mode = "search", max_length = 0 },
+            jump = { pos = "end" },
             label = { after = { 0, 0 }, matches = false },
             pattern = "^\\s*\\S\\?", -- match non-whitespace at start plus any character (ignores empty lines)
           })
@@ -251,6 +252,7 @@ return {
         function()
           require("flash").jump({
             search = { mode = "search", max_length = 0 },
+            jump = { pos = "end" },
             label = { after = { 0, 0 }, matches = false },
             pattern = "^\\s*\\S\\?", -- match non-whitespace at start plus any character (ignores empty lines)
           })
