@@ -5,7 +5,7 @@ M.plugins = {}
 
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
-    require("lspconfig").pyright.setup({
+    vim.lsp.config("pyright", {
       capabilities = extra.capabilities,
     })
 
