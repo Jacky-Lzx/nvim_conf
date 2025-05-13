@@ -2,9 +2,7 @@ local M = {}
 
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
-    require("lspconfig").lua_ls.setup({
-      -- on_attach = extra.on_attach,
-      capabilities = extra.capabilities,
+    vim.lsp.config("lua_ls", {
       settings = {
         Lua = {},
       },

@@ -252,8 +252,11 @@ return {
         },
       })
 
+      vim.lsp.config("*", {
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
+      })
+
       vim.lsp.config("typos_lsp", {
-        capabilities = extra.capabilities,
         init_options = {
           -- Custom config. Used together with a config file found in the workspace or its parents,
           -- taking precedence for settings declared in both.

@@ -2,10 +2,7 @@ local M = {}
 
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
-    require("lspconfig").rust_analyzer.setup({
-      -- on_attach = extra.on_attach,
-      capabilities = extra.capabilities,
-
+    vim.lsp.config("rust_analyzer", {
       settings = {
         ["rust-analyzer"] = {
           diagnostics = {
