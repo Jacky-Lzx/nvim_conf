@@ -229,13 +229,46 @@ return {
             })
             :map("<leader>tS")
 
+          Snacks.toggle.diagnostics():map("<leader>td")
+          Snacks.toggle
+            .new({
+              id = "virtual_lines",
+              name = "Virtual lines",
+              get = function()
+                return not not vim.diagnostic.config().virtual_lines
+              end,
+              set = function(state)
+                if state then
+                  vim.diagnostic.config({ virtual_lines = { current_line = true } })
+                else
+                  vim.diagnostic.config({ virtual_lines = false })
+                end
+              end,
+            })
+            :map("<leader>tV")
+          Snacks.toggle
+            .new({
+              id = "virtual_text",
+              name = "Virtual text",
+              get = function()
+                return not not vim.diagnostic.config().virtual_text
+              end,
+              set = function(state)
+                if state then
+                  vim.diagnostic.config({ virtual_text = { spacing = 2, prefix = "●" } })
+                else
+                  vim.diagnostic.config({ virtual_text = state })
+                end
+              end,
+            })
+            :map("<leader>tv")
+
           -- Create some toggle mappings
           Snacks.toggle.dim():map("<leader>tD")
 
           Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>ts")
           Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
           Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>tL")
-          Snacks.toggle.diagnostics():map("<leader>td")
           Snacks.toggle.line_number():map("<leader>tl")
           Snacks.toggle
             .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })

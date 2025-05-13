@@ -219,7 +219,8 @@ return {
         underline = false,
         signs = false,
         update_in_insert = false,
-        virtual_text = { spacing = 4, prefix = "●" },
+        virtual_text = { spacing = 2, prefix = "●" },
+        virtual_lines = { current_line = true },
         severity_sort = true,
         float = {
           border = "rounded",
