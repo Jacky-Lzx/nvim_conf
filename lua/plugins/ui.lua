@@ -331,9 +331,13 @@ return {
     opts = {
       autocmd = { enabled = true },
       sign = {
+        enabled = false,
         text = "",
       },
-      -- virtual_text = { enabled = true },
+      virtual_text = {
+        enabled = true,
+        text = "",
+      },
     },
   },
 
