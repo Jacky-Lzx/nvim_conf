@@ -6,6 +6,25 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+vim.diagnostic.config({
+  underline = false,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.HINT] = "󰌶",
+      [vim.diagnostic.severity.INFO] = "",
+    },
+  },
+  update_in_insert = false,
+  -- virtual_text = { spacing = 2, prefix = "●" },
+  virtual_text = false,
+  virtual_lines = { current_line = true },
+  severity_sort = true,
+  float = {
+    border = "rounded",
+  },
+})
 
 return {
   {
@@ -213,26 +232,11 @@ return {
       -- "j-hui/fidget.nvim",
       "saghen/blink.cmp",
     },
-    opts = {
-      -- options for vim.diagnostic.config()
-      diagnostics = {
-        underline = false,
-        signs = false,
-        update_in_insert = false,
-        virtual_text = { spacing = 2, prefix = "●" },
-        virtual_lines = { current_line = true },
-        severity_sort = true,
-        float = {
-          border = "rounded",
-        },
-      },
-    },
-    config = function(_, opts)
-      vim.diagnostic.config(opts.diagnostics)
-
+    opts = {},
+    config = function(_, _)
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls", "pyright" },
-        automatic_installation = true,
+        automatic_enable = true,
       })
 
       local extra = {
