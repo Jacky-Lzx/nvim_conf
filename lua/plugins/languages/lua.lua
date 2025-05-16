@@ -7,6 +7,9 @@ function M.setup(setting_name, extra)
         Lua = {},
       },
     })
+
+    vim.lsp.enable("lua_ls")
+
     return
   end
 

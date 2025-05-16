@@ -11,6 +11,9 @@ function M.setup(setting_name, extra)
         },
       },
     })
+
+    vim.lsp.enable("rust_analyzer")
+
     return
   end
 

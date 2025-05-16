@@ -241,7 +241,7 @@ return {
     config = function(_, _)
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls", "pyright" },
-        automatic_enable = true,
+        automatic_enable = false,
       })
 
       local extra = {
@@ -276,6 +276,7 @@ return {
           diagnosticSeverity = "Hint",
         },
       })
+      vim.lsp.enable("typos_lsp")
 
       -- Use LspAttach autocommand to only map the following keys
       -- after the language server attaches to the current buffer

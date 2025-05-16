@@ -62,6 +62,8 @@ function M.setup(setting_name, extra)
       },
     })
 
+    vim.lsp.enable("texlab")
+
     -- require("notify")("Unknown setting for language `python`: " .. setting_name)
     return
   end

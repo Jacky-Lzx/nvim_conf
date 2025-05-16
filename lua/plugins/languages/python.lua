@@ -23,6 +23,8 @@ function M.setup(setting_name, extra)
     --   },
     -- })
 
+    vim.lsp.enable("pyright")
+
     return
   end
 
