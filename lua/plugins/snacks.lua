@@ -109,7 +109,7 @@ return {
 
     -- stylua: ignore
     keys = {
-      { "<A-w>", function() require("snacks").bufdelete() end, desc = "[Snacks] Delete buffer", },
+      { "<M-w>", function() require("snacks").bufdelete() end, desc = "[Snacks] Delete buffer", },
       { "<leader>si", function() require("snacks").image.hover() end, desc = "[Snacks] Display image", },
       { "<A-i>", function() require("snacks").terminal() end, desc = "[Snacks] Toggle terminal", mode = { "n", "t" }, },
       -- Notification
@@ -228,40 +228,6 @@ return {
               end,
             })
             :map("<leader>tS")
-
-          Snacks.toggle.diagnostics():map("<leader>td")
-          Snacks.toggle
-            .new({
-              id = "virtual_lines",
-              name = "Virtual lines",
-              get = function()
-                return not not vim.diagnostic.config().virtual_lines
-              end,
-              set = function(state)
-                if state then
-                  vim.diagnostic.config({ virtual_lines = { current_line = true } })
-                else
-                  vim.diagnostic.config({ virtual_lines = false })
-                end
-              end,
-            })
-            :map("<leader>tV")
-          Snacks.toggle
-            .new({
-              id = "virtual_text",
-              name = "Virtual text",
-              get = function()
-                return not not vim.diagnostic.config().virtual_text
-              end,
-              set = function(state)
-                if state then
-                  vim.diagnostic.config({ virtual_text = { spacing = 2, prefix = "●" } })
-                else
-                  vim.diagnostic.config({ virtual_text = state })
-                end
-              end,
-            })
-            :map("<leader>tv")
 
           -- Create some toggle mappings
           Snacks.toggle.dim():map("<leader>tD")
