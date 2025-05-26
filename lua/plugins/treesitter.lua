@@ -2,7 +2,8 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    event = "VeryLazy",
+    lazy = false,
+    branch = "main",
     opts = {
       auto_install = true,
       highlight = {
@@ -38,11 +39,6 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      local configs = require("nvim-treesitter.configs")
-
-      configs.setup(opts)
-    end,
   },
 
   {
