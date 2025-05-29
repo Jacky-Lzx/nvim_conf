@@ -5,14 +5,9 @@ vim.g.markdown_recommended_style = 0
 
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
-    require("lspconfig").marksman.setup({
-      -- on_attach = extra.on_attach,
-      capabilities = extra.capabilities,
-    })
-    require("lspconfig").vale_ls.setup({
-      -- on_attach = extra.on_attach,
-      capabilities = extra.capabilities,
-    })
+    vim.lsp.enable("vale_ls")
+    vim.lsp.enable("marksman")
+
     return
   end
 
