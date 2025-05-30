@@ -3,7 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     lazy = false,
-    branch = "main",
+    -- branch = "main",
     opts = {
       auto_install = true,
       highlight = {
@@ -39,6 +39,9 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
 
   {
