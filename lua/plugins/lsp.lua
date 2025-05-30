@@ -224,38 +224,35 @@ return {
   {
     "stevearc/conform.nvim",
     event = "BufWritePre",
-    keys = {
-      {
-        "<leader>tf",
-        function()
-          if vim.g.disable_autoformat then
-            vim.g.disable_autoformat = false
-            require("snacks.notify").info("Enable format-on-save")
-          else
-            vim.g.disable_autoformat = true
-            require("snacks.notify").info("Disable format-on-save")
-          end
-        end,
-        mode = "n",
-        desc = "Toggle format-on-save",
-      },
-    },
+    keys = {},
     opts = {
       format_on_save = function(_)
         -- Disable with a global or buffer-local variable
-        if vim.g.disable_autoformat then
-          return
+        if vim.g.enable_autoformat then
+          return { timeout_ms = 500, lsp_format = "fallback" }
         end
-        return { timeout_ms = 500, lsp_format = "fallback" }
       end,
     },
+    init = function()
+      vim.g.enable_autoformat = true
+      require("snacks").toggle
+        .new({
+          id = "auto_format",
+          name = "Auto format",
+          get = function()
+            return vim.g.enable_autoformat
+          end,
+          set = function(state)
+            vim.g.enable_autoformat = state
+          end,
+        })
+        :map("<leader>tf")
+    end,
     config = function(_, opts)
       opts["formatters_by_ft"] = utils.language_setup(G.language.formatter)
       opts["formatters_by_ft"].javascript = { "prettierd", "prettier", stop_after_first = true }
 
       require("conform").setup(opts)
-
-      vim.g.disable_autoformat = false
     end,
   },
 
