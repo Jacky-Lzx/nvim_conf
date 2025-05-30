@@ -41,9 +41,6 @@ M.plugins = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons", -- if you prefer nvim-web-devicons
     },
-    keys = {
-      "<leader>tm",
-    },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
