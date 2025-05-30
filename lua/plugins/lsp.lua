@@ -258,7 +258,7 @@ return {
 
   {
     "mfussenegger/nvim-lint",
-    event = { "BufWritePre" },
+    event = { "BufWritePost" },
     config = function()
       require("lint").linters_by_ft = utils.language_setup(G.language.linter)
 
@@ -271,7 +271,7 @@ return {
           -- You can call `try_lint` with a linter name or a list of names to always
           -- run specific linters, independent of the `linters_by_ft` configuration
 
-          -- require("lint").try_lint("codespell")
+          require("lint").try_lint("codespell")
         end,
       })
     end,

@@ -8,6 +8,7 @@ function M.setup(setting_name, extra)
     vim.lsp.config("pyright", {
       capabilities = extra.capabilities,
     })
+    vim.lsp.enable("pyright")
 
     -- require("lspconfig").pylsp.setup({
     --   -- on_attach = extra.on_attach,
@@ -23,17 +24,16 @@ function M.setup(setting_name, extra)
     --   },
     -- })
 
-    vim.lsp.enable("pyright")
-
     return
   end
 
   if setting_name == G.language.formatter then
-    return { "isort", "black" }
+    return { "ruff_format" }
+    -- return {  "isort", "black" }
   end
 
   if setting_name == G.language.linter then
-    return
+    return { "ruff" }
   end
 
   require("notify")("Unknown setting for language `python`: " .. setting_name)
