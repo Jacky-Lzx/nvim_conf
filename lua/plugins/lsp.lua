@@ -118,6 +118,8 @@ return {
     },
     opts = {
       focus = false,
+      warn_no_results = false,
+      open_no_results = true,
       preview = {
         type = "float",
         relative = "editor",
@@ -251,6 +253,7 @@ return {
     config = function(_, opts)
       opts["formatters_by_ft"] = utils.language_setup(G.language.formatter)
       opts["formatters_by_ft"].javascript = { "prettierd", "prettier", stop_after_first = true }
+      opts["formatters_by_ft"]["_"] = { "trim_whitespace" }
 
       require("conform").setup(opts)
     end,
