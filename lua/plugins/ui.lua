@@ -354,27 +354,89 @@ return {
     },
   },
 
+  -- {
+  --   "aznhe21/actions-preview.nvim",
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<leader>a",   function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", noremap = true, silent = true, },
+  --     { "<A-a>",   function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", mode = "i", noremap = true, silent = true, },
+  --     { "<leader>gra", function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", noremap = true, silent = true, },
+  --   },
+  --   opts = function()
+  --     local hl = require("actions-preview.highlight")
+  --     return {
+  --       backend = { "snacks", "telescope" },
+  --
+  --       snacks = {
+  --         layout = {
+  --           reverse = false,
+  --           layout = {
+  --             backdrop = false,
+  --             width = 0.5,
+  --             min_width = 80,
+  --             height = 0.4,
+  --             min_height = 3,
+  --             box = "vertical",
+  --             border = "rounded",
+  --             title = "{title}",
+  --             title_pos = "center",
+  --             { win = "input", height = 1, border = "bottom" },
+  --             { win = "list", height = 5, border = "none" },
+  --             { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+  --           },
+  --         },
+  --       },
+  --       -- priority list of external command to highlight diff
+  --       -- disabled by default, must be set by yourself
+  --       highlight_command = {
+  --         -- Highlight diff using delta: https://github.com/dandavison/delta
+  --         -- The argument is optional, in which case "delta" is assumed to be
+  --         -- specified.
+  --         hl.delta("delta --config " .. os.getenv("HOME") .. "/.config/nvim/configs/.gitconfig"),
+  --       },
+  --     }
+  --   end,
+  -- },
+
   {
-    "aznhe21/actions-preview.nvim",
+    "rachartier/tiny-code-action.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      {
+        "folke/snacks.nvim",
+        opts = {
+          -- terminal = {},
+        },
+      },
+    },
+    event = "LspAttach",
     -- stylua: ignore
     keys = {
-      { "<leader>a",   function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", noremap = true, silent = true, },
-      { "<A-a>",   function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", mode = "i", noremap = true, silent = true, },
-      { "<leader>gra", function() require("actions-preview").code_actions() end, desc = "[LSP] Code action", noremap = true, silent = true, },
+      { "<leader>a",   function() require("tiny-code-action").code_action() end, desc = "[LSP] Code action", noremap = true, silent = true, },
+      { "<A-a>",   function() require("tiny-code-action").code_action() end, desc = "[LSP] Code action", mode = "i", noremap = true, silent = true, },
+      { "<leader>gra", function() require("tiny-code-action").code_action() end, desc = "[LSP] Code action", noremap = true, silent = true, },
     },
-    opts = function()
-      local hl = require("actions-preview.highlight")
-      return {
-        backend = { "snacks", "telescope" },
-
-        snacks = {
+    opts = {
+      backend = "delta",
+      backend_opts = {
+        delta = {
+          -- The arguments to pass to delta
+          -- If you have a custom configuration file, you can set the path to it like so:
+          -- args = {
+          --   "--config " .. os.getenv("HOME") .. "/.config/nvim/configs/.gitconfig",
+          -- },
+        },
+      },
+      picker = {
+        "snacks",
+        opts = {
           layout = {
             reverse = false,
             layout = {
               backdrop = false,
               width = 0.5,
               min_width = 80,
-              height = 0.4,
+              height = 0.8,
               min_height = 3,
               box = "vertical",
               border = "rounded",
@@ -382,20 +444,13 @@ return {
               title_pos = "center",
               { win = "input", height = 1, border = "bottom" },
               { win = "list", height = 5, border = "none" },
-              { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+              -- { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+              { win = "preview", title = "{preview}", border = "top" },
             },
           },
         },
-        -- priority list of external command to highlight diff
-        -- disabled by default, must be set by yourself
-        highlight_command = {
-          -- Highlight diff using delta: https://github.com/dandavison/delta
-          -- The argument is optional, in which case "delta" is assumed to be
-          -- specified.
-          hl.delta("delta --config " .. os.getenv("HOME") .. "/.config/nvim/configs/.gitconfig"),
-        },
-      }
-    end,
+      },
+    },
   },
 
   {
