@@ -79,7 +79,24 @@ return {
     "echasnovski/mini.diff",
     event = "BufReadPost",
     version = "*",
-    opts = {},
+    opts = {
+      -- Module mappings. Use `''` (empty string) to disable one.
+      -- NOTE: Mappings are handled by gitsigns.
+      mappings = {
+        -- Apply hunks inside a visual/operator region
+        apply = "",
+        -- Reset hunks inside a visual/operator region
+        reset = "",
+        -- Hunk range textobject to be used inside operator
+        -- Works also in Visual mode if mapping differs from apply and reset
+        textobject = "",
+        -- Go to hunk range in corresponding direction
+        goto_first = "",
+        goto_prev = "",
+        goto_next = "",
+        goto_last = "",
+      },
+    },
   },
 
   -- Show colors in the text: e.g. "#b3e2a7"
@@ -101,6 +118,9 @@ return {
       -- word_diff = true,
       current_line_blame = true,
       attach_to_untracked = true,
+      preview_config = {
+        border = "rounded",
+      },
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
 
@@ -111,9 +131,14 @@ return {
         end
 
         -- Navigation
-        -- NOTE: Navigation is handled by mini.diff
-        -- map("n", "]h", function() if vim.wo.diff then vim.cmd.normal({ "]h", bang = true }) else gitsigns.nav_hunk("next") end end, { desc = "[Git] Next hunk" })
-        -- map("n", "[h", function() if vim.wo.diff then vim.cmd.normal({ "[h", bang = true }) else gitsigns.nav_hunk("prev") end end, { desc = "[Git] Prev hunk" })
+        -- stylua: ignore
+        map("n", "]h", function() if vim.wo.diff then vim.cmd.normal({ "]h", bang = true }) else gitsigns.nav_hunk("next") end end, { desc = "[Git] Next hunk" })
+        -- stylua: ignore
+        map("n", "]H", function() if vim.wo.diff then vim.cmd.normal({ "]H", bang = true }) else gitsigns.nav_hunk("last") end end, { desc = "[Git] Last hunk" })
+        -- stylua: ignore
+        map("n", "[h", function() if vim.wo.diff then vim.cmd.normal({ "[h", bang = true }) else gitsigns.nav_hunk("prev") end end, { desc = "[Git] Prev hunk" })
+        -- stylua: ignore
+        map("n", "[H", function() if vim.wo.diff then vim.cmd.normal({ "[H", bang = true }) else gitsigns.nav_hunk("first") end end, { desc = "[Git] First hunk" })
 
         -- Actions
         map("n", "<leader>ggs", gitsigns.stage_hunk, { desc = "[Git] Stage hunk" })
