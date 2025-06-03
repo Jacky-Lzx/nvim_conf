@@ -283,7 +283,7 @@ return {
   {
     "mfussenegger/nvim-lint",
     event = { "BufWritePost" },
-    config = function()
+    config = function(_, opts)
       require("lint").linters_by_ft =
         vim.tbl_deep_extend("error", opts["linters_by_ft"], utils.language_setup(G.language.linter))
       require("lint").linters_by_ft["fish"] = { "fish" }
