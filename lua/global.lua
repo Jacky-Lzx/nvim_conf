@@ -24,6 +24,7 @@ Enabled_languages = {
   "lua",
   "bash",
   "java",
+  "typst",
 }
 
 ---@type string
