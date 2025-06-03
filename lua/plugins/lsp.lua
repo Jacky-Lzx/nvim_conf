@@ -83,7 +83,7 @@ snacks.toggle
       if state then
         vim.diagnostic.config({ virtual_text = virtual_text_config })
       else
-        vim.diagnostic.config({ virtual_text = state })
+        vim.diagnostic.config({ virtual_text = false })
       end
     end,
   })
@@ -251,7 +251,8 @@ return {
         :map("<leader>tf")
     end,
     config = function(_, opts)
-      opts["formatters_by_ft"] = utils.language_setup(G.language.formatter)
+      opts["formatters_by_ft"] =
+        vim.tbl_extend("keep", opts["formatters_by_ft"], utils.language_setup(G.language.formatter))
       opts["formatters_by_ft"].javascript = { "prettierd", "prettier", stop_after_first = true }
       opts["formatters_by_ft"]["_"] = { "trim_whitespace" }
 
@@ -264,6 +265,8 @@ return {
     event = { "BufWritePost" },
     config = function()
       require("lint").linters_by_ft = utils.language_setup(G.language.linter)
+      require("lint").linters_by_ft["fish"] = { "fish" }
+      require("lint").linters_by_ft["bash"] = { "bash" }
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()

@@ -2,23 +2,11 @@ local M = {}
 
 function M.setup(setting_name, extra)
   if setting_name == G.language.lsp then
-    vim.lsp.config("rust_analyzer", {
-      settings = {
-        ["rust-analyzer"] = {
-          diagnostics = {
-            enable = true,
-          },
-        },
-      },
-    })
-
-    vim.lsp.enable("rust_analyzer")
-
     return
   end
 
   if setting_name == G.language.formatter then
-    return { "rustfmt", lsp_format = "fallback" }
+    return
   end
 
   if setting_name == G.language.linter then
@@ -43,6 +31,28 @@ M.plugins = {
         actions = true,
         completion = true,
         hover = true,
+      },
+    },
+  },
+
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^6", -- Recommended
+    ft = "rust",
+  },
+
+  {
+    "mason-org/mason.nvim",
+    opts = { ensure_installed = { "rust-analyzer" } },
+  },
+
+  -- formatter
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        rust = { "rustfmt", lsp_format = "fallback" },
       },
     },
   },
