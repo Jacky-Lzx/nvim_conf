@@ -252,7 +252,7 @@ return {
     end,
     config = function(_, opts)
       opts["formatters_by_ft"] =
-        vim.tbl_extend("keep", opts["formatters_by_ft"], utils.language_setup(G.language.formatter))
+        vim.tbl_extend("error", opts["formatters_by_ft"], utils.language_setup(G.language.formatter))
       opts["formatters_by_ft"].javascript = { "prettierd", "prettier", stop_after_first = true }
       opts["formatters_by_ft"]["_"] = { "trim_whitespace" }
 
@@ -264,7 +264,8 @@ return {
     "mfussenegger/nvim-lint",
     event = { "BufWritePost" },
     config = function()
-      require("lint").linters_by_ft = utils.language_setup(G.language.linter)
+      require("lint").linters_by_ft =
+        vim.tbl_deep_extend("error", opts["linters_by_ft"], utils.language_setup(G.language.linter))
       require("lint").linters_by_ft["fish"] = { "fish" }
       require("lint").linters_by_ft["bash"] = { "bash" }
 

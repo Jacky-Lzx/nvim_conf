@@ -1,42 +1,36 @@
--- Python related plugins
 local M = {}
 
-M.plugins = {}
+M.plugins = {
+  {
+    "mason-org/mason.nvim",
+    opts = { ensure_installed = { "ruff", "pyright" } },
+  },
 
-function M.setup(setting_name, extra)
-  if setting_name == G.language.lsp then
-    vim.lsp.config("pyright", {
-      capabilities = extra.capabilities,
-    })
-    vim.lsp.enable("pyright")
+  -- formatter
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        rust = { "ruff" },
+      },
+    },
+  },
 
-    -- require("lspconfig").pylsp.setup({
-    --   -- on_attach = extra.on_attach,
-    --   capabilities = extra.capabilities,
-    --   settings = {
-    --     pylsp = {
-    --       plugins = {
-    --         pycodestyle = {
-    --           enabled = false,
-    --         },
-    --       },
-    --     },
-    --   },
-    -- })
+  -- linter
+  {
+    "mfussenegger/nvim-lint",
+    optional = true,
+    opts = {
+      linters_by_ft = {
+        python = { "ruff" },
+      },
+    },
+  },
+}
 
-    return
-  end
+function M.setup(setting_name, extra) end
 
-  if setting_name == G.language.formatter then
-    return { "ruff_format" }
-    -- return {  "isort", "black" }
-  end
-
-  if setting_name == G.language.linter then
-    return { "ruff" }
-  end
-
-  require("notify")("Unknown setting for language `python`: " .. setting_name)
-end
+vim.lsp.enable("pyright")
 
 return M
