@@ -7,7 +7,26 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-local virtual_text_config = {
+local virtual_text_config_enabled = {
+  spacing = 4,
+  -- format = function(_)
+  --   return ""
+  -- end,
+  prefix = function(diagnostic)
+    if diagnostic.severity == vim.diagnostic.severity.ERROR then
+      return ""
+    elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+      return ""
+    elseif diagnostic.severity == vim.diagnostic.severity.INFO then
+      return ""
+    elseif diagnostic.severity == vim.diagnostic.severity.HINT then
+      return "󰌶"
+    end
+    return diagnostic.message
+  end,
+}
+
+local virtual_text_config_disabled = {
   spacing = 0,
   format = function(_)
     return ""
@@ -25,6 +44,7 @@ local virtual_text_config = {
     return diagnostic.message
   end,
 }
+
 local signs_config = {
   text = {
     [vim.diagnostic.severity.ERROR] = "",
@@ -45,7 +65,7 @@ vim.diagnostic.config({
   underline = false,
   signs = signs_config,
   update_in_insert = false,
-  virtual_text = virtual_text_config,
+  virtual_text = virtual_text_config_enabled,
   virtual_lines = virtual_lines_config,
   severity_sort = true,
   float = {
@@ -77,13 +97,13 @@ snacks.toggle
     id = "virtual_text",
     name = "Virtual text",
     get = function()
-      return not not vim.diagnostic.config().virtual_text
+      return vim.diagnostic.config().virtual_text.format == virtual_text_config_enabled.format
     end,
     set = function(state)
       if state then
-        vim.diagnostic.config({ virtual_text = virtual_text_config })
+        vim.diagnostic.config({ virtual_text = virtual_text_config_enabled })
       else
-        vim.diagnostic.config({ virtual_text = false })
+        vim.diagnostic.config({ virtual_text = virtual_text_config_disabled })
       end
     end,
   })
