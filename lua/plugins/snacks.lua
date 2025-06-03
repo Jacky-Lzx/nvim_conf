@@ -127,10 +127,10 @@ return {
       { "<leader>sr", function() require("snacks").picker.recent() end, desc = "[Snacks] Recent", },
       -- git
       { "<C-g>", function() require("snacks").lazygit() end, desc = "[Snacks] Lazygit", },
-      { "<leader>gl", function() require("snacks").picker.git_log() end, desc = "[Snacks] Git log", },
-      { "<leader>gd", function() require("snacks").picker.git_diff() end, desc = "[Snacks] Git diff", },
-      { "<leader>gb", function() require("snacks").git.blame_line() end, desc = "[Snacks] Git blame line", },
-      { "<leader>gB", function() require("snacks").gitbrowse() end, desc = "[Snacks] Git browse", },
+      { "<leader>ggl", function() require("snacks").picker.git_log() end, desc = "[Snacks] Git log", },
+      { "<leader>ggd", function() require("snacks").picker.git_diff() end, desc = "[Snacks] Git diff", },
+      { "<leader>ggb", function() require("snacks").git.blame_line() end, desc = "[Snacks] Git blame line", },
+      { "<leader>ggB", function() require("snacks").gitbrowse() end, desc = "[Snacks] Git browse", },
       -- Grep
       -- { "<leader>sb", function() require("snacks").picker.lines() end, desc = "[Snacks] Buffer lines" },
       -- { "<leader>sB", function() require("snacks").picker.grep_buffers() end, desc = "[Snacks] Grep open buffers" },
@@ -242,7 +242,7 @@ return {
           Snacks.toggle.treesitter():map("<leader>tT")
           Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tb")
           Snacks.toggle.inlay_hints():map("<leader>th")
-          Snacks.toggle.indent():map("<leader>tg")
+          Snacks.toggle.indent():map("<leader>tG")
           Snacks.toggle.dim():map("<leader>tD")
           -- Toggle the profiler
           Snacks.toggle.profiler():map("<leader>tpp")
