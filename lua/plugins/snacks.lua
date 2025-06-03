@@ -109,7 +109,7 @@ return {
 
     -- stylua: ignore
     keys = {
-      { "<M-w>", function() require("snacks").bufdelete() end, desc = "[Snacks] Delete buffer", },
+      { "<A-w>", function() require("snacks").bufdelete() end, desc = "[Snacks] Delete buffer", },
       { "<leader>si", function() require("snacks").image.hover() end, desc = "[Snacks] Display image", },
       { "<A-i>", function() require("snacks").terminal() end, desc = "[Snacks] Toggle terminal", mode = { "n", "t" }, },
       -- Notification
