@@ -4,114 +4,39 @@
 
 local cond_obj = require("luasnip.extras.conditions")
 
-local has_treesitter, ts = pcall(require, "vim.treesitter")
-local _, query = pcall(require, "vim.treesitter.query")
-
 local M = {
   fn = {},
   obj = {},
 }
 
---- NOTE: useful commands
---- Visualize treesitter: `<CMD>InspectTree<CR>`
---- Get current buffer: `local buf = vim.api.nvim_get_current_buf()`
---- Get the test of a node: `vim.treesitter.get_node_text(class_include, buf)`
-
-local MATH_ENV = {
-  inline_formula = true,
-  displayed_equation = true,
-  math_environment = true,
-  text_mode = false,
-}
+local function false_fn()
+  return false
+end
+M.fn.false_fn = false_fn
 
 -- math / not math zones
 local function in_math()
-  local node = vim.treesitter.get_node()
-  while node do
-    local result = MATH_ENV[node:type()]
-    if result ~= nil and not result then
-      return false
-    end
-    if result then
-      return true
-    end
-    node = node:parent()
-  end
-  return false
+  -- require("snacks.debug").inspect(vim.api.nvim_eval("vimtex#syntax#in_mathzone()"))
+  return vim.api.nvim_eval("vimtex#syntax#in_mathzone()") == 1
 end
 M.fn.in_math = in_math
 
 -- comment detection
 local function in_comment()
-  if not has_treesitter then
-    return nil
-  end
-
-  local node = vim.treesitter.get_node()
-  while node do
-    if node:type() == "line_comment" then
-      return true
-    end
-    node = node:parent()
-  end
-  return false
+  return vim.fn["vimtex#syntax#in_comment"]() == 1
 end
 M.fn.in_comment = in_comment
 
 -- document class
 local function in_beamer()
-  if not has_treesitter then
-    return nil
-  end
-
-  local buf = vim.api.nvim_get_current_buf()
-
-  local node = vim.treesitter.get_node()
-  while node do
-    if node:type() == "source_file" then
-      local class_include = node:named_child(0)
-      if class_include then
-        -- require("snacks.debug").inspect(vim.treesitter.get_node_text(class_include, buf))
-        local class_path = class_include:field("path")[1]
-        if class_path then
-          local field_path = class_path:field("path")[1]
-          if vim.treesitter.get_node_text(field_path, buf) == "beamer" then
-            return true
-          end
-        end
-      end
-    end
-    node = node:parent()
-  end
-  return false
+  return vim.b.vimtex["documentclass"] == "beamer"
 end
 M.fn.in_beamer = in_beamer
 
 -- general env function
 local function in_env(name)
-  if not has_treesitter then
-    return nil
-  end
-
-  local buf = vim.api.nvim_get_current_buf()
-  local node = vim.treesitter.get_node()
-
-  while node do
-    if string.match(node:type(), "environment$") then
-      local begin_node = node:named_child(0)
-      if begin_node and begin_node:type() == "begin" then
-        local text_group_node = begin_node:named_child(0)
-        if text_group_node then
-          local env_name_node = text_group_node:named_child(0)
-          if env_name_node and vim.treesitter.get_node_text(env_name_node, buf) == name then
-            return true
-          end
-        end
-      end
-    end
-    node = node:parent()
-  end
-  return false
+  local is_inside = vim.fn["vimtex#env#is_inside"](name)
+  return (is_inside[1] > 0 and is_inside[2] > 0)
 end
 M.fn.in_env = in_env
 

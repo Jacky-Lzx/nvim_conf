@@ -33,9 +33,24 @@ return {
   autosnippet(
     { trig = "mk", name = "inline_math_select", desc = "(Select) In-line math block" },
     fmta([[ \( <> \)]], { d(1, get_visual_or_insert) }),
-    { condition = cond_has_selected_text, priority = 2000 }
+    {
+      condition = cond_has_selected_text,
+      show_condition = conds.obj.false_fn,
+      priority = 2000,
+    }
   ),
-  autosnippet({ trig = "mk", name = "inline_math", desc = "In-line math block" }, fmta([[\( <> \)<>]], { i(1), i(0) })),
+  autosnippet(
+    {
+      trig = "mk",
+      name = "inline_math",
+      desc = "In-line math block",
+    },
+    fmta([[\( <> \)<>]], { i(1), i(0) }),
+    {
+      condition = -conds.obj.in_math,
+      show_condition = conds.obj.false_fn,
+    }
+  ),
 
   autosnippet(
     { trig = "dm", name = "inline_math_select", desc = "(Select) In-line math block" },
@@ -47,7 +62,11 @@ return {
       ]],
       { d(1, get_visual_or_insert) }
     ),
-    { condition = cond_line_begin * cond_has_selected_text, priority = 2000 }
+    {
+      condition = cond_line_begin * cond_has_selected_text,
+      show_condition = conds.obj.false_fn,
+      priority = 2000,
+    }
   ),
   autosnippet(
     { trig = "dm", name = "inline_math", desc = "In-line math block" },
@@ -59,7 +78,21 @@ return {
     ]],
       { i(0) }
     ),
-    { condition = cond_line_begin }
+    {
+      condition = cond_line_begin * -conds.obj.in_math,
+      show_condition = conds.obj.false_fn,
+    }
+  ),
+
+  autosnippet(
+    { trig = "==", name = "&= align", dscr = "&= align" },
+    fmta(
+      [[
+    &<> <> \\
+    ]],
+      { c(1, { t("="), t("\\leq"), i(1) }), i(2) }
+    ),
+    { condition = conds.fn.in_align, show_condition = conds.fn.in_align }
   ),
 
   s(
@@ -204,13 +237,41 @@ return {
   ),
 
   autosnippet(
-    { trig = "^^", name = "superscript", desc = "Superscript" },
-    fmta([[^{<>}<>]], { i(1), i(0) }),
-    { condition = conds.obj.in_math, show_condition = conds.obj.in_math }
+    { trig = "([A-Za-z0-9]+)^^", name = "superscript", desc = "Superscript", trigEngine = "ecma" },
+    fmta([[<>^{<>}<>]], { f(function(_, snip)
+      return snip.captures[1]
+    end), i(1), i(0) }),
+    { condition = conds.obj.in_math, show_condition = conds.obj.false_fn }
   ),
   autosnippet(
     { trig = "__", name = "subscript", desc = "Subscript" },
     fmta([[_{<>}<>]], { i(1), i(0) }),
+    { condition = conds.obj.in_math, show_condition = conds.obj.false_fn }
+  ),
+
+  s(
+    { trig = "lim", name = "lim(sup|inf)", dscr = "lim(sup|inf)" },
+    fmta(
+      [[ 
+        \lim<><><>
+      ]],
+      {
+        c(1, { t(""), t("sup"), t("inf") }),
+        c(2, { t(""), fmta([[_{<> \to <>}]], { i(1, "n"), i(2, "\\infty") }) }),
+        i(0),
+      }
+    ),
+    { condition = conds.obj.in_math, show_condition = conds.obj.in_math }
+  ),
+
+  s(
+    { trig = "sum", name = "summation", dscr = "summation" },
+    fmta(
+      [[
+        \sum<> <>
+      ]],
+      { c(1, { fmta([[_{<>}^{<>}]], { i(1, "i = 0"), i(2, "\\infty") }), t("") }), i(0) }
+    ),
     { condition = conds.obj.in_math, show_condition = conds.obj.in_math }
   ),
 }
