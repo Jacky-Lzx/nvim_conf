@@ -26,7 +26,7 @@ vim.lsp.config("texlab", {
         args = {
           "%f",
         },
-        onSave = true,
+        onSave = false,
         forwardSearchAfter = false,
       },
       -- build = {
@@ -49,7 +49,7 @@ vim.lsp.config("texlab", {
         args = { "-r", "%l", "%p", "%f" },
       },
       chktex = {
-        onOpenAndSave = true,
+        onOpenAndSave = false,
         onEdit = false,
         additionalArgs = {
           "-wall",
@@ -65,20 +65,35 @@ vim.lsp.config("texlab", {
           "-e16",
         },
       },
-      bibtexFormatter = "texlab", -- @type "texlab" | "latexindent"; @default "texlab"
-      latexFormatter = "latexindent", -- @type "texlab" | "latexindent"; @default "latexindent"
-      latexindent = {
-        -- ["local"] = "~/.config/latexindent/lzx_settings.yaml", -- local is a reserved keyword
-        ["local"] = vim.env.HOME .. "/.config/latexindent/lzx_settings.yaml", -- local is a reserved keyword
-        modifyLineBreaks = true, -- @default false
-      },
+      bibtexFormatter = "none", -- @type "texlab" | "latexindent" | "none"; @default "texlab"
+      latexFormatter = "none", -- @type "texlab" | "latexindent" | "none"; @default "latexindent"
+      -- latexindent = {
+      -- ["local"] = "~/.config/latexindent/lzx_settings.yaml", -- local is a reserved keyword
+      -- ["local"] = vim.env.HOME .. "/.config/latexindent/lzx_settings.yaml", -- local is a reserved keyword
+      -- modifyLineBreaks = true, -- @default false
+      -- },
     },
   },
 })
--- FIXME: TeXLab does not work correctly in terms of formatting
--- vim.lsp.enable("texlab")
+-- NOTE: Currently TeXLab does not work correctly in terms of formatting
+vim.lsp.enable("texlab")
 
 M.plugins = {
+  -- Add BibTeX/LaTeX to treesitter
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      opts.highlight = opts.highlight or {}
+      opts.ensure_installed = { "latex", "bibtex" }
+      opts.highlight.disable = { "latex" }
+    end,
+  },
+
+  {
+    "mason-org/mason.nvim",
+    opts = { ensure_installed = { "tex-fmt" } },
+  },
+
   -- formatter
   {
     "stevearc/conform.nvim",
@@ -86,10 +101,14 @@ M.plugins = {
     keys = {},
     opts = {
       formatters_by_ft = {
-        tex = { "latexindent" },
-        -- bib = { "latexindent" },
+        tex = { "tex-fmt" },
+        -- tex = { "latexindent" },
+        bib = { "tex-fmt" },
       },
       formatters = {
+        ["tex-fmt"] = {
+          prepend_args = { "-n" },
+        },
         latexindent = {
           prepend_args = { "--local", vim.env.HOME .. "/.config/latexindent/lzx_settings.yaml" },
         },
@@ -97,26 +116,29 @@ M.plugins = {
     },
   },
 
-  -- Add BibTeX/LaTeX to treesitter
-  -- FIXME: Not work, don't know why
+  -- linter
   {
-    "nvim-treesitter/nvim-treesitter",
+    "mfussenegger/nvim-lint",
+    optional = true,
     opts = function(_, opts)
-      opts.highlight = opts.highlight or {}
-      if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "bibtex" })
-      end
-      if type(opts.highlight.disable) == "table" then
-        vim.list_extend(opts.highlight.disable, { "latex" })
-      else
-        opts.highlight.disable = { "latex" }
-      end
+      opts.linters_by_ft = { tex = { "chktex" } }
+      local chktex_l = require("lint").linters.chktex
+      -- stylua: ignore
+      chktex_l.args = {
+        "-wall", "-q", "-n1", "-n3", "-n8", "-n9", "-n22", "-n30", "-n24", "-n17", "-e16",
+        "-v0", "-I0", "-s", ":", "-f", "%l%b%c%b%d%b%k%b%n%b%m%b%b%b",
+      }
+      chktex_l.ignore_exitcode = true
     end,
   },
 
   {
     "lervag/vimtex",
     lazy = false, -- lazy-loading will disable inverse search
+    keys = {
+      { "<localLeader>l", "", desc = "[VimTeX]", ft = "tex" },
+    },
+
     config = function()
       -- Viewer options: One may configure the viewer either by specifying a built-in viewer method:
       vim.g.vimtex_view_enabled = true
@@ -129,10 +151,25 @@ M.plugins = {
 
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
       vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
+
+      vim.g.vimtex_syntax_conceal = {
+        accents = 1,
+        ligatures = 1,
+        cites = 1,
+        fancy = 1,
+        spacing = 1,
+        greek = 0,
+        math_bounds = 1,
+        math_delimiters = 1,
+        math_fracs = 0,
+        math_super_sub = 0,
+        math_symbols = 0,
+        sections = 0,
+        styles = 1,
+      }
+
+      vim.g.vimtex_fold_enabled = 1
     end,
-    keys = {
-      { "<localLeader>l", "", desc = "[VimTeX]", ft = "tex" },
-    },
   },
 
   {
