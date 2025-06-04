@@ -28,7 +28,7 @@ M.plugins = {
     optional = true,
     opts = {
       formatters_by_ft = {
-        python = { "ruff" },
+        python = { "ruff_format" },
       },
     },
   },
