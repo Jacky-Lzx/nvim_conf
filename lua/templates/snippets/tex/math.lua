@@ -29,7 +29,7 @@ local get_visual_or_insert = function(_, parent)
   end
 end
 
-return {
+M = {
   autosnippet(
     { trig = "mk", name = "inline_math_select", desc = "(Select) In-line math block" },
     fmta([[ \( <> \)]], { d(1, get_visual_or_insert) }),
@@ -237,14 +237,15 @@ return {
   ),
 
   autosnippet(
-    { trig = "([A-Za-z0-9]+)^^", name = "superscript", desc = "Superscript", trigEngine = "ecma" },
-    fmta([[<>^{<>}<>]], { f(function(_, snip)
-      return snip.captures[1]
-    end), i(1), i(0) }),
+    { trig = "^^", name = "superscript", desc = "Superscript", wordTrig = false },
+    fmta([[^{<>}<>]], {
+      i(1),
+      i(0),
+    }),
     { condition = conds.obj.in_math, show_condition = conds.obj.false_fn }
   ),
   autosnippet(
-    { trig = "__", name = "subscript", desc = "Subscript" },
+    { trig = "__", name = "subscript", desc = "Subscript", wordTrig = false },
     fmta([[_{<>}<>]], { i(1), i(0) }),
     { condition = conds.obj.in_math, show_condition = conds.obj.false_fn }
   ),
@@ -275,3 +276,5 @@ return {
     { condition = conds.obj.in_math, show_condition = conds.obj.in_math }
   ),
 }
+
+return M
