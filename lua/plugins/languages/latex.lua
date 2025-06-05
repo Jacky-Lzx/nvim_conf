@@ -91,6 +91,8 @@ M.plugins = {
 
   {
     "mason-org/mason.nvim",
+    optional = true,
+    opts_extend = { "ensure_installed" },
     opts = { ensure_installed = { "tex-fmt" } },
   },
 

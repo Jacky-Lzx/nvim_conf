@@ -35,6 +35,13 @@ function M.setup(setting_name, extra)
   require("notify")("Unknown setting for language `sh|bash|zsh`: " .. setting_name)
 end
 
-M.plugins = {}
+M.plugins = {
+  {
+    "mason-org/mason.nvim",
+    optional = true,
+    opts_extend = { "ensure_installed" },
+    opts = { ensure_installed = { "shfmt" } },
+  },
+}
 
 return M

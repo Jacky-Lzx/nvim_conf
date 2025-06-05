@@ -25,6 +25,13 @@ function M.setup(setting_name, extra)
 end
 
 M.plugins = {
+  {
+    "mason-org/mason.nvim",
+    optional = true,
+    opts_extend = { "ensure_installed" },
+    opts = { ensure_installed = { "stylua" } },
+  },
+
   -- Provide neovim config completion
   -- Have its settings in blink.cmp in `completion.lua`
   {
