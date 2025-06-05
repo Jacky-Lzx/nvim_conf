@@ -1,21 +1,3 @@
-local M = {}
-
-function M.setup(setting_name, extra)
-  if setting_name == G.language.lsp then
-    return
-  end
-
-  if setting_name == G.language.formatter then
-    return
-  end
-
-  if setting_name == G.language.linter then
-    return
-  end
-
-  require("notify")("Unknown setting for language `LaTex`: " .. setting_name)
-end
-
 vim.g.tex_flavor = "latex"
 
 vim.lsp.config("texlab", {
@@ -78,7 +60,7 @@ vim.lsp.config("texlab", {
 -- NOTE: Currently TeXLab does not work correctly in terms of formatting
 vim.lsp.enable("texlab")
 
-M.plugins = {
+local M = {
   -- Add BibTeX/LaTeX to treesitter
   {
     "nvim-treesitter/nvim-treesitter",

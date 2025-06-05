@@ -1,6 +1,6 @@
-local M = {}
+vim.lsp.enable("pyright")
 
-M.plugins = {
+local M = {
   {
     "linux-cultist/venv-selector.nvim",
     branch = "regexp", -- Use this branch for the new version
@@ -46,9 +46,5 @@ M.plugins = {
     },
   },
 }
-
-function M.setup(setting_name, extra) end
-
-vim.lsp.enable("pyright")
 
 return M

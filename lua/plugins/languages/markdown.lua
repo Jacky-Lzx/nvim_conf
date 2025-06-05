@@ -1,28 +1,21 @@
-local M = {}
-
 -- Set the markdown file use the tabindent values set in the config instead of recommended
 vim.g.markdown_recommended_style = 0
 
-function M.setup(setting_name, extra)
-  if setting_name == G.language.lsp then
-    vim.lsp.enable("vale_ls")
-    vim.lsp.enable("marksman")
+vim.lsp.enable("vale_ls")
+vim.lsp.enable("marksman")
 
-    return
-  end
+local M = {
+  -- formatter
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        markdown = { "prettier" },
+      },
+    },
+  },
 
-  if setting_name == G.language.formatter then
-    return { "prettier" }
-  end
-
-  if setting_name == G.language.linter then
-    return nil
-  end
-
-  require("notify")("Unknown setting for language `markdown`: " .. setting_name)
-end
-
-M.plugins = {
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle" },

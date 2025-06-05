@@ -1,30 +1,23 @@
-local M = {}
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {},
+  },
+})
 
-function M.setup(setting_name, extra)
-  if setting_name == G.language.lsp then
-    vim.lsp.config("lua_ls", {
-      settings = {
-        Lua = {},
+vim.lsp.enable("lua_ls")
+
+local M = {
+  -- formatter
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
       },
-    })
+    },
+  },
 
-    vim.lsp.enable("lua_ls")
-
-    return
-  end
-
-  if setting_name == G.language.formatter then
-    return { "stylua" }
-  end
-
-  if setting_name == G.language.linter then
-    return
-  end
-
-  require("notify")("Unknown setting for language `lua`: " .. setting_name)
-end
-
-M.plugins = {
   {
     "mason-org/mason.nvim",
     optional = true,
