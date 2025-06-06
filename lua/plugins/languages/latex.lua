@@ -119,9 +119,6 @@ local M = {
   {
     "lervag/vimtex",
     lazy = false, -- lazy-loading will disable inverse search
-    keys = {
-      { "<localLeader>l", "", desc = "[VimTeX]", ft = "tex" },
-    },
 
     config = function()
       -- Viewer options: One may configure the viewer either by specifying a built-in viewer method:
@@ -161,6 +158,7 @@ local M = {
   {
     "folke/which-key.nvim",
     optional = true,
+    opts_extend = { "spec" },
     opts = {
       spec = {
         { "<leader>l", group = "[VimTeX]" },

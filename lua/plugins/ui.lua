@@ -268,6 +268,12 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
+
+    keys = {
+      -- stylua: ignore
+      { "<leader>?", function() require("which-key").show({ global = false }) end, desc = "[Which-key] Buffer Local Keymaps", },
+    },
+
     opts = {
       ---@type false | "classic" | "modern" | "helix"
       preset = "helix",
@@ -292,10 +298,7 @@ return {
         return not node.desc
       end,
     },
-    keys = {
-      -- stylua: ignore
-      { "<leader>?", function() require("which-key").show({ global = false }) end, desc = "[Which-key] Buffer Local Keymaps", },
-    },
+    opts_extend = { "spec" },
   },
 
   {
