@@ -15,11 +15,11 @@ return {
     { trig = "frame", desc = "Frame" },
     fmta(
       [[
-        \begin{frame}<>
+        \begin{frame}<><>
           <>
         \end{frame}
       ]],
-      { c(1, { sn(nil, { t("{"), i(1, "Title"), t("}") }), t("") }), i(0) }
+      { c(2, { t(""), t("[fragile]") }), c(1, { sn(nil, { t("{"), i(1, "Title"), t("}") }), t("") }), i(0) }
     )
   ),
 

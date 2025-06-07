@@ -256,7 +256,7 @@ return {
       },
       marks = {
         Search = {
-          color = "#8fc7d6",
+          color = "#CBA6F7",
         },
         GitAdd = { text = "┃" },
         GitChange = { text = "┃" },
