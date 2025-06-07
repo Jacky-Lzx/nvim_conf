@@ -83,6 +83,10 @@ return {
     "echasnovski/mini.diff",
     event = "BufReadPost",
     version = "*",
+    -- stylua: ignore
+    keys = {
+      { "<leader>to", function() require("mini.diff").toggle_overlay(vim.api.nvim_get_current_buf()) end, mode = "n", desc = "[Mini.Diff] Toggle diff overlay", },
+    },
     opts = {
       -- Module mappings. Use `''` (empty string) to disable one.
       -- NOTE: Mappings are handled by gitsigns.
@@ -518,7 +522,7 @@ return {
       -- { "<leader>gra", function() require("tiny-code-action").code_action({}) end, desc = "[LSP] Code action", noremap = true, silent = true, },
     },
     opts = {
-      backend = "delta",
+      -- backend = "delta",
       backend_opts = {
         delta = {
           -- The arguments to pass to delta
