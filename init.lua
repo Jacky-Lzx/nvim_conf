@@ -19,7 +19,7 @@ vim.opt.startofline = false
 vim.opt.list = true
 vim.opt.listchars = { tab = ">-" }
 
-vim.o.signcolumn = "yes:2"
+vim.o.signcolumn = "yes:1"
 
 -- vim.opt_local.conceallevel = 2
 vim.opt.conceallevel = 2

@@ -369,7 +369,7 @@ return {
           -- local opts_local = { buffer = ev.buf }
           -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
           -- vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-          vim.keymap.set("n", "K", vim.lsp.buf.hover)
+          -- vim.keymap.set("n", "K", vim.lsp.buf.hover) -- defined in nvim-ufo
           -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
           vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, {
             buffer = ev.buf,
