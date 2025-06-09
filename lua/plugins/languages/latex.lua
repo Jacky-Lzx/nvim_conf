@@ -60,6 +60,8 @@ vim.lsp.config("texlab", {
 -- NOTE: Currently TeXLab does not work correctly in terms of formatting
 vim.lsp.enable("texlab")
 
+vim.keymap.set("n", "<leader>lb", "<CMD>LspTexlabBuild<CR>", { desc = "[Texlab] Build LaTeX" })
+
 local M = {
   -- Add BibTeX/LaTeX to treesitter
   {
@@ -81,8 +83,7 @@ local M = {
   -- formatter
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre",
-    keys = {},
+    optional = true,
     opts = {
       formatters_by_ft = {
         tex = { "tex-fmt" },
@@ -118,13 +119,16 @@ local M = {
 
   {
     "lervag/vimtex",
-    lazy = false, -- lazy-loading will disable inverse search
+    -- lazy = false, -- lazy-loading will disable inverse search
+    ft = { "tex", "bib" },
 
     config = function()
       -- Viewer options: One may configure the viewer either by specifying a built-in viewer method:
       vim.g.vimtex_view_enabled = true
       vim.g.vimtex_view_zathura_use_synctex = 0
       vim.g.vimtex_view_method = "zathura_simple"
+
+      vim.g.vimtex_view_skim_sync = 1
       -- vim.g.vimtex_view_method = "skim"
 
       -- VimTeX uses latexmk as the default compiler backend. If you use it, which is strongly recommended, you probably don't need to configure anything.

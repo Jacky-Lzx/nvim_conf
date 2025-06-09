@@ -65,9 +65,9 @@ return {
       \end{enumerate}
       ]], {
         c(1, {
-          t("[label=\\arabic*]"),
-          t("[label=\\alph*]"),
-          t("[label=\\roman*]"),
+          t("[label=\\arabic*.]"),
+          t("[label=\\alph*.]"),
+          t("[label=\\roman*.]"),
           i(1),
         }),
         i(0)
