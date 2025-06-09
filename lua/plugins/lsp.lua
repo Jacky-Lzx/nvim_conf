@@ -213,19 +213,18 @@ return {
   -- cmdline tools and lsp servers
   {
 
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     event = "VeryLazy",
     -- keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+    opts_extend = { "ensure_installed" },
     opts = {
-      ensure_installed = {
-        "stylua",
-        "shfmt",
-      },
+      ensure_installed = {},
     },
     ---@param opts MasonSettings | {ensure_installed: string[]}
     config = function(_, opts)
       require("mason").setup(opts)
       local mr = require("mason-registry")
+
       local function ensure_installed()
         for _, tool in ipairs(opts.ensure_installed) do
           local p = mr.get_package(tool)
@@ -370,7 +369,7 @@ return {
           -- local opts_local = { buffer = ev.buf }
           -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
           -- vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-          vim.keymap.set("n", "K", vim.lsp.buf.hover)
+          -- vim.keymap.set("n", "K", vim.lsp.buf.hover) -- defined in nvim-ufo
           -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
           vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, {
             buffer = ev.buf,

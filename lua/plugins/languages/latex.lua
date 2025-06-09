@@ -1,21 +1,3 @@
-local M = {}
-
-function M.setup(setting_name, extra)
-  if setting_name == G.language.lsp then
-    return
-  end
-
-  if setting_name == G.language.formatter then
-    return
-  end
-
-  if setting_name == G.language.linter then
-    return
-  end
-
-  require("notify")("Unknown setting for language `LaTex`: " .. setting_name)
-end
-
 vim.g.tex_flavor = "latex"
 
 vim.lsp.config("texlab", {
@@ -78,7 +60,7 @@ vim.lsp.config("texlab", {
 -- NOTE: Currently TeXLab does not work correctly in terms of formatting
 vim.lsp.enable("texlab")
 
-M.plugins = {
+local M = {
   -- Add BibTeX/LaTeX to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -91,6 +73,8 @@ M.plugins = {
 
   {
     "mason-org/mason.nvim",
+    optional = true,
+    opts_extend = { "ensure_installed" },
     opts = { ensure_installed = { "tex-fmt" } },
   },
 
@@ -135,14 +119,13 @@ M.plugins = {
   {
     "lervag/vimtex",
     lazy = false, -- lazy-loading will disable inverse search
-    keys = {
-      { "<localLeader>l", "", desc = "[VimTeX]", ft = "tex" },
-    },
 
     config = function()
       -- Viewer options: One may configure the viewer either by specifying a built-in viewer method:
       vim.g.vimtex_view_enabled = true
-      vim.g.vimtex_view_method = "skim"
+      vim.g.vimtex_view_zathura_use_synctex = 0
+      vim.g.vimtex_view_method = "zathura_simple"
+      -- vim.g.vimtex_view_method = "skim"
 
       -- VimTeX uses latexmk as the default compiler backend. If you use it, which is strongly recommended, you probably don't need to configure anything.
       -- If you want another compiler backend, you can change it as follows.
@@ -175,6 +158,7 @@ M.plugins = {
   {
     "folke/which-key.nvim",
     optional = true,
+    opts_extend = { "spec" },
     opts = {
       spec = {
         { "<leader>l", group = "[VimTeX]" },

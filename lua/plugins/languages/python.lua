@@ -1,6 +1,6 @@
-local M = {}
+vim.lsp.enable("pyright")
 
-M.plugins = {
+local M = {
   {
     "linux-cultist/venv-selector.nvim",
     branch = "regexp", -- Use this branch for the new version
@@ -19,6 +19,8 @@ M.plugins = {
 
   {
     "mason-org/mason.nvim",
+    optional = true,
+    opts_extend = { "ensure_installed" },
     opts = { ensure_installed = { "ruff", "pyright" } },
   },
 
@@ -44,9 +46,5 @@ M.plugins = {
     },
   },
 }
-
-function M.setup(setting_name, extra) end
-
-vim.lsp.enable("pyright")
 
 return M

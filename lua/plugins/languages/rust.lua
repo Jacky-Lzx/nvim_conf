@@ -1,22 +1,6 @@
-local M = {}
+vim.lsp.enable("rust_analyzer")
 
-function M.setup(setting_name, extra)
-  if setting_name == G.language.lsp then
-    return
-  end
-
-  if setting_name == G.language.formatter then
-    return
-  end
-
-  if setting_name == G.language.linter then
-    return
-  end
-
-  require("notify")("Unknown setting for language `rust`: " .. setting_name)
-end
-
-M.plugins = {
+local M = {
   {
     "Saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
@@ -43,6 +27,8 @@ M.plugins = {
 
   {
     "mason-org/mason.nvim",
+    optional = true,
+    opts_extend = { "ensure_installed" },
     opts = { ensure_installed = { "rust-analyzer" } },
   },
 

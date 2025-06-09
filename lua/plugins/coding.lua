@@ -12,7 +12,7 @@ local M = {}
 
 for i = 1, #Enabled_languages do
   local lang = require("plugins.languages." .. Enabled_languages[i])
-  M = concat_tables(M, lang.plugins)
+  M = concat_tables(M, lang)
 end
 
 return M

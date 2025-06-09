@@ -9,10 +9,10 @@ local utils = {}
 utils.language_setup = function(setting, extra)
   local M = {}
   for _, ft in ipairs(Enabled_languages) do
-    local opts = require("plugins.languages." .. ft).setup(setting, extra)
-    if opts and #opts ~= 0 then
-      M[ft] = opts
-    end
+    require("plugins.languages." .. ft)
+    -- if opts and #opts ~= 0 then
+    --   M[ft] = opts
+    -- end
   end
   return M
 end
