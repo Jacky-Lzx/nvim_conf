@@ -18,6 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 local opts = {
   spec = {
     { import = "plugins" },
+    -- { import = "plugins.languages.lua" },
   },
   install = {
     -- install missing plugins on startup. This doesn't increase startup time.
