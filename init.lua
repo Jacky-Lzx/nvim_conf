@@ -38,6 +38,10 @@ vim.wo.cursorline = true
 
 vim.opt.clipboard = ""
 
+vim.o.textwidth = 120
+
+vim.opt.shell = "fish"
+
 local python_path = ""
 local uname = vim.uv.os_uname()
 if uname.sysname == "Linux" then
