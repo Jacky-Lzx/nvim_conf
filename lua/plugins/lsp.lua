@@ -66,7 +66,7 @@ vim.diagnostic.config({
   signs = signs_config,
   update_in_insert = false,
   virtual_text = virtual_text_config_enabled,
-  virtual_lines = virtual_lines_config,
+  virtual_lines = false,
   severity_sort = true,
   float = {
     border = "rounded",

@@ -13,6 +13,7 @@ vim.filetype.add({
 vim.lsp.config("bashls", {
   filetypes = { "sh", "zsh", "bash" },
 })
+vim.lsp.enable("bashls")
 
 local M = {
   {
@@ -20,6 +21,17 @@ local M = {
     optional = true,
     opts_extend = { "ensure_installed" },
     opts = { ensure_installed = { "shfmt" } },
+  },
+
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        sh = { "shfmt" },
+        fish = { "fish_indent" }, -- Installed with fish
+      },
+    },
+    optional = true,
   },
 }
 

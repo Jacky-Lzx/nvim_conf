@@ -2,10 +2,41 @@ vim.lsp.enable("tinymist")
 
 local M = {
   {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      opts.highlight = opts.highlight or {}
+      opts.ensure_installed = { "typst" }
+    end,
+  },
+
+  {
+    "mason-org/mason.nvim",
+    optional = true,
+    opts_extend = { "ensure_installed" },
+    opts = { ensure_installed = { "typstyle", "tinymist" } },
+  },
+
+  -- formatter
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        typst = { "typstyle" },
+      },
+    },
+  },
+
+  {
     "chomosuke/typst-preview.nvim",
     ft = "typst",
     version = "1.*",
-    opts = {},
+    opts = {
+      -- Use tinymist installed from Mason
+      dependencies_bin = {
+        ["tinymist"] = "tinymist",
+      },
+    },
   },
 }
 

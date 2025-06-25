@@ -95,15 +95,30 @@ local M = {
   {
     "HakonHarnes/img-clip.nvim",
     opts = {
-      -- add options here
-      -- or leave it empty to use the default settings
+      -- add options here or leave it empty to use the default settings
       default = {
-        dir_path = "Figures_Markdown", ---@type string | fun(): string
+        dir_path = "Figures", ---@type string | fun(): string
+        extension = "jpg",
+        relative_to_current_file = true,
+        show_dir_path_in_prompt = true,
       },
     },
     keys = {
       -- suggested keymap
       { "<leader>pi", "<CMD>PasteImage<CR>", desc = "[Img-Clip] Paste image from system clipboard" },
+      {
+        "<leader>pc",
+        function()
+          Snacks.picker.files({
+            ft = { "jpg", "jpeg", "png", "webp" },
+            confirm = function(self, item, _)
+              self:close()
+              require("img-clip").paste_image({}, "./" .. item.file) -- ./ is necessary for img-clip to recognize it as path
+            end,
+          })
+        end,
+        desc = "[Img-Clip] Choose an image to paste",
+      },
     },
   },
 

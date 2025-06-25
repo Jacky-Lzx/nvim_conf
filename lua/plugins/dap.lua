@@ -1,28 +1,43 @@
 return {
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     lazy = true,
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    main = "dapui",
     -- stylua: ignore
     keys = {
       { "<leader>Du", function() require("dapui").toggle({reset = true}) end, desc = "[DAP ui] Toggle dapui", },
     },
-    config = function()
-      require("dapui").setup()
-    end,
+    opts = {},
   },
+  -- {
+  --   -- Show variable values as virtual texts
+  --   "theHamsta/nvim-dap-virtual-text",
+  --   opts = {
+  --     virt_text_pos = "eol_right_align",
+  --   },
+  -- },
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      -- Show variable values as virtual texts
-      "theHamsta/nvim-dap-virtual-text",
+      {
+        "nvim-lualine/lualine.nvim",
+        optional = true,
+        opts = {
+          options = {
+            disabled_filetypes = { winbar = { "dap-repl" } },
+          },
+        },
+      },
     },
     -- stylua: ignore
     keys = {
-      {"<F5>",      function() require("dap").continue() end,                                                        mode = "n",          desc = "[DAP] Continue"},
+      {"<F5>",       function() require("dap").continue() end,                                                        mode = "n",          desc = "[DAP] Continue"},
       {"<F6>",       function() require("dap").step_over() end,                                                       mode = "n",          desc = "[DAP] Step over"},
       {"<F7>",       function() require("dap").step_into() end,                                                       mode = "n",          desc = "[DAP] Step into"},
       {"<F8>",       function() require("dap").step_out() end,                                                        mode = "n",          desc = "[DAP] Step out"},
+      {"<F9>",       function() require("dap").pause() end,                                                           mode = "n",          desc = "[DAP] Pause"},
+      {"<F10>",      function() require("dap").terminate() end,                                                       mode = "n",          desc = "[DAP] Terminate"},
       {"<Leader>b",  function() require("dap").toggle_breakpoint() end,                                               mode = "n",          desc = "[DAP] Toggle breakpoint"},
       {"<Leader>B",  function() require("dap").set_breakpoint() end,                                                  mode = "n",          desc = "[DAP] Set breakpoint"},
       -- Remove the <leader>D binding in "x" mode
@@ -36,12 +51,6 @@ return {
     },
 
     config = function()
-      require("nvim-dap-virtual-text").setup({
-        -- position of virtual text, see `:h nvim_buf_set_extmark()`, default tries to inline the virtual text. Use 'eol' to set to end of line
-        -- virt_text_pos = vim.fn.has("nvim-0.10") == 1 and "inline" or "eol",
-        virt_text_pos = "eol",
-      })
-
       local dap, dapui = require("dap"), require("dapui")
 
       dap.listeners.before.attach.dapui_config = function()
@@ -118,7 +127,8 @@ return {
         else
           cb({
             type = "executable",
-            command = "/opt/homebrew/anaconda3/envs/math/bin/python",
+            -- command = "/opt/homebrew/anaconda3/envs/math/bin/python",
+            command = "python",
             args = { "-m", "debugpy.adapter" },
             options = {
               source_filetype = "python",
