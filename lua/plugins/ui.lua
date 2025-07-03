@@ -309,10 +309,37 @@ return {
     "nvim-lualine/lualine.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
-      { "AndreM222/copilot-lualine" },
+      "AndreM222/copilot-lualine",
     },
     event = "BufWinEnter",
-    opts = function()
+    opts = {
+      options = {
+        theme = "catppuccin",
+        always_divide_middle = false,
+        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
+      },
+      sections = {
+        lualine_a = { "mode" },
+        lualine_b = { "branch", "diff", "diagnostics" },
+        lualine_c = { "filename" },
+        lualine_x = {},
+        lualine_y = { "encoding", "fileformat", "filetype", "progress" },
+        lualine_z = { "location" },
+      },
+      -- stylua: ignore
+      winbar = {
+        lualine_a = { "filename", },
+        lualine_b = { { function() return " " end, color = "Comment", }, },
+        lualine_x = { "lsp_status", },
+      },
+      inactive_winbar = {
+        -- Always show winbar
+        -- stylua: ignore
+        lualine_b = { function() return " " end, },
+      },
+    },
+    config = function(_, opts)
       local mocha = require("catppuccin.palettes").get_palette("mocha")
 
       local function show_macro_recording()
@@ -328,14 +355,7 @@ return {
         show_macro_recording,
         color = { fg = "#333333", bg = mocha.red },
         separator = { left = "", right = "" },
-      }
-      local mode = {
-        "mode",
-        -- separator = { left = "", right = "" },
-      }
-      local location = {
-        "location",
-        -- separator = { left = "", right = "" },
+        padding = 0,
       }
 
       local copilot = {
@@ -355,43 +375,10 @@ return {
         },
       }
 
-      return {
-        options = {
-          -- When set to true, left sections i.e. 'a','b' and 'c'
-          -- can't take over the entire statusline even
-          -- if neither of 'x', 'y' or 'z' are present.
-          always_divide_middle = false,
-          component_separators = { left = "", right = "" },
-          section_separators = { left = "", right = "" },
-        },
-        sections = {
-          lualine_a = { mode },
-          lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { "filename", copilot },
-          lualine_x = {
-            macro_recording,
-          },
-          lualine_y = { "encoding", "fileformat", "filetype", "progress" },
-          lualine_z = { location },
-        },
-        -- stylua: ignore
-        winbar = {
-          lualine_a = {
-            "filename"
-          },
-          lualine_b = {
-            { function() return " " end, color = 'Comment'},
-          },
-          lualine_x = {
-            "lsp_status"
-          }
-        },
-        -- stylua: ignore
-        inactive_winbar = {
-          -- Always show winbar
-          lualine_b = { function() return " " end },
-        },
-      }
+      table.insert(opts.sections.lualine_x, 1, macro_recording)
+      table.insert(opts.sections.lualine_c, copilot)
+
+      require("lualine").setup(opts)
     end,
   },
 
