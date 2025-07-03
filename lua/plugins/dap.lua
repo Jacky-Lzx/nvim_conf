@@ -1,15 +1,14 @@
 return {
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     lazy = true,
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    main = "dapui",
     -- stylua: ignore
     keys = {
       { "<leader>Du", function() require("dapui").toggle({reset = true}) end, desc = "[DAP ui] Toggle dapui", },
     },
-    config = function()
-      require("dapui").setup()
-    end,
+    opts = {},
   },
   -- {
   --   -- Show variable values as virtual texts
@@ -20,6 +19,17 @@ return {
   -- },
   {
     "mfussenegger/nvim-dap",
+    dependencies = {
+      {
+        "nvim-lualine/lualine.nvim",
+        optional = true,
+        opts = {
+          options = {
+            disabled_filetypes = { winbar = { "dap-repl" } },
+          },
+        },
+      },
+    },
     -- stylua: ignore
     keys = {
       {"<F5>",       function() require("dap").continue() end,                                                        mode = "n",          desc = "[DAP] Continue"},
