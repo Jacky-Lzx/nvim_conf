@@ -60,6 +60,7 @@
   "showkeys": { "branch": "main", "commit": "cb0a50296f11f1e585acffba8c253b9e8afc1f84" },
   "smartyank.nvim": { "branch": "master", "commit": "c4e53e0d9316ca790a6f5d78aad73206a763873b" },
   "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
+  "sniprun": { "branch": "master", "commit": "a90c65846c3c18efc3f799d8b6dc26af9d4a69ed" },
   "texpresso.vim": { "branch": "main", "commit": "907838c08bbf99ad6bed3c908f1d0551a92ab4e0" },
   "tiny-code-action.nvim": { "branch": "main", "commit": "62d0ebd4ce63b3088a6f25c67a4fdb6bfb1ce394" },
   "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },
