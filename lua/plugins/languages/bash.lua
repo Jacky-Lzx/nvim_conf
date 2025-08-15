@@ -28,6 +28,7 @@ local M = {
     opts = {
       formatters_by_ft = {
         sh = { "shfmt" },
+        fish = { "fish_indent" }, -- Installed with fish
       },
     },
     optional = true,
