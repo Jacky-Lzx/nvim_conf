@@ -314,8 +314,7 @@ return {
       -- "hrsh7th/cmp-nvim-lsp",
       -- "SmiteshP/nvim-navic",
       -- Show lsp status on the bottom-left
-      -- Have no idea why it still works when not installed
-      -- "j-hui/fidget.nvim",
+      "j-hui/fidget.nvim",
       "saghen/blink.cmp",
     },
     opts = {},
