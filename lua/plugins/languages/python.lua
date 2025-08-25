@@ -2,19 +2,12 @@ vim.lsp.enable("pyright")
 
 local M = {
   {
-    "linux-cultist/venv-selector.nvim",
-    branch = "regexp", -- Use this branch for the new version
-    cmd = "VenvSelect",
+    "nvim-treesitter/nvim-treesitter",
+    optional = true,
     opts = {
-      settings = {
-        options = {
-          notify_user_on_venv_activation = true,
-        },
-      },
+      ensure_installed = { "python" },
     },
-    --  Call config for python files and load the cached venv automatically
-    ft = "python",
-    keys = { { "<leader>cv", "<CMD>VenvSelect<CR>", desc = "Select VirtualEnv", ft = "python" } },
+    opts_extend = { "ensure_installed" },
   },
 
   {
@@ -44,6 +37,76 @@ local M = {
         python = { "ruff" },
       },
     },
+  },
+
+  {
+    "linux-cultist/venv-selector.nvim",
+    branch = "regexp", -- Use this branch for the new version
+    dependencies = { "mfussenegger/nvim-dap" },
+    cmd = "VenvSelect",
+    opts = {
+      settings = {
+        options = {
+          notify_user_on_venv_activation = true,
+        },
+      },
+    },
+    --  Call config for python files and load the cached venv automatically
+    ft = "python",
+    keys = { { "<leader>cv", "<CMD>VenvSelect<CR>", desc = "Select VirtualEnv", ft = "python" } },
+  },
+
+  {
+    "mfussenegger/nvim-dap",
+    ft = "python",
+    optional = true,
+    opts = function()
+      local dap = require("dap")
+
+      -- See `https://codeberg.org/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation`
+      dap.adapters.python = function(cb, config)
+        if config.request == "attach" then
+          ---@diagnostic disable-next-line: undefined-field
+          local port = (config.connect or config).port
+          ---@diagnostic disable-next-line: undefined-field
+          local host = (config.connect or config).host or "127.0.0.1"
+          cb({
+            type = "server",
+            port = assert(port, "`connect.port` is required for a python `attach` configuration"),
+            host = host,
+            options = {
+              source_filetype = "python",
+            },
+          })
+        else
+          cb({
+            type = "executable",
+            command = "python",
+            args = { "-m", "debugpy.adapter" },
+            options = {
+              source_filetype = "python",
+            },
+          })
+        end
+      end
+
+      dap.configurations.python = {
+        {
+          -- The first three options are required by nvim-dap
+          type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
+          request = "launch",
+          name = "[Python] Launch file",
+
+          -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+          program = "${file}", -- This configuration will launch the current file if used.
+          -- You can also dynamically get arguments, e.g., from user input:
+          args = function()
+            local args_str = vim.fn.input("Commandline args: ")
+            return vim.split(args_str, " ", { plain = true })
+          end,
+        },
+      }
+    end,
   },
 }
 
