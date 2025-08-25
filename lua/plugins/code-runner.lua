@@ -11,6 +11,12 @@ return {
 
   {
     "stevearc/overseer.nvim",
+    init = function()
+      require("which-key").add({
+        { "<leader>o", group = "[Overseer]" },
+      })
+    end,
+    cmd = "OverseerRun",
     keys = {
       -- Shift+F5
       { "<F17>", "<CMD>OverseerRun<CR>", desc = "[Overseer] Run" },
@@ -18,14 +24,12 @@ return {
       -- typos: ignore
       { "<leader>ot", "<CMD>OverseerToggle<CR>", desc = "[Overseer] Toggle" }, -- codespell:ignore ot
     },
-    cmd = "OverseerRun",
+
     opts = {
-      template_dirs = { "templates.overseer" },
+      template_dirs = { "templates.overseer.builtin", "templates.overseer.user" },
       templates = {
         "builtin",
-        "user.convert_md_to_pdf",
-        "user.verilog",
-        "user.python",
+        "user",
       },
       task_list = {
         -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
