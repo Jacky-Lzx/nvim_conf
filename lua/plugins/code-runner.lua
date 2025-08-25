@@ -11,15 +11,12 @@ return {
 
   {
     "stevearc/overseer.nvim",
-    dependencies = {
-      -- "rcarriga/nvim-notify",
-    },
     keys = {
       -- Shift+F5
       { "<F17>", "<CMD>OverseerRun<CR>", desc = "[Overseer] Run" },
       { "<leader>or", "<CMD>OverseerRun<CR>", desc = "[Overseer] Run" },
       -- typos: ignore
-      { "<leader>ot", "<CMD>OverseerToggle<CR>", desc = "[Overseer] Toggle" },
+      { "<leader>ot", "<CMD>OverseerToggle<CR>", desc = "[Overseer] Toggle" }, -- codespell:ignore ot
     },
     cmd = "OverseerRun",
     opts = {
@@ -28,6 +25,7 @@ return {
         "builtin",
         "user.convert_md_to_pdf",
         "user.verilog",
+        "user.python",
       },
       task_list = {
         -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
@@ -52,6 +50,8 @@ return {
           ["<A-h>"] = "DecreaseDetail",
           ["<A-k>"] = "ScrollOutputUp",
           ["<A-j>"] = "ScrollOutputDown",
+          ["<C-j>"] = false,
+          ["<C-k>"] = false,
         },
       },
     },
