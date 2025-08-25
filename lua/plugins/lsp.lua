@@ -320,7 +320,7 @@ return {
     opts = {},
     config = function(_, _)
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls", "pyright" },
+        ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "pyright" },
         automatic_enable = false,
       })
 
@@ -330,8 +330,6 @@ return {
       -- require("snacks.debug").inspect(extra.capabilities)
 
       utils.language_setup(G.language.lsp, extra)
-
-      require("lspconfig").jsonls.setup({})
 
       -- require("lspconfig").ltex.setup({})
       require("lspconfig").clangd.setup({
