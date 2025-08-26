@@ -332,12 +332,6 @@ return {
       utils.language_setup(G.language.lsp, extra)
 
       -- require("lspconfig").ltex.setup({})
-      require("lspconfig").clangd.setup({
-        cmd = {
-          "clangd",
-          -- "--header-insertion=never",
-        },
-      })
 
       vim.lsp.config("*", {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
