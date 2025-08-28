@@ -743,4 +743,20 @@ return {
       vim.keymap.set("n", "zX", "<NOP>", { desc = "Disabled" })
     end,
   },
+
+  {
+    "lukas-reineke/virt-column.nvim",
+    opts = {
+      -- char = "|",
+      -- char = "",
+      -- char = "┇",
+      -- char = "∶",
+      -- char = "∷",
+      -- char = "║",
+      -- char = "⋮",
+      char = "",
+      -- char = "󰮾",
+      virtcolumn = "+1",
+    },
+  },
 }
