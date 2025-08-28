@@ -3,10 +3,11 @@ return {
     "rmagatti/auto-session",
     lazy = false,
 
+    -- stylua: ignore
     keys = {
-      { "<leader>ps", "<CMD>SessionRestore<CR>", desc = "[Auto Session] Restore session" },
-      { "<leader>pS", "<CMD>Autosession search<CR>", desc = "[Auto Session] Search session" },
-      { "<leader>pD", "<CMD>Autosession delete<CR>", desc = "[Auto Session] Delete session" },
+      { "<leader>ps", "<CMD>AutoSession restore<CR>", desc = "[Auto Session] Restore session" },
+      { "<leader>pS", "<CMD>AutoSession search<CR>",  desc = "[Auto Session] Search session"  },
+      { "<leader>pD", "<CMD>AutoSession delete<CR>",  desc = "[Auto Session] Delete session"  },
     },
 
     ---enables autocomplete for opts
