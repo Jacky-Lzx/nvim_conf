@@ -13,6 +13,10 @@ return {
     "saghen/blink.cmp",
     -- optional: provides snippets for the snippet source
     dependencies = {
+      {
+        "Kaiser-Yang/blink-cmp-dictionary",
+        dependencies = { "nvim-lua/plenary.nvim" },
+      },
       "L3MON4D3/LuaSnip",
       "onsails/lspkind-nvim",
       "fang2hou/blink-copilot",
@@ -109,9 +113,9 @@ return {
         default = function()
           local success, node = pcall(vim.treesitter.get_node)
           if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
-            return { "buffer" }
+            return { "dictionary", "buffer" }
           else
-            return { "lazydev", "copilot", "lsp", "path", "snippets", "buffer" }
+            return { "dictionary", "lazydev", "copilot", "lsp", "path", "snippets", "buffer" }
           end
         end,
         per_filetype = {
@@ -119,6 +123,19 @@ return {
         },
 
         providers = {
+          dictionary = {
+            score_offset = 15,
+            module = "blink-cmp-dictionary",
+            name = "Dict",
+            -- Make sure this is at least 2.
+            -- 3 is recommended
+            min_keyword_length = 3,
+            max_items = 10,
+            opts = {
+              -- options for blink-cmp-dictionary
+              dictionary_directories = { "~/.config/nvim/dictionary" },
+            },
+          },
           path = {
             score_offset = 95,
             opts = {
