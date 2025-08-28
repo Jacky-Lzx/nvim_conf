@@ -65,10 +65,10 @@
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },
   "typst-preview.nvim": { "branch": "master", "commit": "dea4525d5420b7c32eebda7de15a6beb9d6574fa" },
   "undotree": { "branch": "master", "commit": "28f2f54a34baff90ea6f4a735ef1813ad875c743" },
-  "venv-selector.nvim": { "branch": "regexp", "commit": "d2326e7433fdeb10f7d0d1237c18b91b353f9f8b" },
+  "venv-selector.nvim": { "branch": "main", "commit": "2abf3bc4a6d29126f7c81b252be10b9edb9427c0" },
   "vim-startuptime": { "branch": "master", "commit": "b6f0d93f6b8cf6eee0b4c94450198ba2d6a05ff6" },
   "vim-wakatime": { "branch": "master", "commit": "3403495670f0ee08887401a28f8430dc4ac67429" },
   "vimtex": { "branch": "master", "commit": "dc90feacb86f7b85b0b791d8073eefc769a23725" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
-  "yazi.nvim": { "branch": "main", "commit": "a18220c31679eb6c47e3fa67090a1664af26d348" }
+  "yazi.nvim": { "branch": "main", "commit": "66a659291f85517994886bb641567ce7c7d5368b" }
 }
