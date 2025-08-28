@@ -4,7 +4,27 @@ vim.g.markdown_recommended_style = 0
 vim.lsp.enable("vale_ls")
 vim.lsp.enable("marksman")
 
+vim.lsp.config("harper_ls", {
+  filetypes = { "markdown", "text", "tex", "plaintex" },
+  settings = {
+    ["harper-ls"] = {
+      linters = {
+        SentenceCapitalization = false,
+        SpellCheck = false,
+      },
+    },
+  },
+})
+vim.lsp.enable("harper_ls")
+
 local M = {
+  {
+    "mason-org/mason.nvim",
+    optional = true,
+    opts_extend = { "ensure_installed" },
+    opts = { ensure_installed = { "vale", "vale-ls", "marksman", "harper-ls" } },
+  },
+
   -- formatter
   {
     "stevearc/conform.nvim",
