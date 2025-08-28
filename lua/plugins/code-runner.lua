@@ -68,4 +68,12 @@ return {
       require("lualine").setup(opts)
     end,
   },
+
+  {
+    "mfussenegger/nvim-dap",
+    optional = true,
+    opts = function()
+      require("overseer").enable_dap()
+    end,
+  },
 }

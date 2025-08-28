@@ -1,16 +1,43 @@
 return {
   {
-    "rcarriga/nvim-dap-ui",
-    lazy = true,
+    "igorlfs/nvim-dap-view",
     dependencies = {
-      "nvim-neotest/nvim-nio",
+      {
+        -- Solve the display issue with lualine
+        "nvim-lualine/lualine.nvim",
+        optional = true,
+        opts = { options = { disabled_filetypes = { winbar = { "dap-view", "dap-view-term", "dap-repl" } } } },
+      },
     },
-    main = "dapui",
     -- stylua: ignore
     keys = {
-      { "<leader>Du", function() require("dapui").toggle({reset = true}) end, desc = "[DAP ui] Toggle dapui" },
+      { "<leader>Du", function() require("dap-view").toggle() end, desc = "[DAP view] Toggle dap-view" },
     },
-    opts = {},
+    ---@module 'dap-view'
+    ---@type dapview.Config
+    opts = {
+      winbar = {
+        sections = { "scopes", "repl", "watches", "breakpoints", "exceptions" },
+        default_section = "scopes",
+        controls = {
+          enabled = true,
+        },
+      },
+      windows = {
+        height = 0.25,
+        position = "below",
+        terminal = {
+          width = 0.1,
+          position = "right",
+          -- List of debug adapters for which the terminal should be ALWAYS hidden
+          hide = {},
+        },
+      },
+      help = {
+        border = "rounded",
+      },
+      auto_toggle = true,
+    },
   },
 
   {
@@ -25,13 +52,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      { "rcarriga/nvim-dap-ui" },
-      {
-        -- Solve the display issue with lualine
-        "nvim-lualine/lualine.nvim",
-        optional = true,
-        opts = { options = { disabled_filetypes = { winbar = { "dap-repl" } } } },
-      },
+      "igorlfs/nvim-dap-view",
     },
     -- stylua: ignore
     keys = {
@@ -70,72 +91,10 @@ return {
     end,
 
     config = function()
-      -- Register dapui so that it will be automatically opened when dap is started
       local dap = require("dap")
-      local dapui = require("dapui")
-      dap.listeners.before.attach.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.launch.dapui_config = function()
-        dapui.open()
-      end
+      dap.defaults.fallback.external_terminal = {
+        command = "kitty",
+      }
     end,
   },
-
-  -- {
-  --   "mfussenegger/nvim-dap",
-  --   config = function()
-  --     dap.adapters.codelldb = {
-  --       name = "codelldb",
-  --       type = "executable",
-  --       command = "codelldb", -- or if not in $PATH: "/absolute/path/to/codelldb"
-  --
-  --       -- On windows you may have to uncomment this:
-  --       -- detached = false,
-  --     }
-  --     dap.configurations.cpp = {
-  --       {
-  --         name = "Launch file",
-  --         type = "codelldb",
-  --         request = "launch",
-  --         program = function()
-  --           return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-  --         end,
-  --         cwd = "${workspaceFolder}",
-  --         stopOnEntry = false,
-  --       },
-  --     }
-  --     dap.configurations.c = dap.configurations.cpp
-  --
-  --     dap.configurations.rust = {
-  --       {
-  --         name = "Launch file",
-  --         type = "codelldb",
-  --         request = "launch",
-  --         program = function()
-  --           -- Build the project before starting a debug session
-  --           vim.fn.system("cargo build")
-  --
-  --           -- Get the file name of the target executable
-  --           local metadata_json = vim.fn.system("cargo metadata --format-version 1 --no-deps")
-  --           local metadata = vim.fn.json_decode(metadata_json)
-  --           local target_name = metadata.packages[1].targets[1].name
-  --           local target_dir = metadata.target_directory
-  --           return target_dir .. "/debug/" .. target_name
-  --         end,
-  --         args = function()
-  --           -- Command line arguments that will be passed to the program
-  --           local inputstr = vim.fn.input("CommandLine Args:", "")
-  --           local params = {}
-  --           for param in string.gmatch(inputstr, "[^%s]+") do
-  --             table.insert(params, param)
-  --           end
-  --           return params
-  --         end,
-  --       },
-  --     }
-  --
-  --
-  --   end,
-  -- },
 }
