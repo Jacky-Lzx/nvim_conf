@@ -118,9 +118,26 @@ local M = {
       -- add options here or leave it empty to use the default settings
       default = {
         dir_path = "Figures", ---@type string | fun(): string
-        extension = "jpg",
-        relative_to_current_file = true,
-        show_dir_path_in_prompt = true,
+
+        extension = "jpg", ---@type string
+        process_cmd = "convert - -quality 75 jpg:-", ---@type string
+
+        use_absolute_path = false, ---@type boolean
+        relative_to_current_file = true, ---@type boolean
+
+        show_dir_path_in_prompt = true, ---@type boolean
+
+        prompt_for_file_name = false, ---@type boolean
+        file_name = "%y-%m-%d_%H-%M-%S", ---@type string
+      },
+      filetypes = {
+        markdown = {
+          -- encode spaces and special characters in file path
+          url_encode_path = true, ---@type boolean
+
+          -- Adding `./` makes blink.cmp to easily find the image with LSP (https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/plugins/img-clip.lua)
+          template = "![Image](./$FILE_PATH)", ---@type string
+        },
       },
     },
     keys = {
