@@ -14,7 +14,7 @@ return {
       explorer = { enabled = false },
       image = {
         enabled = true,
-        doc = { inline = false, float = true, max_width = 60, max_height = 30 },
+        doc = { inline = false, float = false, max_width = 60, max_height = 30 },
         math = { latex = { font_size = "small" } },
       },
       indent = {
