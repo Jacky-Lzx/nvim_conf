@@ -11,20 +11,6 @@ end
 return {
   {
     "saghen/blink.cmp",
-    -- optional: provides snippets for the snippet source
-    dependencies = {
-      {
-        "Kaiser-Yang/blink-cmp-dictionary",
-        dependencies = { "nvim-lua/plenary.nvim" },
-      },
-      "L3MON4D3/LuaSnip",
-      "onsails/lspkind-nvim",
-      "fang2hou/blink-copilot",
-      -- Spell source based on Neovim's `spellsuggest`.
-      "ribru17/blink-cmp-spell",
-      ---Use treesitter to highlight the label text for the given list of sources.
-      "xzbdmw/colorful-menu.nvim",
-    },
 
     event = { "InsertEnter", "CmdlineEnter" },
 
@@ -34,7 +20,7 @@ return {
     -- build = 'cargo build --release',
     -- If you use nix, you can build from source using latest nightly rust with:
     -- build = 'nix run .#build-plugin',
-
+    opts_extend = { "sources.default" },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
@@ -100,42 +86,26 @@ return {
         nerd_font_variant = "normal",
       },
 
-      snippets = {
-        preset = "luasnip",
-      },
-
       sources = {
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         -- "buffer" source is used to complete words
-        -- default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer", "spell" },
+        default = { "lazydev", "lsp", "path", "buffer" },
         -- default = { "lazydev", "copilot", "lsp", "path", "snippets" },
-        default = function()
-          local success, node = pcall(vim.treesitter.get_node)
-          if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
-            return { "dictionary", "buffer" }
-          else
-            return { "dictionary", "lazydev", "copilot", "lsp", "path", "snippets", "buffer" }
-          end
-        end,
+
+        -- default = function()
+        --   local success, node = pcall(vim.treesitter.get_node)
+        --   if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
+        --     return { "dictionary", "buffer" }
+        --   else
+        --     return { "dictionary", "lazydev", "copilot", "lsp", "path", "snippets", "buffer" }
+        --   end
+        -- end,
         per_filetype = {
           codecompanion = { "codecompanion" },
         },
 
         providers = {
-          dictionary = {
-            score_offset = 15,
-            module = "blink-cmp-dictionary",
-            name = "Dict",
-            -- Make sure this is at least 2.
-            -- 3 is recommended
-            min_keyword_length = 3,
-            max_items = 10,
-            opts = {
-              -- options for blink-cmp-dictionary
-              dictionary_directories = { "~/.config/nvim/dictionary" },
-            },
-          },
           path = {
             score_offset = 95,
             opts = {
@@ -164,48 +134,6 @@ return {
             score_offset = 60,
             fallbacks = { "buffer" },
           },
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            score_offset = 100,
-            async = true,
-            opts = {
-              kind_icon = "",
-              kind_hl = "DevIconCopilot",
-            },
-          },
-          spell = {
-            name = "Spell",
-            module = "blink-cmp-spell",
-            score_offset = 10,
-            opts = {
-              use_cmp_spell_sorting = true,
-              -- -- EXAMPLE: Only enable source in `@spell` captures, and disable it
-              -- -- in `@nospell` captures.
-              -- enable_in_context = function()
-              --   local curpos = vim.api.nvim_win_get_cursor(0)
-              --   local captures = vim.treesitter.get_captures_at_pos(0, curpos[1] - 1, curpos[2] - 1)
-              --   local in_spell_capture = false
-              --   for _, cap in ipairs(captures) do
-              --     if cap.capture == "spell" then
-              --       in_spell_capture = true
-              --     elseif cap.capture == "nospell" then
-              --       return false
-              --     end
-              --   end
-              --   return in_spell_capture
-              -- end,
-            },
-          },
-          -- Hide snippets after trigger character
-          -- Trigger characters are defined by the sources. For example, for Lua, the trigger characters are ., ", '.
-          snippets = {
-            score_offset = 70,
-            should_show_items = function(ctx)
-              return ctx.trigger.initial_kind ~= "trigger_character"
-            end,
-            fallbacks = { "buffer" },
-          },
           cmdline = {
             min_keyword_length = 2,
             -- Ignores cmdline completions when executing shell commands
@@ -219,9 +147,10 @@ return {
       fuzzy = {
         implementation = "prefer_rust_with_warning",
         sorts = {
-          "exact",
-          -- defaults
+          -- "exact",
           "score",
+          "kind",
+          "label",
           "sort_text",
         },
       },
@@ -234,74 +163,56 @@ return {
         menu = {
           border = "rounded",
           max_height = 20,
-          draw = {
-            columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
-            components = {
-              label = {
-                text = function(ctx)
-                  ---Print copilot suggestions in a different way
-                  -- if ctx.source_name == "copilot" then
-                  --   local last_match_index = ctx.label_matched_indices[#ctx.label_matched_indices]
-                  --   if last_match_index then
-                  --     local label_len = #ctx.label
-                  --     if last_match_index == label_len then
-                  --       return ctx.label
-                  --     end
-                  --     -- Find the last index of the space
-                  --     local last_space_index = findLast(ctx.label:sub(1, last_match_index + 2), " ")
-                  --     if last_space_index then
-                  --       return ctx.label:sub(last_space_index + 1)
-                  --     else
-                  --       return ctx.label
-                  --     end
-                  --   end
-                  --   return ctx.label
-                  -- end
-                  return require("colorful-menu").blink_components_text(ctx)
-                end,
-                highlight = function(ctx)
-                  if ctx.source_name == "copilot" then
-                    return "Comment"
-                  end
-                  return require("colorful-menu").blink_components_highlight(ctx)
-                end,
-              },
-              kind_icon = {
-                ellipsis = false,
-                text = function(ctx)
-                  local icon = ctx.kind_icon
-                  if icon then
-                    -- Do nothing
-                  elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
-                    local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
-                    if dev_icon then
-                      icon = dev_icon
-                    end
-                  else
-                    icon = require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
-                  end
-
-                  return icon .. ctx.icon_gap
-                end,
-
-                -- Optionally, use the highlight groups from nvim-web-devicons
-                -- You can also add the same function for `kind.highlight` if you want to
-                -- keep the highlight groups in sync with the icons.
-                highlight = function(ctx)
-                  local hl = ctx.kind_hl
-                  if hl then
-                    -- Do nothing
-                  elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
-                    local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
-                    if dev_icon then
-                      hl = dev_hl
-                    end
-                  end
-                  return hl
-                end,
-              },
-            },
-          },
+          -- draw = {
+          --   columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+          --   components = {
+          --     label = {
+          --       text = function(ctx)
+          --         return require("colorful-menu").blink_components_text(ctx)
+          --       end,
+          --       highlight = function(ctx)
+          --         -- if ctx.source_name == "copilot" then
+          --         --   return "Comment"
+          --         -- end
+          --         return require("colorful-menu").blink_components_highlight(ctx)
+          --       end,
+          --     },
+          --     kind_icon = {
+          --       ellipsis = false,
+          --       text = function(ctx)
+          --         local icon = ctx.kind_icon
+          --         if icon then
+          --           -- Do nothing
+          --         elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
+          --           local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+          --           if dev_icon then
+          --             icon = dev_icon
+          --           end
+          --         else
+          --           icon = require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
+          --         end
+          --
+          --         return icon .. ctx.icon_gap
+          --       end,
+          --
+          --       -- Optionally, use the highlight groups from nvim-web-devicons
+          --       -- You can also add the same function for `kind.highlight` if you want to
+          --       -- keep the highlight groups in sync with the icons.
+          --       highlight = function(ctx)
+          --         local hl = ctx.kind_hl
+          --         if hl then
+          --           -- Do nothing
+          --         elseif vim.tbl_contains({ "Path" }, ctx.source_name) then
+          --           local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
+          --           if dev_icon then
+          --             hl = dev_hl
+          --           end
+          --         end
+          --         return hl
+          --       end,
+          --     },
+          --   },
+          -- },
         },
         documentation = {
           auto_show = true,
@@ -380,6 +291,141 @@ return {
           ["<CR>"] = { function(cmp) if vim.fn.getcmdtype() == ":" then return cmp.accept_and_enter() end return false end, "fallback", },
           -- stylua: ignore
           ["<A-/>"] = { function(cmp) if cmp.is_menu_visible() then return cmp.hide() else return cmp.show() end end, "fallback", },
+        },
+      },
+    },
+  },
+
+  {
+    "saghen/blink.cmp",
+    optional = true,
+    dependencies = {
+      "fang2hou/blink-copilot",
+    },
+    opts = {
+      sources = {
+        default = { "copilot" },
+        providers = {
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            score_offset = 100,
+            async = true,
+            opts = {
+              kind_icon = "",
+              kind_hl = "DevIconCopilot",
+            },
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "saghen/blink.cmp",
+    optional = true,
+    dependencies = {
+      ---Use treesitter to highlight the label text for the given list of sources.
+      "xzbdmw/colorful-menu.nvim",
+    },
+    opts = {
+      completion = {
+        menu = {
+          draw = {
+            -- We don't need label_description now because label and label_description are already combined together in
+            -- label by colorful-menu.nvim.
+            columns = { { "kind_icon" }, { "label", gap = 1 }, { "kind" } },
+            components = {
+              label = {
+                text = function(ctx)
+                  return require("colorful-menu").blink_components_text(ctx)
+                end,
+                highlight = function(ctx)
+                  return require("colorful-menu").blink_components_highlight(ctx)
+                end,
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "saghen/blink.cmp",
+    optional = true,
+    dependencies = {
+      {
+        "Kaiser-Yang/blink-cmp-dictionary",
+        dependencies = { "nvim-lua/plenary.nvim" },
+      },
+    },
+    opts = {
+      sources = {
+        -- Add 'dictionary' to the list
+        default = { "dictionary" },
+        providers = {
+          dictionary = {
+            score_offset = 5,
+            module = "blink-cmp-dictionary",
+            name = "Dict",
+            -- Make sure this is at least 2.
+            -- 3 is recommended
+            min_keyword_length = 3,
+            max_items = 10,
+            opts = {
+              -- options for blink-cmp-dictionary
+              dictionary_directories = { "~/.config/nvim/dictionary" },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  -- Spell source based on Neovim's `spellsuggest`.
+  {
+    "saghen/blink.cmp",
+    optional = true,
+    dependencies = { "ribru17/blink-cmp-spell" },
+    opts = {
+      sources = {
+        default = { "spell" },
+        providers = {
+          -- ...
+          spell = {
+            name = "Spell",
+            module = "blink-cmp-spell",
+            score_offset = 10,
+            opts = {
+              use_cmp_spell_sorting = true,
+            },
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "saghen/blink.cmp",
+    optional = true,
+    dependencies = { "L3MON4D3/LuaSnip" },
+    opts = {
+      snippets = {
+        preset = "luasnip",
+      },
+      sources = {
+        default = { "snippets" },
+        providers = {
+          -- Hide snippets after trigger character
+          -- Trigger characters are defined by the sources. For example, for Lua, the trigger characters are ., ", '.
+          snippets = {
+            score_offset = 80,
+            should_show_items = function(ctx)
+              return ctx.trigger.initial_kind ~= "trigger_character"
+            end,
+            fallbacks = { "buffer" },
+          },
         },
       },
     },
