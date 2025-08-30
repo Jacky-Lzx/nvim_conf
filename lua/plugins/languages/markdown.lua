@@ -52,7 +52,9 @@ local M = {
 
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    -- ft = { "markdown", "codecompanion" },
+    -- This plugin should not be loaded by markdown filetype. If so, wired errors happen when opening a project and use
+    -- snacks picker to open a markdown file. Don't know why this issue happens.
+    ft = { "codecompanion" },
     keys = {
       { "<leader>tm", desc = "Enable render markdown" },
     },
