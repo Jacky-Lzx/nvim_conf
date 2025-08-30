@@ -21,8 +21,9 @@ return {
   ),
 
   -- stylua: ignore
-  s({ trig = "codespell-ignore", desc = "Ignore codespell (Place at the end of the line)" },
-    { t("-- codespell:ignore "), i(0, "<WORD>") }
+  s(
+    { trig = "codespell-ignore", desc = "Ignore codespell (Place at the end of the line)" },
+    fmta([[-- codespell:ignore "<>"]], { i(0, "<WORD>") })
   ),
 
   -- stylua: ignore
