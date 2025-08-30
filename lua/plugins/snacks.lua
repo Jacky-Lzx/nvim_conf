@@ -25,8 +25,9 @@ return {
         indent = {
           only_scope = true,
         },
+        -- The scope setting will cause errors when the current scope is the last element in a markdown file
         scope = {
-          enabled = true, -- enable highlighting the current scope
+          enabled = false, -- enable highlighting the current scope
           underline = true, -- underline the start of the scope
         },
         chunk = {
@@ -86,7 +87,7 @@ return {
       -- Create keymappings of `ii` and `ai` for textobjects, and `[i` and `]i` for jumps
       scope = {
         enabled = true,
-        cursor = false,
+        cursor = true,
       },
       scroll = { enabled = false },
       statuscolumn = {
