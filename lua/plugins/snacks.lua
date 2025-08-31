@@ -14,7 +14,8 @@ return {
       explorer = { enabled = false },
       image = {
         enabled = true,
-        doc = { inline = false, float = false, max_width = 60, max_height = 30 },
+        -- Automatically show image in a floating window when mouse hovering over it
+        doc = { inline = false, float = true, max_width = 60, max_height = 30 },
         math = { latex = { font_size = "small" } },
       },
       indent = {
@@ -113,6 +114,12 @@ return {
           height = 0.9,
           width = 0.9,
           zindex = 50,
+        },
+        -- Keeps the image on the bottom right corner
+        snacks_image = {
+          relative = "editor",
+          row = 0.8,
+          col = -1,
         },
       },
     },
