@@ -54,7 +54,7 @@ local M = {
     "MeanderingProgrammer/render-markdown.nvim",
     -- This plugin should not be loaded by markdown filetype. If so, wired errors happen when opening a project and use
     -- snacks picker to open a markdown file. Don't know why this issue happens.
-    ft = { "codecompanion" },
+    -- ft = { "markdown", "codecompanion" },
     keys = {
       { "<leader>tm", desc = "Enable render markdown" },
     },
@@ -67,6 +67,8 @@ local M = {
     opts = {
       -- Disable by default, use keymap to toggle
       enabled = false,
+
+      file_types = { "markdown", "codecompanion" },
 
       completions = { lsp = { enabled = true } },
       -- Vim modes that will show a rendered view of the markdown file, :h mode(), for all enabled
@@ -104,6 +106,14 @@ local M = {
     end,
   },
 
+  -- The markview plugin needs to be loaded before nvim-treesitter
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   dependencies = {
+  --     "OXY2DEV/markview.nvim",
+  --   },
+  -- },
+  --
   -- {
   --   "OXY2DEV/markview.nvim",
   --   -- Do not lazy load this plugin as it is already lazy-loaded.
@@ -113,6 +123,8 @@ local M = {
   --   opts = {
   --     preview = {
   --       modes = { "n", "no", "c", "i" },
+  --       filetypes = { "md", "rmd", "quarto", "codecompanion" },
+  --       icon_provider = "devicons", -- "internal", "mini" or "devicons"
   --     },
   --   },
   --
