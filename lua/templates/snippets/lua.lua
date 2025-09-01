@@ -15,9 +15,21 @@ local conds = require("templates.snippets.utils.conditions")
 
 return {
   -- stylua: ignore
-  s({trig = "stylua-ignore", desc = "Ignore stylua"},
-    {t("-- stylua: ignore")},
-    {show_condition = conds.line_begin}
+  s({ trig = "stylua-ignore", desc = "Ignore stylua" },
+    { t("-- stylua: ignore") },
+    { show_condition = conds.line_begin }
+  ),
+
+  -- stylua: ignore
+  s(
+    { trig = "codespell-ignore", desc = "Ignore codespell (Place at the end of the line)" },
+    fmta([[-- codespell:ignore "<>"]], { i(0, "<WORD>") })
+  ),
+
+  -- stylua: ignore
+  s({ trig = "typos-ignore", desc = "Ignore typos" },
+    { t("-- typos: ignore") },
+    { show_condition = conds.line_begin }
   ),
 
   -- stylua: ignore

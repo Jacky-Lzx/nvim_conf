@@ -40,6 +40,9 @@ vim.opt.clipboard = ""
 
 vim.o.textwidth = 120
 
+-- Enables project-local `.nvim.lua` configuration file
+vim.o.exrc = true
+
 vim.opt.shell = "fish"
 
 local python_path = ""

@@ -19,4 +19,9 @@ return {
       args = i(0),
     })
   ),
+
+  s(
+    { trig = "ignore", name = "Linting ignore", desc = "Ignore linting error\nPlaced at the end of the line" },
+    { t("# noqa: E"), i(1, "402") }
+  ),
 }

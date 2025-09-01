@@ -51,7 +51,44 @@ return {
     "echasnovski/mini.bracketed",
     version = "*",
     event = "BufReadPost",
-    config = true,
+    keys = {
+      {
+        "]i",
+        function()
+          require("mini.bracketed").indent("forward", { change_type = "more" })
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Inner indent forward",
+      },
+      {
+        "[i",
+        function()
+          require("mini.bracketed").indent("backward", { change_type = "more" })
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Inner indent backward",
+      },
+      {
+        "]o",
+        function()
+          require("mini.bracketed").indent("forward", { change_type = "less" })
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Outer indent forward",
+      },
+      {
+        "[o",
+        function()
+          require("mini.bracketed").indent("backward", { change_type = "less" })
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Outer indent backward",
+      },
+    },
+    opts = {
+      indent = { suffix = "" },
+      oldfile = { suffix = "" },
+    },
   },
 
   {
@@ -260,5 +297,16 @@ return {
         desc = "[Flash] Line jump",
       },
     },
+  },
+
+  {
+    "bullets-vim/bullets.vim",
+
+    config = function()
+      vim.g.bullets_set_mappings = 0 -- disable adding default key mappings, default = 1
+      vim.g.bullets_custom_mappings = {
+        { "imap", "<cr>", "<Plug>(bullets-newline)" },
+      }
+    end,
   },
 }

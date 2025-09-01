@@ -24,6 +24,11 @@ local M = {
       formatters_by_ft = {
         typst = { "typstyle" },
       },
+      formatters = {
+        typstyle = {
+          prepend_args = { "-l", "120", "--wrap-text" },
+        },
+      },
     },
   },
 

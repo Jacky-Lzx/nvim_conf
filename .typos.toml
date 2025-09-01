@@ -1,5 +1,8 @@
 [default]
-extend-ignore-re = [".*--.*typos: ignore[^\\n]*\\n"]
+extend-ignore-re = [
+  ".*(?:#|--|//|/*).*(?:spellchecker|typos):\\s?ignore[^\\n]*\\n[^\\n]*",
+  ".*(?:spellchecker|typos):\\s?ignore-next-line[^\\n]*\\n[^\\n]*",
+]
 
 [default.extend-words]
 # Don't correct "noice"

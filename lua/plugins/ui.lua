@@ -14,6 +14,18 @@ return {
   },
 
   {
+    "j-hui/fidget.nvim",
+    opts = {
+      notification = {
+        window = {
+          winblend = 0,
+          border = "rounded",
+        },
+      },
+    },
+  },
+
+  {
     "nvim-tree/nvim-tree.lua",
     version = "*",
     dependencies = {
@@ -574,15 +586,7 @@ return {
       },
       lsp = {
         progress = {
-          enabled = true,
-          -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
-          -- See the section on formatting for more details on how to customize.
-          --- @type NoiceFormat|string
-          format = "lsp_progress",
-          --- @type NoiceFormat|string
-          format_done = "lsp_progress_done",
-          throttle = 1000 / 30, -- frequency to update lsp progress message
-          view = "mini",
+          enabled = false, -- lsp progress is handled by fidget.nvim
         },
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
@@ -738,5 +742,21 @@ return {
       vim.keymap.set("n", "zx", "<NOP>", { desc = "Disabled" })
       vim.keymap.set("n", "zX", "<NOP>", { desc = "Disabled" })
     end,
+  },
+
+  {
+    "lukas-reineke/virt-column.nvim",
+    opts = {
+      -- char = "|",
+      -- char = "",
+      -- char = "┇",
+      -- char = "∶",
+      -- char = "∷",
+      -- char = "║",
+      -- char = "⋮",
+      char = "",
+      -- char = "󰮾",
+      virtcolumn = "+1",
+    },
   },
 }

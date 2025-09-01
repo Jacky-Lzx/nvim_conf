@@ -3,27 +3,27 @@ vim.g.tex_flavor = "latex"
 vim.lsp.config("texlab", {
   settings = {
     texlab = {
+      -- build = {
+      --   executable = "latexmk",
+      --   args = {
+      --     "%f",
+      --   },
+      --   onSave = false,
+      --   forwardSearchAfter = false,
+      -- },
       build = {
-        executable = "latexmk",
+        executable = "tectonic",
         args = {
+          "-X",
+          "compile",
           "%f",
+          "--synctex",
+          "--keep-logs",
+          "--keep-intermediates",
         },
         onSave = false,
         forwardSearchAfter = false,
       },
-      -- build = {
-      --   executable = "tectonic",
-      --   args = {
-      --     "-X",
-      --     "compile",
-      --     "%f",
-      --     "--synctex",
-      --     "--keep-logs",
-      --     "--keep-intermediates",
-      --   },
-      --   onSave = true,
-      --   forwardSearchAfter = false,
-      -- },
       -- Use Skim for preview and forward search
       -- The inverse search is configured in "f2fora/nvim-texlabconfig"
       forwardSearch = {
@@ -92,7 +92,7 @@ local M = {
       },
       formatters = {
         ["tex-fmt"] = {
-          prepend_args = { "-n" },
+          prepend_args = { "-l", "120" },
         },
         latexindent = {
           prepend_args = { "--local", vim.env.HOME .. "/.config/latexindent/lzx_settings.yaml" },
@@ -121,19 +121,25 @@ local M = {
     "lervag/vimtex",
     -- lazy = false, -- lazy-loading will disable inverse search
     ft = { "tex", "bib" },
+    init = function()
+      require("which-key").add({
+        { "<leader>l", group = "[VimTeX]" },
+      })
+    end,
 
     config = function()
       -- Viewer options: One may configure the viewer either by specifying a built-in viewer method:
       vim.g.vimtex_view_enabled = true
-      vim.g.vimtex_view_zathura_use_synctex = 0
+
       vim.g.vimtex_view_method = "zathura_simple"
+      vim.g.vimtex_view_zathura_use_synctex = 0
 
-      vim.g.vimtex_view_skim_sync = 1
       -- vim.g.vimtex_view_method = "skim"
+      -- vim.g.vimtex_view_skim_sync = 1
 
-      -- VimTeX uses latexmk as the default compiler backend. If you use it, which is strongly recommended, you probably don't need to configure anything.
-      -- If you want another compiler backend, you can change it as follows.
-      -- The list of supported backends and further explanation is provided in the documentation, see ":help vimtex-compiler".
+      -- VimTeX uses latexmk as the default compiler backend. If you use it, which is strongly recommended, you probably
+      -- don't need to configure anything. If you want another compiler backend, you can change it as follows. The list
+      -- of supported backends and further explanation is provided in the documentation, see ":help vimtex-compiler".
       vim.g.vimtex_compiler_method = "latexmk"
 
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
@@ -159,20 +165,9 @@ local M = {
     end,
   },
 
-  {
-    "folke/which-key.nvim",
-    optional = true,
-    opts_extend = { "spec" },
-    opts = {
-      spec = {
-        { "<leader>l", group = "[VimTeX]" },
-      },
-    },
-  },
-
-  -- Texlab is a popular Language Server for LaTeX, which supports Forward Search and Inverse Search between TeX and PDF files.
-  -- nvim-texlabconfig provides some useful snippets to configure this capability for neovim and some viewers and a homonymous executable which allows a fast Inverse Search.
-  -- Should setup pdf viewer as well, see the documentation
+  -- Texlab is a popular Language Server for LaTeX, which supports Forward Search and Inverse Search between TeX and PDF
+  -- files. nvim-texlabconfig provides some useful snippets to configure this capability for neovim and some viewers and
+  -- a homonymous executable which allows a fast Inverse Search. Should setup pdf viewer as well, see the documentation
   {
     "f3fora/nvim-texlabconfig",
     -- build = "go build",
@@ -183,6 +178,13 @@ local M = {
     config = function(_, opts)
       require("texlabconfig").setup(opts)
     end,
+  },
+
+  -- To enable auto-rendering of pdf files, you should follow the instructions in https://github.com/let-def/texpresso,
+  -- and make sure the texpresso executable is in your $PATH.
+  {
+    "let-def/texpresso.vim",
+    ft = { "tex" },
   },
 }
 

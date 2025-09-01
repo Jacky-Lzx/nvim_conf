@@ -314,14 +314,13 @@ return {
       -- "hrsh7th/cmp-nvim-lsp",
       -- "SmiteshP/nvim-navic",
       -- Show lsp status on the bottom-left
-      -- Have no idea why it still works when not installed
-      -- "j-hui/fidget.nvim",
+      "j-hui/fidget.nvim",
       "saghen/blink.cmp",
     },
     opts = {},
     config = function(_, _)
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "jsonls", "pyright" },
+        ensure_installed = { "lua_ls", "rust_analyzer", "marksman", "pyright" },
         automatic_enable = false,
       })
 
@@ -332,32 +331,29 @@ return {
 
       utils.language_setup(G.language.lsp, extra)
 
-      require("lspconfig").jsonls.setup({})
-
       -- require("lspconfig").ltex.setup({})
-      require("lspconfig").clangd.setup({
-        cmd = {
-          "clangd",
-          -- "--header-insertion=never",
-        },
-      })
 
       vim.lsp.config("*", {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
       })
 
       vim.lsp.config("typos_lsp", {
-        init_options = {
-          -- Custom config. Used together with a config file found in the workspace or its parents,
-          -- taking precedence for settings declared in both.
-          -- Equivalent to the typos `--config` cli argument.
-          -- config = "~/code/typos-lsp/crates/typos-lsp/tests/typos.toml",
-          -- How typos are rendered in the editor, can be one of an Error, Warning, Info or Hint.
-          -- Defaults to error.
-          diagnosticSeverity = "Hint",
+        settings = {
+          typos_lsp = {
+            init_options = {
+              -- Custom config. Used together with a config file found in the workspace or its parents,
+              -- taking precedence for settings declared in both.
+              -- Equivalent to the typos `--config` cli argument.
+              -- config = "~/code/typos-lsp/crates/typos-lsp/tests/typos.toml",
+              -- How typos are rendered in the editor, can be one of an Error, Warning, Info or Hint.
+              -- Defaults to error.
+              diagnosticSeverity = "Hint",
+            },
+          },
         },
       })
-      vim.lsp.enable("typos_lsp")
+      -- WARN:this lsp will cause a strange error when opening a markdown file with snacks.picker
+      -- vim.lsp.enable("typos_lsp")
 
       -- Use LspAttach autocommand to only map the following keys
       -- after the language server attaches to the current buffer

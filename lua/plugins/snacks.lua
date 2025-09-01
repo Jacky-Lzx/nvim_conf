@@ -14,7 +14,8 @@ return {
       explorer = { enabled = false },
       image = {
         enabled = true,
-        doc = { inline = false, float = false, max_width = 80, max_height = 40 },
+        -- Automatically show image in a floating window when mouse hovering over it
+        doc = { inline = false, float = true, max_width = 60, max_height = 30 },
         math = { latex = { font_size = "small" } },
       },
       indent = {
@@ -25,8 +26,9 @@ return {
         indent = {
           only_scope = true,
         },
+        -- The scope setting will cause errors when the current scope is the last element in a markdown file
         scope = {
-          enabled = true, -- enable highlighting the current scope
+          enabled = false, -- enable highlighting the current scope
           underline = true, -- underline the start of the scope
         },
         chunk = {
@@ -86,7 +88,7 @@ return {
       -- Create keymappings of `ii` and `ai` for textobjects, and `[i` and `]i` for jumps
       scope = {
         enabled = true,
-        cursor = false,
+        cursor = true,
       },
       scroll = { enabled = false },
       statuscolumn = {
@@ -113,6 +115,12 @@ return {
           width = 0.9,
           zindex = 50,
         },
+        -- Keeps the image on the bottom right corner
+        snacks_image = {
+          relative = "editor",
+          row = 0.8,
+          col = -1,
+        },
       },
     },
 
@@ -126,7 +134,7 @@ return {
       { "<leader>n", function() require("snacks").notifier.show_history() end, desc = "[Snacks] Notification history", },
       { "<leader>un", function() require("snacks").notifier.hide() end, desc = "[Snacks] Dismiss all notifications", },
       -- Top Pickers & Explorer
-      { "<leader><space>", function() require("snacks").picker.smart() end, desc = "[Snacks] Smart find files", },
+      -- { "<leader><space>", function() require("snacks").picker.smart() end, desc = "[Snacks] Smart find files", },
       { "<leader>,", function() require("snacks").picker.buffers() end, desc = "[Snacks] Buffers", },
       { "<leader>sn", function() require("snacks").picker.notifications() end, desc = "[Snacks] Notification history", },
       -- find
@@ -239,8 +247,6 @@ return {
             :map("<leader>tS")
 
           -- Create some toggle mappings
-          Snacks.toggle.dim():map("<leader>tD")
-
           Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>ts")
           Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
           Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>tL")
