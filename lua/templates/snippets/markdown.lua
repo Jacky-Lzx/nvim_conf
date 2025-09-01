@@ -5,11 +5,25 @@ local i = ls.insert_node
 local d = ls.dynamic_node
 local sn = ls.snippet_node
 
+local fmta = require("luasnip.extras.fmt").fmta
+
 local autosnippet = ls.extend_decorator.apply(s, { snippetType = "autosnippet" })
 
 local utils = require("templates.snippets.utils.utils")
--- local conds = require("templates.snippets.utils.conditions")
+local conds = require("templates.snippets.tex.utils.conditions")
 local cond_line_begin = require("luasnip.extras.conditions.expand").line_begin
+local cond_has_selected_text = require("luasnip.extras.conditions.expand").has_selected_text
+
+-- Copied from latex snippets
+local get_visual_or_insert = function(_, parent)
+  if #parent.snippet.env.SELECT_RAW == 1 then
+    return sn(nil, t(vim.trim(parent.snippet.env.SELECT_RAW[1])))
+  elseif #parent.snippet.env.SELECT_RAW > 1 then
+    return sn(nil, t(parent.snippet.env.SELECT_RAW))
+  else
+    return sn(nil, i(1))
+  end
+end
 
 local function generate_table(_, snip)
   local rows = tonumber(snip.captures[1])
@@ -101,5 +115,28 @@ return {
   autosnippet(
     {trig = "enum(%d+)%s", desc = "Enumerate generation", regTrig = true, hidden = true},
     {d(1, generate_list, {}, {user_args = {"1"}})}, {condition = cond_line_begin}
+  ),
+
+  -- Copied and modified from latex snippets
+  autosnippet(
+    { trig = "mk", name = "inline_math_select", desc = "(Select) In-line math block" },
+    fmta([[$<>$]], { d(1, get_visual_or_insert) }),
+    {
+      condition = cond_has_selected_text,
+      show_condition = conds.obj.false_fn,
+      priority = 2000,
+    }
+  ),
+  autosnippet(
+    {
+      trig = "mk",
+      name = "inline_math",
+      desc = "In-line math block",
+    },
+    fmta([[$<>$<>]], { i(1), i(0) }),
+    {
+      condition = -conds.obj.in_math,
+      show_condition = conds.obj.false_fn,
+    }
   ),
 }
