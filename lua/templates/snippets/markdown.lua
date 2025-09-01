@@ -135,7 +135,6 @@ return {
     },
     fmta([[$<>$<>]], { i(1), i(0) }),
     {
-      condition = -conds.obj.in_math,
       show_condition = conds.obj.false_fn,
     }
   ),
