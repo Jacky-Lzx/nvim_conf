@@ -65,11 +65,9 @@ local M = {
     opts = {
       -- Disable by default, use keymap to toggle
       enabled = false,
-
-      file_types = { "markdown", "codecompanion" },
-
+      -- The plugin also provides a completion method using blink.cmp
+      -- However, just enabling the general LSP conmpletions is enough
       completions = {
-        blink = { enabled = true },
         lsp = { enabled = true },
       },
       -- Vim modes that will show a rendered view of the markdown file, :h mode(), for all enabled
@@ -78,12 +76,19 @@ local M = {
       -- Default: render_modes = { "n", "c", "t" },
       -- Set to true to enable render in all modes
       render_modes = true,
-      checkbox = { checked = { scope_highlight = "@markup.strikethrough" } },
+      checkbox = {
+        checked = { scope_highlight = "@markup.strikethrough" },
+      },
       indent = {
         enabled = true,
         skip_heading = true,
       },
       latex = { enabled = false },
+
+      code = {
+        -- Disable the sign shown on the left of the line numbers
+        sign = false,
+      },
     },
     config = function(_, opts)
       require("render-markdown").setup(opts)
