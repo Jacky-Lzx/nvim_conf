@@ -11,6 +11,14 @@ return {
 
   {
     "stevearc/overseer.nvim",
+    dependencies = {
+      {
+        "rmagatti/auto-session",
+        optional = true,
+        opts_extend = { "close_filetypes_on_save" },
+        opts = { close_filetypes_on_save = { "OverseerList" } },
+      },
+    },
     init = function()
       require("which-key").add({
         { "<leader>o", group = "[Overseer]" },
@@ -57,6 +65,13 @@ return {
           ["<C-j>"] = false,
           ["<C-k>"] = false,
         },
+      },
+      bundles = {
+        -- Disable autostart tasks when they are loaded from a bundle. If it is set to true, when restoring a session
+        -- using auto-session, a task will be run at the start
+        -- NOTE: even setting this option to false will auto start a task, if previously exiting neovim with
+        -- OverseerList open
+        autostart_on_load = false,
       },
     },
     config = function(_, opts)

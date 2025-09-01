@@ -16,10 +16,15 @@ return {
     opts = {
       auto_restore = false,
       suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      -- Do not load the session if there's an error
+      continue_restore_on_error = false,
+      -- Buffers with matching filetypes will be closed before saving
+      close_filetypes_on_save = { "checkhealth" },
     },
 
     init = function()
-      vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+      -- vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+      vim.o.sessionoptions = "buffers,curdir,folds,tabpages,winsize,winpos,localoptions"
     end,
   },
 
