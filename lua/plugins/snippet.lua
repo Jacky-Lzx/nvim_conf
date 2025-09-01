@@ -59,8 +59,8 @@ return {
           },
         },
         ---Mapping for populating `TM_SELECTED_TEXT` and related variables (not set by default).
-        cut_selection_keys = ";",
-        store_selection_keys = ";",
+        cut_selection_keys = "`",
+        store_selection_keys = "`",
         enable_autosnippets = true,
       }
     end,
