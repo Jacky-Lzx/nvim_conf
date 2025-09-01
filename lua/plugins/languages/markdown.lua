@@ -52,9 +52,7 @@ local M = {
 
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    -- This plugin should not be loaded by markdown filetype. If so, wired errors happen when opening a project and use
-    -- snacks picker to open a markdown file. Don't know why this issue happens.
-    -- ft = { "markdown", "codecompanion" },
+    ft = { "markdown", "codecompanion" },
     keys = {
       { "<leader>tm", desc = "Enable render markdown" },
     },
@@ -70,7 +68,10 @@ local M = {
 
       file_types = { "markdown", "codecompanion" },
 
-      completions = { lsp = { enabled = true } },
+      completions = {
+        blink = { enabled = true },
+        lsp = { enabled = true },
+      },
       -- Vim modes that will show a rendered view of the markdown file, :h mode(), for all enabled
       -- components. Individual components can be enabled for other modes. Remaining modes will be
       -- unaffected by this plugin.
@@ -202,7 +203,7 @@ local M = {
     keys = {
       { "<leader>OO", "<CMD>Obsidian<CR>", desc = "[Obsidian] Picker" },
       { "<leader>OD", "<CMD>Obsidian dailies<CR>", desc = "[Obsidian] Dailies" },
-      { "<leader>Os", "<CMD>Obsidian search<CR>", desc = "[Obsidian] Search" },
+      { "<leader>Og", "<CMD>Obsidian search<CR>", desc = "[Obsidian] Search" },
       { "<leader>Of", "<CMD>Obsidian quick_switch<CR>", desc = "[Obsidian] Quick switch files" },
       { "<leader>Od", "<CMD>Obsidian follow_link<CR>", desc = "[Obsidian] Follow link" },
       { "<leader>Ob", "<CMD>Obsidian backlinks<CR>", desc = "[Obsidian] Back links" },
@@ -300,9 +301,9 @@ local M = {
         },
         tag_mappings = {
           -- Add tag(s) to current note.
-          tag_note = "<C-x>",
+          tag_note = "<C-l>",
           -- Insert a tag at the current location.
-          insert_tag = "<C-l>",
+          insert_tag = "",
         },
       },
 
