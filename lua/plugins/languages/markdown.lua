@@ -1,7 +1,8 @@
 -- Set the markdown file use the tabindent values set in the config instead of recommended
 vim.g.markdown_recommended_style = 0
 
-vim.lsp.enable("vale_ls")
+-- FIXME: Vale is not configured correctly. It doesn't work
+-- vim.lsp.enable("vale_ls")
 
 -- marksman does not support configure its settings through lsp.
 -- You can only create a `.marksman.toml` file in your project root.
@@ -25,7 +26,7 @@ local M = {
     "mason-org/mason.nvim",
     optional = true,
     opts_extend = { "ensure_installed" },
-    opts = { ensure_installed = { "vale", "vale-ls", "marksman", "harper-ls" } },
+    opts = { ensure_installed = { "marksman", "harper-ls" } },
   },
 
   -- formatter

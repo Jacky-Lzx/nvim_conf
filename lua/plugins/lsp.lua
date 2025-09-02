@@ -282,6 +282,16 @@ return {
   {
     "mfussenegger/nvim-lint",
     event = { "BufWritePost" },
+    dependencies = {
+      {
+        "mason-org/mason.nvim",
+        optional = true,
+        opts_extend = { "ensure_installed" },
+        opts = {
+          ensure_installed = { "codespell", "typos" },
+        },
+      },
+    },
     config = function(_, opts)
       require("lint").linters_by_ft =
         vim.tbl_deep_extend("error", opts["linters_by_ft"], utils.language_setup(G.language.linter))
@@ -296,8 +306,8 @@ return {
 
           -- You can call `try_lint` with a linter name or a list of names to always
           -- run specific linters, independent of the `linters_by_ft` configuration
-
           require("lint").try_lint("codespell")
+          require("lint").try_lint("typos")
         end,
       })
     end,
