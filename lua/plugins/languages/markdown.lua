@@ -165,7 +165,7 @@ local M = {
           -- encode spaces and special characters in file path
           url_encode_path = true, ---@type boolean
 
-          template = "![Image]($FILE_PATH)", ---@type string
+          template = "![$CURSOR]($FILE_PATH)", ---@type string | fun(context: table): string
         },
       },
     },
