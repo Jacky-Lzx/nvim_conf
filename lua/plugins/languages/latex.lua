@@ -95,7 +95,7 @@ local M = {
           prepend_args = { "-l", "120" },
         },
         latexindent = {
-          prepend_args = { "--local", vim.env.HOME .. "/.config/latexindent/lzx_settings.yaml" },
+          prepend_args = { "--local", vim.fn.stdpath("config") .. "/configs/latexindent.yaml" },
         },
       },
     },
