@@ -1,12 +1,24 @@
-vim.lsp.config("lua_ls", {
-  settings = {
-    Lua = {},
-  },
-})
-
 vim.lsp.enable("lua_ls")
 
-local M = {
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    optional = true,
+    opts = {
+      ensure_installed = { "lua" },
+    },
+    opts_extend = { "ensure_installed" },
+  },
+
+  {
+    "mason-org/mason.nvim",
+    optional = true,
+    opts = {
+      ensure_installed = { "lua-language-server", "stylua" },
+    },
+    opts_extend = { "ensure_installed" },
+  },
+
   -- formatter
   {
     "stevearc/conform.nvim",
@@ -16,13 +28,6 @@ local M = {
         lua = { "stylua" },
       },
     },
-  },
-
-  {
-    "mason-org/mason.nvim",
-    optional = true,
-    opts_extend = { "ensure_installed" },
-    opts = { ensure_installed = { "stylua" } },
   },
 
   -- Provide neovim config completion
@@ -39,5 +44,3 @@ local M = {
     },
   },
 }
-
-return M

@@ -5,7 +5,7 @@ vim.g.markdown_recommended_style = 0
 -- vim.lsp.enable("vale_ls")
 
 -- marksman does not support configure its settings through lsp.
--- You can only create a `.marksman.toml` file in your project root.
+-- You only can create a `.marksman.toml` file in your project root.
 vim.lsp.enable("marksman")
 
 vim.lsp.config("harper_ls", {
@@ -44,16 +44,12 @@ local M = {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle" },
     build = "cd app && yarn install",
-    -- init = function()
-    --   -- require("markdown-preview").setup(opts)
-    --   vim.g.mkdp_filetypes = { "markdown" }
-    -- end,
     ft = { "markdown" },
   },
 
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown", "codecompanion" },
+    ft = { "markdown" },
     keys = {
       { "<leader>tm", desc = "Enable render markdown" },
     },

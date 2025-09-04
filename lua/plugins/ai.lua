@@ -6,6 +6,12 @@ return {
       -- "nvim-treesitter/nvim-treesitter",
       "echasnovski/mini.diff",
       "j-hui/fidget.nvim",
+      -- Configure render-markdown to recognize the codecompanion filetype
+      {
+        "MeanderingProgrammer/render-markdown.nvim",
+        optional = true,
+        ft = { "codecompanion" },
+      },
     },
 
     -- stylua: ignore
@@ -80,18 +86,56 @@ return {
   },
 
   {
-    "zbirenbaum/copilot.lua",
-    event = "VeryLazy",
+    "saghen/blink.cmp",
+    optional = true,
+    dependencies = {
+      "fang2hou/blink-copilot",
+      {
+        "zbirenbaum/copilot.lua",
+        event = "VeryLazy",
+        opts = {
+          suggestion = {
+            enabled = false,
+          },
+          panel = {
+            enabled = false,
+          },
+          filetypes = {
+            markdown = true,
+            help = true,
+          },
+        },
+      },
+    },
     opts = {
-      suggestion = {
-        enabled = false,
+      sources = {
+        default = { "copilot" },
+        providers = {
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            score_offset = 100,
+            async = true,
+            opts = {
+              kind_icon = "",
+              kind_hl = "DevIconCopilot",
+            },
+          },
+        },
       },
-      panel = {
-        enabled = false,
-      },
-      filetypes = {
-        markdown = true,
-        help = true,
+    },
+  },
+
+  -- Customization of the Copilot icon
+  {
+    "nvim-tree/nvim-web-devicons",
+    opts = {
+      override = {
+        copilot = {
+          icon = "",
+          color = "#cba6f7", -- Catppuccin.mocha.mauve
+          name = "Copilot",
+        },
       },
     },
   },

@@ -45,8 +45,10 @@ local M = {
   {
     "mason-org/mason.nvim",
     optional = true,
+    opts = {
+      ensure_installed = { "ruff", "pyright" },
+    },
     opts_extend = { "ensure_installed" },
-    opts = { ensure_installed = { "ruff", "pyright" } },
   },
 
   -- formatter

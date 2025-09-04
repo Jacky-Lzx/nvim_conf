@@ -300,31 +300,6 @@ return {
     "saghen/blink.cmp",
     optional = true,
     dependencies = {
-      "fang2hou/blink-copilot",
-    },
-    opts = {
-      sources = {
-        default = { "copilot" },
-        providers = {
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            score_offset = 100,
-            async = true,
-            opts = {
-              kind_icon = "",
-              kind_hl = "DevIconCopilot",
-            },
-          },
-        },
-      },
-    },
-  },
-
-  {
-    "saghen/blink.cmp",
-    optional = true,
-    dependencies = {
       ---Use treesitter to highlight the label text for the given list of sources.
       "xzbdmw/colorful-menu.nvim",
     },
