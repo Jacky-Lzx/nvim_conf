@@ -34,7 +34,19 @@ function M.python_host()
 end
 
 function M.python()
-  return M.python_host() or M.executable("python3") or M.executable("python") or "python3"
+  local selector = package.loaded["venv-selector"]
+  local selected = selector and executable_path(selector.python())
+  if selected then
+    return selected
+  end
+  for _, name in ipairs({ "VIRTUAL_ENV", "CONDA_PREFIX" }) do
+    local env = vim.env[name]
+    local python = env and env ~= "" and executable_path(env .. "/bin/python")
+    if python then
+      return python
+    end
+  end
+  return M.executable("python3") or M.executable("python") or "python3"
 end
 
 function M.debugpy_python()
