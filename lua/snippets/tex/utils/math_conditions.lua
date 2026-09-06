@@ -39,13 +39,16 @@ local function create_unified_cache(options)
   }
 
   -- Update access tracking
+  local access_clock = 0
   local function update_access_tracking(full_key)
     cache.access_count[full_key] = (cache.access_count[full_key] or 0) + 1
-    cache.last_access[full_key] = os.time() -- Update last access time
+    access_clock = access_clock + 1
+    cache.last_access[full_key] = access_clock
   end
 
   -- Eviction strategies
-  local eviction_strategies = {
+  local eviction_strategies
+  eviction_strategies = {
     lru = function()
       local oldest_key, oldest_time = nil, math.huge
       for key, access_time in pairs(cache.last_access) do
@@ -76,7 +79,7 @@ local function create_unified_cache(options)
     local full_key = string.format("%s:%s", namespace, tostring(key))
     local value = self.items[full_key]
 
-    if value then
+    if value ~= nil then
       update_access_tracking(full_key) -- Update access tracking
       return value
     else
@@ -90,7 +93,10 @@ local function create_unified_cache(options)
     local full_key = string.format("%s:%s", namespace, tostring(key))
 
     -- Eviction logic
-    if #vim.tbl_keys(self.items) >= config.max_size then
+    if config.max_size <= 0 then
+      return false
+    end
+    if self.items[full_key] == nil and #vim.tbl_keys(self.items) >= config.max_size then
       local evict_strategy = eviction_strategies[config.eviction_strategy] or eviction_strategies.lru
       local key_to_evict = evict_strategy()
 
@@ -244,8 +250,10 @@ end
 -- INCREMENTAL PARSING HELPER
 ------------------------------------------------------------------------------
 local function get_incremental_parser(buffer, language)
-  local parser = vim.treesitter.get_parser(buffer, language)
-  assert(parser, "No parser found for language: " .. language)
+  local ok, parser = pcall(vim.treesitter.get_parser, buffer, language)
+  if not ok or not parser then
+    return nil
+  end
 
   local config = M.config.incremental_parsing
   if not config.enabled then
@@ -256,11 +264,39 @@ local function get_incremental_parser(buffer, language)
       or config.max_lines_for_full_parse
 
     if line_count > max_lines then
-      parser:parse(true) -- Force a full parse if exceeds limit
+      if not pcall(parser.parse, parser, true) then
+        return nil
+      end
     end
   end
 
   return parser
+end
+
+local function get_root(parser)
+  if not parser then
+    return nil
+  end
+  local ok, trees = pcall(parser.parse, parser)
+  if ok and trees and trees[1] then
+    return trees[1]:root()
+  end
+end
+
+local function context_key(with_cursor)
+  local buffer = vim.api.nvim_get_current_buf()
+  local key = string.format("%d:%d:%s", buffer, vim.api.nvim_buf_get_changedtick(buffer), vim.bo.filetype)
+  if with_cursor then
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    key = string.format("%s:%d:%d", key, cursor[1], cursor[2])
+  end
+  return key
+end
+
+local function cached(namespace, key)
+  if M.config.use_cache and M.cache then
+    return M.cache:get(namespace, key)
+  end
 end
 
 ------------------------------------------------------------------------------
@@ -315,7 +351,7 @@ local get_math_query = create_math_query()
 
 function M.is_mathzone()
   local current_row, current_col = get_cursor_pos()
-  local cache_key = string.format("%d:%d", current_row, current_col)
+  local cache_key = context_key(true)
   local lang = vim.bo.filetype
   if lang == "tex" then
     lang = "latex" -- Normalize filetype for TeX files
@@ -325,48 +361,44 @@ function M.is_mathzone()
   end
 
   -- Check cache first if caching is enabled
-  local cached_result = M.config.use_cache and M.cache:get("mathzone", cache_key)
-  if cached_result ~= false and cached_result ~= nil then
+  local cached_result = cached("mathzone", cache_key)
+  if cached_result ~= nil then
     return cached_result
   end
 
-  -- Use incremental parser; ensure you run `:TSInstall latex` or `:TSInstall markdown`
-  local parser = get_incremental_parser(0, lang)
-  if not parser then
-    return M.is_mathzone_fallback()
-  end
-
-  local root = parser:parse()[1]:root()
-
-  local query = get_math_query(lang)
-  if not query then
-    return M.is_mathzone_fallback()
-  end
-
-  local cursor = vim.api.nvim_win_get_cursor(0)
-  cursor[1] = cursor[1] - 1 -- Convert to 0-indexed for Treesitter
-
-  local function check_math_environment(node, capture)
-    if lang == "latex" then
-      assert(capture == "env_name", "Invalid capture for math environment check: " .. capture)
-      local env_name = vim.treesitter.get_node_text(node, 0)
-      local env_node = node:parent():parent():parent()
-      return M.config.math_environments["latex"][env_name] and vim.treesitter.is_in_node_range(env_node, unpack(cursor))
-    elseif lang == "markdown" or lang == "markdown_inline" then
-      -- For markdown, just check node range
-      return vim.treesitter.is_in_node_range(node, unpack(cursor))
+  -- Store numeric ranges, not nodes tied to a potentially stale parse tree.
+  local tree_key = context_key(false)
+  local ranges = cached("math_ranges", tree_key)
+  if not ranges then
+    local root = get_root(get_incremental_parser(0, lang))
+    local ok, query = pcall(get_math_query, lang)
+    if not root or not ok or not query then
+      return M.is_mathzone_fallback()
+    end
+    ranges = {}
+    for id, node in query:iter_captures(root, 0) do
+      local capture = query.captures[id]
+      if capture == "env_name" then
+        local name = vim.treesitter.get_node_text(node, 0)
+        node = M.config.math_environments.latex[name] and node:parent():parent():parent() or nil
+      elseif capture ~= "inline" and capture ~= "display" then
+        node = nil
+      end
+      if node then
+        ranges[#ranges + 1] = { node:range() }
+      end
+    end
+    if M.config.use_cache then
+      M.cache:set("math_ranges", tree_key, ranges)
     end
   end
 
-  for id, node in query:iter_captures(root, 0) do
-    local capture = query.captures[id]
-
-    local is_in_zone = (capture == "inline" or capture == "display")
-      and vim.treesitter.is_in_node_range(node, unpack(cursor))
-
-    local is_math_env = (capture == "env_name" or capture == "context") and check_math_environment(node, capture)
-
-    if is_in_zone or is_math_env then
+  local row, col = current_row - 1, current_col - 1
+  for _, range in ipairs(ranges) do
+    if
+      (row > range[1] or row == range[1] and col >= range[2])
+      and (row < range[3] or row == range[3] and col < range[4])
+    then
       if M.config.use_cache then
         M.cache:set("mathzone", cache_key, true)
       end
@@ -389,8 +421,8 @@ local function safe_regex_matcher(line)
   local patterns = {
     { pattern = "()%$(.-)%$()", type = "inline" },
     { pattern = "()%$%$(.-)%$%$()", type = "display" },
-    { pattern = "()\\(%(.-)\\%)()", type = "latex_inline" },
-    { pattern = "()\\(%[.-)\\%]()()", type = "latex_display" },
+    { pattern = "()\\%((.-)\\%)()", type = "latex_inline" },
+    { pattern = "()\\%[(.-)\\%]()", type = "latex_display" },
     { pattern = "()\\math{(.-)}()", type = "sile_inline" },
   }
 
@@ -410,7 +442,7 @@ end
 
 function M.is_mathzone_fallback()
   local current_row, current_col = get_cursor_pos()
-  local cache_key = string.format("fallback:%d:%d", current_row, current_col)
+  local cache_key = context_key(true)
 
   -- Check cache first if caching is enabled
   if M.config.use_cache then
@@ -425,7 +457,7 @@ function M.is_mathzone_fallback()
 
   -- Check for math zones in the current line
   for _, zone in ipairs(matches) do
-    if current_col >= zone.start and current_col <= zone.stop then
+    if current_col >= zone.start and current_col < zone.stop then
       -- Cache the result if caching is enabled
       if M.config.use_cache then
         M.cache:set("fallback", cache_key, true)
@@ -450,8 +482,8 @@ local function in_environment(env_name)
   local current_row = get_cursor_pos()
 
   -- Check cache first if caching is enabled
-  local cache_key = string.format("%d:%s", current_row, env_name)
-  local cached_result = M.config.use_cache and M.cache:get("environment", cache_key)
+  local cache_key = context_key(true) .. ":" .. env_name
+  local cached_result = cached("environment", cache_key)
   if cached_result ~= nil then
     return cached_result
   end
@@ -510,41 +542,52 @@ local function in_environment(env_name)
   return result
 end
 
-local document_query = vim.treesitter.query.parse(
-  "latex",
-  [[
+local document_query
+local document_query_source = [[
     (class_include
       (curly_group_path
         (path) @document_type
       )
     )
   ]]
-)
 
 local function document_type()
   if vim.bo.filetype ~= "tex" then
     return nil -- Only applies to TeX files, not markdown or others
   end
 
-  local parser = get_incremental_parser(0, "latex")
-  if not parser then
-    require("snacks.notify").warn("LaTeX parser not available. Cannot determine document type.")
+  local key = context_key(false)
+  local result = cached("document_type", key)
+  if result ~= nil then
+    return result or nil
   end
-
-  local root = parser:parse()[1]:root()
-
-  local cursor = vim.api.nvim_win_get_cursor(0)
-  cursor[1] = cursor[1] - 1 -- Convert to 0-indexed for Treesitter
+  local root = get_root(get_incremental_parser(0, "latex"))
+  if not root then
+    return nil
+  end
+  if not document_query then
+    local ok, query = pcall(vim.treesitter.query.parse, "latex", document_query_source)
+    if not ok or not query then
+      return nil
+    end
+    document_query = query
+  end
 
   for id, node in document_query:iter_captures(root, 0) do
     local capture_name = document_query.captures[id]
 
     if capture_name == "document_type" then
       local doc_type = vim.treesitter.get_node_text(node, 0)
+      if M.config.use_cache then
+        M.cache:set("document_type", key, doc_type)
+      end
       return doc_type
     end
   end
 
+  if M.config.use_cache then
+    M.cache:set("document_type", key, false)
+  end
   return nil
 end
 
@@ -558,7 +601,10 @@ local function in_environment_ts(env_name)
     return in_environment(env_name) -- Fallback to regex-based detection
   end
 
-  local node = vim.treesitter.get_node()
+  local ok, node = pcall(vim.treesitter.get_node)
+  if not ok or not node then
+    return in_environment(env_name)
+  end
 
   while node do
     if node:type() == "generic_environment" or node:type() == "math_environment" then
@@ -648,8 +694,8 @@ local function is_math_range()
 end
 
 function M.is_in_sile_display_math()
-  local current_row, current_col = get_cursor_pos()
-  local cache_key = string.format("%d:%d", current_row, current_col)
+  local current_row = get_cursor_pos()
+  local cache_key = context_key(true)
 
   -- Check cache first
   if M.config.use_cache then
@@ -705,19 +751,24 @@ local function is_cursor_in_text_command()
   end
 
   local current_row, current_col = get_cursor_pos()
-  local cache_key = string.format("%d:%d", current_row, current_col)
+  local cache_key = context_key(true)
 
   -- Check cache for result if caching is enabled
-  local cached_result = M.config.use_cache and M.cache:get("text_command", cache_key)
+  local cached_result = cached("text_command", cache_key)
   if cached_result ~= nil then
     return cached_result
   end
 
   local line = vim.api.nvim_buf_get_lines(0, current_row - 1, current_row, false)[1] or ""
-  local text_start = line:find("\\text{")
-  local text_end = line:find("}")
-
-  local result = text_start and text_end and text_start < current_col and current_col < text_end
+  local result = false
+  for text_start, content_start in line:gmatch("()\\text{()") do
+    local group = line:sub(content_start - 1):match("^%b{}")
+    local text_end = group and content_start + #group - 2 or #line + 1
+    if text_start < current_col and current_col < text_end then
+      result = true
+      break
+    end
+  end
   if M.config.use_cache then
     M.cache:set("text_command", cache_key, result) -- Store result in cache
   end
@@ -728,9 +779,8 @@ end
 -- MATH MODE DETECTION
 ------------------------------------------------------------------------------
 function M.fn.math_mode()
-  return (M.config.use_cache and M.cache:get("mathzone", string.format("%d:%d", get_cursor_pos())) == true)
-    or (M.is_mathzone() or M.is_mathzone_fallback() or is_math_range() or M.is_in_sile_display_math())
-      and not is_cursor_in_text_command()
+  return (M.is_mathzone() or M.is_mathzone_fallback() or is_math_range() or M.is_in_sile_display_math())
+    and not is_cursor_in_text_command()
 end
 
 local function false_fn()
@@ -739,7 +789,7 @@ end
 M.fn.false_fn = false_fn
 
 local function true_fn()
-  return false
+  return true
 end
 M.fn.true_fn = true_fn
 
@@ -758,7 +808,7 @@ end
 -- NEOVIM INTEGRATION
 ------------------------------------------------------------------------------
 vim.api.nvim_create_user_command("CheckCursorMathZone", function()
-  if M.math_mode() then
+  if M.fn.math_mode() then
     print("Cursor is in a math mode")
   else
     print("Cursor is NOT in a math mode")
