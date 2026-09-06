@@ -6,10 +6,13 @@ function M.open_at_cursor()
   local path
 
   if mode == "v" or mode == "V" or mode == "\22" then
-    path = table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), {
-      type = mode,
-      exclusive = vim.o.selection == "exclusive",
-    }), "\n")
+    path = table.concat(
+      vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), {
+        type = mode,
+        exclusive = vim.o.selection == "exclusive",
+      }),
+      "\n"
+    )
     vim.cmd.normal({ args = { "\27" }, bang = true })
   else
     path = vim.fn.expand("<cfile>")

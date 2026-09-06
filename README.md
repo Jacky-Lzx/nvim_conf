@@ -5,17 +5,19 @@ Personal Neovim configuration for macOS and Linux. It targets Neovim 0.12 and us
 
 ## Language profiles
 
-Language support is selected in `lua/config/languages.lua`. The default profiles are:
+Language support is selected in `lua/config/languages.lua`. The currently enabled profiles are:
 
 - `base`: Lua, Bash, JSON, YAML, TOML, KDL
 - `web`: HTML, Vue, JavaScript, TypeScript
 - `native`: C, C++, CMake, Rust
 - `data`: Python
 - `writing`: Markdown, LaTeX, Typst
+- `optional`: Java, Verilog, Godot, Matlab
 
-The `optional` profile contains Java, Verilog, Godot, and Matlab. Add `"optional"` to
-`enabled_profiles`, or define a smaller profile, to enable them. Only selected language modules
+The `optional` profile is currently enabled by preference. Remove `"optional"` from
+`enabled_profiles`, or define a smaller profile, to narrow support. Only selected language modules
 contribute plugins, LSP servers, Mason tools, formatters, linters, and Tree-sitter parsers.
+Languages without an LSP entry, such as KDL, do not enable an LSP server.
 
 Run `:ConfigToolsInstall` after changing profiles. Tool and parser installation is explicit and
 may access the network. Normal startup does not install Mason packages or Tree-sitter parsers.
@@ -66,12 +68,36 @@ after an explicit `:ConfigToolsInstall` or `:MasonToolsInstall`.
 Run `:checkhealth config` to inspect platform capabilities, optional integrations, and tools for
 the enabled language profiles.
 
-Run the side-effect-controlled smoke test with:
+Run the smoke runner with:
 
 ```sh
 ./tests/smoke.sh
 ```
 
-The syntax/profile pass uses `-u NONE`. The startup pass sets `NVIM_SMOKE_TEST=1`, which disables
-project-local configuration and prevents lazy.nvim from cloning or installing missing plugins.
-It never invokes the explicit Mason or Tree-sitter installation commands.
+The script resolves the configuration root and runs from it in a subshell, so it can also be
+invoked by path from any working directory. Each suite runs in a separate Neovim process with
+`-u NONE -i NONE --noplugin`, isolating test stubs and disabling normal configuration, ShaDa,
+and automatic plugin loading. Coverage includes:
+
+- `smoke.lua`: Lua syntax and explicit language profiles without assuming a personal selection;
+  includes `lsp_config.lua` once for LSP ordering, capabilities, picker actions, and dependencies.
+- `math_conditions.lua`: math detection fallbacks, caching, and invalidation.
+- `commands.lua`: title casing across visual selections and explicit ranges.
+- `python.lua`: interpreter selection, provider separation, and shell/task argument quoting.
+- `rust.lua`: asynchronous Cargo artifact selection, cancellation, and failure handling through DAP.
+- `integrations.lua`: Vue server discovery, task defaults, paste mappings, highlight cleanup, and hunk navigation.
+- `open_at_cursor.lua`: link extraction from active characterwise, linewise, and blockwise selections.
+- `tooling.lua`: formatting controls, completion buffer filtering, lint guards, language tools, and filetypes.
+
+Install the configured plugins with `:Lazy sync` before running the full runner. Most regression
+tests stub external integrations, but `rust.lua` explicitly loads the installed `nvim-dap` from
+`stdpath("data") .. "/lazy/nvim-dap"` and exercises its real evaluator. It does not run Cargo or
+start a debug adapter, so Cargo and codelldb are not needed for that test. The Python suite uses
+`/bin/sh` and `/usr/bin/printf` to check real `:make` quoting, without running Python.
+
+The final startup pass loads the real configuration and installed plugins with `-i NONE` and
+`NVIM_SMOKE_TEST=1`. This disables ShaDa and project-local configuration and prevents lazy.nvim
+from cloning itself or installing missing plugins. The runner never invokes the explicit Mason
+or Tree-sitter installation commands. Startup is not fully side-effect-free or sandboxed:
+installed plugins and startup hooks still run and may write caches or logs or invoke external
+processes.
