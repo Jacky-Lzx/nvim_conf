@@ -88,12 +88,17 @@ and automatic plugin loading. Coverage includes:
 - `integrations.lua`: Vue server discovery, task defaults, paste mappings, highlight cleanup, and hunk navigation.
 - `open_at_cursor.lua`: link extraction from active characterwise, linewise, and blockwise selections.
 - `tooling.lua`: formatting controls, completion buffer filtering, lint guards, language tools, and filetypes.
+- `lualine_lazy.lua`: deferred task/symbol components, upstream rendering parity, and both provider load orders.
+- `mini_diff_lazy.lua`: first-key overlay rendering after asynchronous Git reference loading and subsequent toggling.
 
 Install the configured plugins with `:Lazy sync` before running the full runner. Most regression
 tests stub external integrations, but `rust.lua` explicitly loads the installed `nvim-dap` from
 `stdpath("data") .. "/lazy/nvim-dap"` and exercises its real evaluator. It does not run Cargo or
 start a debug adapter, so Cargo and codelldb are not needed for that test. The Python suite uses
 `/bin/sh` and `/usr/bin/printf` to check real `:make` quoting, without running Python.
+The statusline tests use installed lualine, Overseer, Trouble, and their rendering dependencies.
+The Mini.diff tests require Git and a tracked `init.lua`; they change only an in-memory buffer
+and read the reference from the index. Both Lazy key replay and direct first invocation are tested.
 
 The final startup pass loads the real configuration and installed plugins with `-i NONE` and
 `NVIM_SMOKE_TEST=1`. This disables ShaDa and project-local configuration and prevents lazy.nvim

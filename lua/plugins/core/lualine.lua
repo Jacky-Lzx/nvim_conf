@@ -4,8 +4,6 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "AndreM222/copilot-lualine",
-      "folke/trouble.nvim",
-      "stevearc/overseer.nvim",
     },
     event = "VeryLazy",
     opts = {
@@ -37,13 +35,31 @@ return {
     },
     config = function(_, opts)
       local mocha = require("catppuccin.palettes").get_palette("mocha")
-      local symbols = require("trouble").statusline({
-        mode = "lsp_document_symbols",
-        groups = {},
-        title = false,
-        filter = { range = true },
-        format = "{kind_icon}{symbol.name:Normal}",
-      })
+      local overseer = require("lualine.component"):extend()
+      function overseer:update_status(is_focused)
+        if not package.loaded.overseer then
+          return ""
+        end
+        self.component = self.component or require("lualine.components.overseer")(self.options)
+        -- The outer component's draw() applies padding and resets task highlights.
+        return self.component:update_status(is_focused)
+      end
+
+      local symbols
+      local function trouble_symbols()
+        if not package.loaded.trouble then
+          return ""
+        end
+        symbols = symbols
+          or require("trouble").statusline({
+            mode = "lsp_document_symbols",
+            groups = {},
+            title = false,
+            filter = { range = true },
+            format = "{kind_icon}{symbol.name:Normal}",
+          })
+        return symbols.has() and symbols.get() or ""
+      end
 
       local function show_macro_recording()
         local recording_register = vim.fn.reg_recording()
@@ -79,11 +95,10 @@ return {
       }
 
       table.insert(opts.sections.lualine_x, 1, macro_recording)
-      table.insert(opts.sections.lualine_x, 1, "overseer")
+      table.insert(opts.sections.lualine_x, 1, { overseer, component_name = "overseer" })
       table.insert(opts.sections.lualine_c, copilot)
       table.insert(opts.winbar.lualine_b, 1, {
-        symbols.get,
-        cond = symbols.has,
+        trouble_symbols,
       })
 
       require("lualine").setup(opts)

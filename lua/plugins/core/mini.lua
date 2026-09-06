@@ -168,11 +168,21 @@ return {
 
   {
     "echasnovski/mini.diff",
-    event = "VeryLazy",
     version = "*",
-    -- stylua: ignore
     keys = {
-      { "<leader>to", function() require("mini.diff").toggle_overlay(vim.api.nvim_get_current_buf()) end, mode = "n", desc = "[Mini.Diff] Toggle diff overlay", },
+      {
+        "<leader>to",
+        function()
+          local diff, buf = require("mini.diff"), vim.api.nvim_get_current_buf()
+          -- Setup's auto-enable is scheduled; enable before the first key replay.
+          diff.enable(buf)
+          if diff.get_buf_data(buf) then
+            diff.toggle_overlay(buf)
+          end
+        end,
+        mode = "n",
+        desc = "[Mini.Diff] Toggle diff overlay",
+      },
     },
     opts = {
       -- Module mappings. Use `''` (empty string) to disable one.
