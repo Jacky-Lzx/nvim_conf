@@ -1,40 +1,20 @@
 local M = {}
 
---- Helper to get visually selected text
-local function get_visual_selection()
-  local s_start = vim.fn.getpos("'<")
-  local s_end = vim.fn.getpos("'>")
-  local lines = vim.api.nvim_buf_get_lines(0, s_start[2] - 1, s_end[2], false)
-
-  if #lines == 0 then
-    return nil
-  end
-
-  if #lines == 1 then
-    lines[1] = string.sub(lines[1], s_start[3], s_end[3])
-  else
-    lines[1] = string.sub(lines[1], s_start[3])
-    lines[#lines] = string.sub(lines[#lines], 1, s_end[3])
-  end
-
-  return table.concat(lines, "\n")
-end
-
 --- Opens the link or path under the cursor or selection
 function M.open_at_cursor()
   local mode = vim.api.nvim_get_mode().mode
   local path
 
-  if mode:match("[vV]") or mode == "␖" then
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
-    vim.schedule(function()
-      path = get_visual_selection()
-      M.process_open(path)
-    end)
+  if mode == "v" or mode == "V" or mode == "\22" then
+    path = table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), {
+      type = mode,
+      exclusive = vim.o.selection == "exclusive",
+    }), "\n")
+    vim.cmd.normal({ args = { "\27" }, bang = true })
   else
     path = vim.fn.expand("<cfile>")
-    M.process_open(path)
   end
+  M.process_open(path)
 end
 
 --- Internal helper to check if a file exists

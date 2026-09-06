@@ -28,7 +28,10 @@ end)
 --
 -- -- Allow clipboard copy paste in neovim
 vim.g.neovide_input_use_logo = 1
-vim.api.nvim_set_keymap("", "<D-v>", "+p<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("!", "<D-v>", "<C-R>+", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<D-v>", "<C-R>+", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+vim.keymap.set("n", "<D-v>", '"+p', { silent = true })
+vim.keymap.set("x", "<D-v>", '"+P', { silent = true })
+vim.keymap.set("i", "<D-v>", "<C-R><C-O>+", { silent = true })
+vim.keymap.set("c", "<D-v>", "<C-R>+", { silent = true })
+vim.keymap.set("t", "<D-v>", function()
+  vim.api.nvim_paste(vim.fn.getreg("+"), false, -1)
+end, { silent = true })

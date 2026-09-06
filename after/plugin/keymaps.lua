@@ -61,11 +61,14 @@ vim.keymap.set(
 local function pulse_cursor()
   -- Set a highlight on the current line
   -- 'CursorLine' is a standard group, but you can use 'Visual' or 'Search' for more pop
+  local win = vim.api.nvim_get_current_win()
   local match_id = vim.fn.matchadd("Visual", "\\%" .. vim.fn.line(".") .. "l")
 
   -- Clear the highlight after 200 milliseconds
   vim.defer_fn(function()
-    vim.fn.matchdelete(match_id)
+    if vim.api.nvim_win_is_valid(win) then
+      pcall(vim.fn.matchdelete, match_id, win)
+    end
   end, 200)
 end
 

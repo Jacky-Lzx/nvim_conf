@@ -38,7 +38,7 @@ function M.server_path()
     -- npm -g wrapper package: <root>/vue-language-server/bin/vue-language-server
     local prefix = real:match("^(.*)/vue%-language%-server/")
     if prefix then
-      local base = prefix .. "vue-language-server"
+      local base = prefix .. "/vue-language-server"
       local p = first_existing({ base .. "/node_modules/@vue/language-server", base })
       if p then
         return p

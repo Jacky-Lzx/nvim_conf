@@ -11,7 +11,7 @@ return {
         filename_without_ext .. ".pdf",
         "--pdf-engine=xelatex",
         "-V",
-        'CJKmainfont="华文黑体"',
+        "CJKmainfont=华文黑体",
       },
     }
   end,

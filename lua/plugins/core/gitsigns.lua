@@ -22,13 +22,13 @@ return {
 
         -- Navigation
         -- stylua: ignore
-        map("n", "]h", function() if vim.wo.diff then vim.cmd.normal({ "]h", bang = true }) else gitsigns.nav_hunk("next") end end, { desc = "[Git] Next hunk" })
+        map("n", "]h", function() if vim.wo.diff then vim.cmd.normal({ "]c", bang = true }) else gitsigns.nav_hunk("next") end end, { desc = "[Git] Next hunk" })
         -- stylua: ignore
-        map("n", "]H", function() if vim.wo.diff then vim.cmd.normal({ "]H", bang = true }) else gitsigns.nav_hunk("last") end end, { desc = "[Git] Last hunk" })
+        map("n", "]H", function() if vim.wo.diff then vim.cmd.normal({ vim.fn.line("$") .. "]c", bang = true }) else gitsigns.nav_hunk("last") end end, { desc = "[Git] Last hunk" })
         -- stylua: ignore
-        map("n", "[h", function() if vim.wo.diff then vim.cmd.normal({ "[h", bang = true }) else gitsigns.nav_hunk("prev") end end, { desc = "[Git] Prev hunk" })
+        map("n", "[h", function() if vim.wo.diff then vim.cmd.normal({ "[c", bang = true }) else gitsigns.nav_hunk("prev") end end, { desc = "[Git] Prev hunk" })
         -- stylua: ignore
-        map("n", "[H", function() if vim.wo.diff then vim.cmd.normal({ "[H", bang = true }) else gitsigns.nav_hunk("first") end end, { desc = "[Git] First hunk" })
+        map("n", "[H", function() if vim.wo.diff then vim.cmd.normal({ vim.fn.line("$") .. "[c", bang = true }) else gitsigns.nav_hunk("first") end end, { desc = "[Git] First hunk" })
 
         -- Actions
         map("n", "<leader>ggs", gitsigns.stage_hunk, { desc = "[Git] Stage hunk" })
