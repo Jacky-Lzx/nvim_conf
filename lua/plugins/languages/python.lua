@@ -12,7 +12,7 @@ return {
     "mason-org/mason.nvim",
     optional = true,
     opts = {
-      ensure_installed = { "ruff", "pyright", "basedpyright", "debugpy" },
+      ensure_installed = { "ruff", "basedpyright", "debugpy" },
     },
     opts_extend = { "ensure_installed" },
   },

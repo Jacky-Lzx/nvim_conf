@@ -23,6 +23,6 @@ return {
     "mason-org/mason.nvim",
     optional = true,
     opts_extend = { "ensure_installed" },
-    opts = { ensure_installed = { "yaml-language-server" } },
+    opts = { ensure_installed = { "yaml-language-server", "prettierd" } },
   },
 }

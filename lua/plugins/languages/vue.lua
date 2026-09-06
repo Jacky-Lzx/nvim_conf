@@ -4,7 +4,7 @@ return {
     "mason-org/mason.nvim",
     optional = true,
     opts = {
-      ensure_installed = { "vue-language-server", "typescript-language-server", "vtsls" },
+      ensure_installed = { "vue-language-server", "vtsls", "prettierd" },
       post_install = {
         ["vue-language-server"] = function(package)
           require("utils.vue_lsp").ensure_typescript5(package:get_install_path())

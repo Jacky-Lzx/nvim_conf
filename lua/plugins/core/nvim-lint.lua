@@ -8,7 +8,7 @@ return {
         optional = true,
         opts_extend = { "ensure_installed" },
         opts = {
-          ensure_installed = { "codespell", "typos" },
+          ensure_installed = { "codespell" },
         },
       },
     },
@@ -28,15 +28,24 @@ return {
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         group = vim.api.nvim_create_augroup("lzx_lint", { clear = true }),
-        callback = function()
-          -- try_lint without arguments runs the linters defined in `linters_by_ft`
-          -- for the current filetype
-          lint.try_lint()
-
-          -- You can call `try_lint` with a linter name or a list of names to always
-          -- run specific linters, independent of the `linters_by_ft` configuration
-          lint.try_lint("codespell")
-          -- require("lint").try_lint("typos")
+        callback = function(ev)
+          if
+            not vim.api.nvim_buf_is_loaded(ev.buf)
+            or vim.bo[ev.buf].buftype ~= ""
+            or vim.bo[ev.buf].filetype == ""
+            or vim.api.nvim_buf_get_offset(ev.buf, vim.api.nvim_buf_line_count(ev.buf)) > 1024 * 1024
+          then
+            return
+          end
+          vim.api.nvim_buf_call(ev.buf, function()
+            lint.try_lint()
+            if
+              vim.fn.executable("codespell") == 1
+              and #vim.lsp.get_clients({ bufnr = ev.buf, name = "typos_lsp" }) == 0
+            then
+              lint.try_lint("codespell")
+            end
+          end)
         end,
       })
     end,

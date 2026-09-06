@@ -21,6 +21,7 @@ return {
     opts = {
       formatters_by_ft = {
         verilog = { "verible-verilog-format" },
+        systemverilog = { "verible-verilog-format" },
       },
       formatters = {
         ["verible-verilog-format"] = {
@@ -45,7 +46,10 @@ return {
         ["       "] = vim.diagnostic.severity.INFO,
       }
 
-      opts.linters_by_ft = vim.tbl_deep_extend("force", opts.linters_by_ft or {}, { verilog = { "iverilog" } })
+      opts.linters_by_ft = vim.tbl_deep_extend("force", opts.linters_by_ft or {}, {
+        verilog = { "iverilog" },
+        systemverilog = { "iverilog" },
+      })
       opts.linters = vim.tbl_deep_extend("force", opts.linters or {}, {
         iverilog = {
           name = "iverilog",

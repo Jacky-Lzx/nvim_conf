@@ -1,11 +1,10 @@
--- make zsh files recognized as sh for bash-ls & treesitter
+-- Keep zsh separate from sh so Bash formatters are not used for zsh syntax.
 vim.filetype.add({
   extension = {
-    zsh = "sh",
-    sh = "sh", -- force sh-files with zsh-shebang to still get sh as filetype
+    zsh = "zsh",
   },
   filename = {
-    [".zshrc"] = "sh",
-    [".zshenv"] = "sh",
+    [".zshrc"] = "zsh",
+    [".zshenv"] = "zsh",
   },
 })
