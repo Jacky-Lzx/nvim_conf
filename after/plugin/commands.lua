@@ -1,9 +1,25 @@
 vim.schedule(function()
-  vim.api.nvim_create_user_command("Titlecase", function()
-    -- 1. Selection Range
-    local s_start = vim.fn.getpos("'<")
-    local s_end = vim.fn.getpos("'>")
-    local lines = vim.api.nvim_buf_get_lines(0, s_start[2] - 1, s_end[2], false)
+  -- Command callbacks receive line numbers, not the original range expression.
+  local visual_range = false
+  vim.api.nvim_create_autocmd("CmdlineLeave", {
+    pattern = ":",
+    callback = function()
+      visual_range = not vim.v.event.abort and vim.fn.getcmdline():match("^%s*'<,'>%s*Titlecase%s*$") ~= nil
+      vim.schedule(function()
+        visual_range = false
+      end)
+    end,
+  })
+  vim.api.nvim_create_user_command("Titlecase", function(opts)
+    local regions
+    if visual_range then
+      regions = vim.fn.getregionpos(vim.fn.getpos("'<"), vim.fn.getpos("'>"), {
+        type = vim.fn.visualmode(),
+        exclusive = vim.o.selection == "exclusive",
+      })
+    end
+    visual_range = false
+    local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
 
     -- 2. Smart Lookup Table
     local small_words = {
@@ -42,27 +58,15 @@ vim.schedule(function()
       )
     end
 
-    -- 3. Apply Transformation
-    if #lines > 0 then
-      -- Process first line (handling partial selection)
-      local prefix = string.sub(lines[1], 1, s_start[3] - 1)
-      local target = string.sub(lines[1], s_start[3])
-      lines[1] = prefix .. to_smart_title(target)
-
-      -- Process middle lines
-      for i = 2, #lines - 1 do
-        lines[i] = to_smart_title(lines[i])
+    for i, line in ipairs(lines) do
+      local first, last = 1, #line
+      if regions then
+        local region = regions[i]
+        first, last = region[1][3], region[2][3]
       end
-
-      -- Process last line (handling partial selection)
-      if #lines > 1 then
-        local suffix = string.sub(lines[#lines], s_end[3] + 1)
-        local last_target = string.sub(lines[#lines], 1, s_end[3])
-        lines[#lines] = to_smart_title(last_target) .. suffix
-      end
-
-      vim.api.nvim_buf_set_lines(0, s_start[2] - 1, s_end[2], false, lines)
+      lines[i] = line:sub(1, first - 1) .. to_smart_title(line:sub(first, last)) .. line:sub(last + 1)
     end
+    vim.api.nvim_buf_set_lines(0, opts.line1 - 1, opts.line2, false, lines)
   end, { range = true })
 
   vim.api.nvim_create_user_command("ConvertTabToSpace", "%s/\t/  /g", {})
