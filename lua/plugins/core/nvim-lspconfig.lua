@@ -6,6 +6,7 @@ return {
     -- lazy = false,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
+      "saghen/blink.cmp",
       "mason-org/mason.nvim",
       -- Show lsp status on the bottom-left
       "j-hui/fidget.nvim",
@@ -14,6 +15,9 @@ return {
       servers = require("config.languages").enabled_lsp_servers(),
     },
     config = function(_, opts)
+      vim.lsp.config("*", {
+        capabilities = require("blink.cmp").get_lsp_capabilities(nil, true),
+      })
       vim.lsp.enable(opts.servers)
     end,
   },

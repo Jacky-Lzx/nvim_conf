@@ -44,7 +44,7 @@ return {
   },
 
   -- Open snacks picker results in trouble.
-  -- This config causes the trouble plugin to be loeaded when snacks.nvim is loaded.
+  -- Load Trouble only when the picker action is invoked.
   {
     "folke/trouble.nvim",
     optional = true,
@@ -53,13 +53,12 @@ return {
       opts = function(_, opts)
         return vim.tbl_deep_extend("force", opts or {}, {
           picker = {
-            -- NOTE: Copy from `require("trouble.sources.snacks").actions` to avoid the loading of trouble at startup
-            -- <2026.04.14, lzx>
+            -- Defer requiring Trouble until the action runs.
             actions = {
               -- Open selected or all items in the trouble list.
               trouble_open = {
-                action = function()
-                  require("trouble.sources.snacks").wrap({ type = "smart" })
+                action = function(picker)
+                  require("trouble.sources.snacks").open(picker, { type = "smart" })
                 end,
                 desc = "smart-open-with-trouble",
               },

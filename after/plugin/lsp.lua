@@ -1,5 +1,3 @@
-vim.lsp.config("*", { capabilities = vim.lsp.protocol.make_client_capabilities() })
-
 -- Use LspAttach autocommand to only map the following keys after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
@@ -11,7 +9,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("<leader>d", vim.diagnostic.open_float, "[LSP] Show diagnostic")
     map("<leader>gk", vim.lsp.buf.signature_help, "[LSP] Signature help")
     -- vim.keymap.set("n", "<leader>sK", vim.lsp.buf.signature_help, { desc = "[LSP] Signature help" })
-    map("<leader>gf", vim.lsp.buf.format, "[LSP] Format")
+    map("<leader>gf", function()
+      require("conform").format({ bufnr = ev.buf, lsp_format = "fallback" })
+    end, "Format")
     map("<leader>rn", vim.lsp.buf.rename, "[LSP] Rename")
 
     map("<leader>gr", vim.lsp.buf.references, "[LSP] References")

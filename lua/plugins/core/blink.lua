@@ -165,15 +165,15 @@ return {
           buffer = {
             score_offset = 20,
 
-            -- The default behavior is to only show completions from visible "normal" buffers (i.e. it wouldn't include
-            -- neo-tree). This will instead show completions from all buffers, even if they're not visible on screen.
-            -- Note that the performance impact of this has not been tested.
-            -- See https://cmp.saghen.dev/recipes.html#buffer-completion-from-all-open-buffers
+            -- Include hidden buffers only when they share the current filetype.
             opts = {
-              -- (Recommended) Filter to only "normal" buffers
               get_bufnrs = function()
+                local current = vim.api.nvim_get_current_buf()
                 return vim.tbl_filter(function(bufnr)
-                  return vim.bo[bufnr].buftype == ""
+                  return vim.api.nvim_buf_is_loaded(bufnr)
+                    and vim.bo[bufnr].buftype == ""
+                    and (bufnr == current or (vim.bo[current].filetype ~= "" and vim.bo[bufnr].filetype == vim.bo[current].filetype))
+                    and vim.api.nvim_buf_get_offset(bufnr, vim.api.nvim_buf_line_count(bufnr)) <= 1024 * 1024
                 end, vim.api.nvim_list_bufs())
               end,
             },
@@ -337,10 +337,6 @@ return {
     },
     config = function(_, opts)
       require("blink.cmp").setup(opts)
-
-      vim.lsp.config("*", {
-        capabilities = require("blink.cmp").get_lsp_capabilities(),
-      })
     end,
   },
 

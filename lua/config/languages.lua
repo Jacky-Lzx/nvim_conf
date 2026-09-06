@@ -9,7 +9,7 @@ M.profiles = {
   optional = { "java", "verilog", "godot", "matlab" },
 }
 
--- Add "optional" here, or define another profile above, to enable more languages.
+-- Select profiles here, or define a smaller profile above.
 M.enabled_profiles = { "base", "web", "native", "data", "writing", "optional" }
 
 M.lsp_servers = {
@@ -37,7 +37,7 @@ local function collect(source)
   local result, seen = {}, {}
   for _, profile in ipairs(M.enabled_profiles) do
     for _, language in ipairs(M.profiles[profile] or {}) do
-      local values = source and source[language] or { language }
+      local values = source and (source[language] or {}) or { language }
       for _, value in ipairs(values or {}) do
         if not seen[value] then
           seen[value] = true

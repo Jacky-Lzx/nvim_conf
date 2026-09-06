@@ -4,6 +4,8 @@ return {
     "echasnovski/mini.ai",
     version = "*",
     event = "VeryLazy",
+    -- Supplies the textobjects queries used by mini.ai's native Tree-sitter integration.
+    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
     -- NOTE: Configs copied from LazyVim (https://www.lazyvim.org/plugins/coding#miniai) <2026.04.28, lzx>
     opts = function()
       local ai = require("mini.ai")
