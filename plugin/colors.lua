@@ -10,10 +10,11 @@ vim.api.nvim_set_hl(0, "IncSearch", { link = "CurSearch" })
 vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", { bg = colors.overlay0 })
 vim.api.nvim_set_hl(0, "MatchParen", { bg = colors.mauve, fg = colors.base, bold = true })
 
-vim.api.nvim_set_hl(0, "SelectionInactive", { bg = "#4b3566" })
+-- vim.api.nvim_set_hl(0, "SelectionInactive", { bg = "#6c508f" })
+vim.api.nvim_set_hl(0, "SelectionInactive", { bg = "#604482" })
 
-vim.api.nvim_set_hl(0, "SnacksPickerListCursorLine", { bg = "#2A2B3D" })
-vim.api.nvim_set_hl(0, "SnacksPickerPreviewCursorLine", { bg = "#2A2B3D" })
+vim.api.nvim_set_hl(0, "SnacksPickerListCursorLine", { bg = "#45475a" })
+vim.api.nvim_set_hl(0, "SnacksPickerPreviewCursorLine", { link = "SnacksPickerListCursorLine" })
 vim.api.nvim_set_hl(0, "SnacksPickerSearch", { link = "SelectionInactive" })
 vim.api.nvim_set_hl(0, "SnacksPickerMatch", { link = "SelectionInactive" })
 
